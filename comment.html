@@ -4,58 +4,27 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="generator" content="PSPad editor, www.pspad.com">
   <title>UFOsearcher-comments</title>
-<html>
-  <form action="" method="post">
-    
-  <label> Name: <br><input type="text" name="name"><br></label>
-    
-     <label> Message: <br> <label><textarea cols="45" rows="5" name="nes"></textarea></label></br>
-    
-    <input type="submit" name="post" value="post">
-    
-    </form>
-  </html>
-    
-    <?php
-
-$name = $_POST["name"];
-$text = $_POST["mes"];
-$post = $_POST["post"];
-
-if ($post){
-
-#WRITE DOWN COMMENTS#
-
-$write = fopen("comment.html", "a+");
-fwrite($write, "<u><b> $name </u></b><br>$text<br>");
-fclose($write);
-
-#DISPLAY COMMENTS#
-
-$read = fopen("comment.html" "r+t");
-echo "All comments:<br>";
-
-while(!feof($read)){
-echo fread($read, 1024);
-}
-
-fclose($read); 
-  
-}
-
-else{
-
-#DISPLAY COMMENTS#
-
-$read = fopen("comment.html" "r+t");
-echo "All comments:";<br>
-
-while(!feof($read)){
-echo fread($read, 1024);
-}
-
-fclose($read);
-
-}
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Comment Box Like On Youtube</title>
+            <link rel="stylesheet" href="css/style.css">
+        </head>
+        <body>
+            <div class="container">
+                <h2>Leave Us a Comment</h2>
+                <form>
+                    <textarea placeholder='Add Your Comment'></textarea>
+                    <div class="btn">
+                        <input type="submit" value='Comment'>
+                        <button id='clear'>Cancel</button>
+                    </div>
+                </form>
+            </div>
+        
+            <script src='plugin.js'></script>    
+        </body>
+    </html>
   </head>
   <body>
