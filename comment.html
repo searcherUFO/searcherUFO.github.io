@@ -4,24 +4,147 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="generator" content="PSPad editor, www.pspad.com">
   <title>UFOsearcher-comments</title>
-<div>
-  <h2>Comment Box</h2>
- 
-  <form>
-    <div>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Use a free Google Firebase Database to allow visitors to leave comments on your web pages. From https://AlanSimpson.me/firebase">      
+    <meta name="author" content="Alan Simpson">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Comments</title>
+    <style>
+        /* Just come optional fonts and characters for styling */
+        @import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans|Pacifico|Source+Code+Pro');
+        /* FontAwesome cdn fonts */
+        @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        /* Sample styling for comments and commenting controls */
+        #allcomments {
+            width: 90%;
+            margin: 1em 0 4em 1em;
+            padding: 1%;
+            border: solid 1px gray;
+            border-radius: 3px;
+            box-shadow: 2px 2px 2px silver;
+        }
+
+        ul#pastcomments {
+            list-style-type: none;
+        }
+
+        ul#pastcomments li:before {
+            font-family: FontAwesome;
+            content: "\f086";
+            font-size: 24pt;
+            color: gray;
+            margin-left: -42px;
+            padding-right: 10px;
+            position: relative;
+            top: 8px;
+        }
+
+        ul#pastcomments li {
+            margin: 0 0 2em 0;
+            padding: 10px;
+        }
+
+        ul#pastcomments li span {
+            font-size: 80%;
+            color: gray;
+            font-style: italic;
+        }
+
+        form#newcomment textarea {
+            height: 72px;
+        }
+
+        form#newcomment label {
+            display: inline-block;
+            margin: 1em 0 0 0;
+        }
+
+        form#newcomment textarea,
+        form#newcomment input[type="text"] {
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="allcomments">
+        <h3>Comments</h3>
+        <!-- We will show past comments in the list below-->
+        <ul id="pastcomments"></ul>
+        <!-- This is the form for entering a new comment -->
+        <form id="newcomment">
+            <label for="tbName">First Name or Initials</label>
+            <br>
+            <input id="tbName" type="text" maxlength="20" required>
+            <br>
+            <label for="txComment">Your Comment / Question</label>
+            <br>
+            <textarea id="txComment" maxlength="4096" required style="width:96%"></textarea>
+            <br>
+            <input type="submit" id="btnSubmitComment" value="Submit Comment">
+        </form>
     </div>
- 
-    <div>
-      <label for="comment">Comment:</label>
-      <textarea id="comment" name="comment" rows="5" cols="30"></textarea>
-    </div>
- 
-    <div>
-      <input type="submit" value="Submit" />
-    </div>
-  </form>
-</div>
+    <!-- Connection to Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase - be sure to use your own code, this connects to my database.
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBqKX1_Jmhm809kqW3SBifAjmVfzLfC-0w",
+            authDomain: "comments2-a5f2e.firebaseapp.com",
+            databaseURL: "https://comments2-a5f2e.firebaseio.com",
+            projectId: "comments2-a5f2e",
+            storageBucket: "comments2-a5f2e.appspot.com",
+            messagingSenderId: "617710094361"
+        };
+        firebase.initializeApp(config);
+        //Rootref is the whole database.
+        const rootRef = firebase.database().ref();
+        //commentsRef is just the pageCountsNode
+        const commentsRef = rootRef.child('comments');
+        //Listen for click on Submit Comment button, and post comment.
+        document.getElementById("btnSubmitComment").addEventListener("click", function () {
+            //Replace line breaks in comment with br tags.
+            var newcomment = document.getElementById('txComment').value.replace(/\n/g, "<br>");
+            //Define a new, keyed post.
+            var newPostRef = commentsRef.push();
+            //Fill tne new keyed post with data
+            newPostRef.set({
+                name: document.getElementById('tbName').value.trim(),
+                comment: newcomment.trim(),
+                frompage: location.pathname,
+                when: firebase.database.ServerValue.TIMESTAMP
+            });
+        });
+
+        function showpastcomments() {
+            var showat = document.getElementById('pastcomments');
+            //Get comments whose from page equals this page's pathname.
+            var commentsRef = firebase.database().ref('comments/').orderByChild('frompage').equalTo(location.pathname);
+            commentsRef.once('value', function (snapshot) {
+                snapshot.forEach(function (itemSnapshot) {
+                    //Get the object for one snapshot
+                    var itemData = itemSnapshot.val();
+                    var comment = itemData.comment;
+                    var name = itemData.name;
+                    var when = new Date(itemData.when).toLocaleDateString("en-us");
+                    showat.innerHTML += "<li>" + comment + "<span> -- " + name + " (" + when +
+                        ")</span></li>";
+                })
+            })
+        }
+        //Called when page first opens and also after Submit button click to show all comments for this page.
+        showpastcomments()
+    </script>
+</body>
+</html>
   </head>
   <body>
