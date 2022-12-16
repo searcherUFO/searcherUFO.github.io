@@ -9,24 +9,23 @@
   <body style="background-color:#15DCB1;">
 <table>
   <tr> 
- <td><center><h1 style="font-size:5.5em; "> searcherUFO </h1></center><!-- minimal settings -->
-<div data-lyket-type="updown" data-lyket-id="my-first-post"></div>
+ <td><center><h1 style="font-size:5.5em; "> searcherUFO </h1></center>function like() {
+  if(color1.style.color == "blue") {
+    color1.style.color = "black";
+  } else {
+    color1.style.color = "blue";
+  }
+  color2.style.color = "black";
+}
 
-<!-- with namespace -->
-<div
-  data-lyket-type="updown"
-  data-lyket-id="my-second-post"
-  data-lyket-namespace="blog"
-></div>
-
-<!-- with non-default template -->
-<div
-  data-lyket-type="updown"
-  data-lyket-id="my-third-post"
-  data-lyket-namespace="blog"
-  data-lyket-template="reddit"
-></div> </tr>
-</table>
+function dislike() {
+  if (color2.style.color == "blue") {
+    color2.style.color = "black";
+  } else {
+    color2.style.color = "blue";
+  }
+  color1.style.color = "black";
+}
     <!DOCTYPE html>
 <center><html>
 
