@@ -8,10 +8,20 @@
   <body>
   <body style="background-color:#15DCB1;">
 
- <td><center><h1 style="font-size:5.5em; "> searcherUFO </h1></center>
-   <div class="button">
-    <input type="checkbox" id="liked"><label for="liked"><span></span></label>
-</div>
+ <center><h1 style="font-size:5.5em; "> searcherUFO </h1></center>
+<!--Click Counter HTML-->
+
+<script>
+  	var clicks = 0;
+
+	function onClick() {
+  	clicks += 1;
+  	document.getElementById("clicks").innerHTML = clicks;
+	};
+</script>
+
+<button type="button" onClick="onClick()">Click me</button>
+<p>Clicks: <a id="clicks">0</a></p>
     <!DOCTYPE html>
 <center><html>
 
