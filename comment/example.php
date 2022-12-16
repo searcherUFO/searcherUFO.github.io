@@ -1,9 +1,6 @@
 <?php
 
-/**
- * Simple chat example by Stephan Soller
- * See http://arkanis.de/projects/simple-chat/
- */
+
 
 // Name of the message buffer file. You have to create it manually with read and write permissions for the webserver.
 $messages_buffer_file = 'messages.json';
