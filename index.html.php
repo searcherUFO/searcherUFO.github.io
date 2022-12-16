@@ -9,19 +9,16 @@
   <body style="background-color:#15DCB1;">
 
  <center><h1 style="font-size:5.5em; "> searcherUFO </h1></center>
-<!--Click Counter HTML-->
+<div class="Hello">Click Me</div>    
 
-<script>
-  	var clicks = 0;
-
-	function onClick() {
-  	clicks += 1;
-  	document.getElementById("clicks").innerHTML = clicks;
-	};
-</script>
-
-<button type="button" onClick="onClick()">Click me</button>
-<p>Clicks: <a id="clicks">0</a></p>
+<?php 
+$find_counts = mysqli_query($conn, "SELECT * FROM ad_section");
+ while($row = mysqli_fetch_assoc($find_counts)){
+  $current_counts = $row['no_of_clicks'];
+  $new_count = $current_counts + 1;
+  $update_count = mysqli_query($conn, "UPDATE `ad_section` SET `no_of_clicks`= $new_count");
+ }
+?>
     <!DOCTYPE html>
 <center><html>
 
