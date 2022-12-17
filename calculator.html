@@ -106,8 +106,19 @@ if (x === "UFO") {
         }
     </script>
 </body>
-<div id=outer><div class='ac b'>Scientific Calculator</div><div id=cover><form name=calcsci>
-<table class=main><col style=width:16.5% span=6><tr class=tdp><td colspan=6><input class=pan id=LED><tr><td colspan=2><label><input name=angle id=angle0 type=radio class=rad checked=checked>  Degrees</label><td colspan=2><label><input name=angle id=angle1 type=radio class=rad>  Radians</label><td colspan=2><label><input name=angle id=angle2 type=radio class=rad>  Gradient</label>
-<tr><td><a class=c id=C onclick=Click('C');>C</a><td><a class=c id=e onclick=Click('=');>=</a><td><a class=b onclick=Click('M+');>M +</a><td><a class=b onclick=Click('M-');>M -</a>
-<td><a class=b onclick=Click('MR');>MRC</a><td><a class=b onclick=Click('MC');>MC</a>
-<tr><td><a class=b id=sin onclick=Click('sin');>sin</a><td><a class=b id=cos onclick=Click('cos');>cos</a><td><a class=b id=tab onclick=Click('tan');>tan</a><td><a class=b id=sinh onclick=Click('sinh');>sinh</a><td><a class=b id=cosh onclick=Click('cosh');>cosh</a><td><a class=b id=tanh onclick=Click('tanh');>tanh</a><tr><td><a class=b id=asin onclick=Click('asin');>asin</a><td><a class=b id=acos onclick=Click('acos');>acos</a><td><a class=b id=atan onclick=Click('atan');>atan</a><td><a class=b id=asinh onclick=Click('asinh');>asinh</a><td><a class=b id=acosh onclick=Click('acosh');>acosh</a><td><a class=b id=atanh onclick=Click('atanh');>atanh</a><tr><td><a class=b id=exp onclick=Click('exp');>exp</a><td><a class=b id=seven onclick=Click('7');>7</a><td><a class=b id=eight onclick=Click('8');>8</a><td><a class=b id=nine onclick=Click('9');>9</a><td><a class=b id=plus onclick=Click('+');>+</a><td><a class=b id=pow onclick=Click('^');>x^y</a><tr><td><a class=b id=log onclick=Click('log');>log</a><td><a class=b id=four onclick=Click('4');>4</a><td><a class=b id=five onclick=Click('5');>5</a><td><a class=b id=six onclick=Click('6');>6</a><td><a class=b id=minus onclick=Click('-');>-</a><td><a class=b id=denom onclick=Click('1/x');>1/x</a><tr><td><a class=b id=abs22 onclick=Click('ln');>ln</a><td><a class=b id=one onclick=Click('1');>1</a><td><a class=b id=two onclick=Click('2');>2</a><td><a class=b id=three onclick=Click('3');>3</a><td><a class=b id=multiply onclick=Click('*');>x</a><td><a class=b id=pi3 onclick=Click('pi');>pi</a><tr><td><a class=b id=sqrt onclick=Click('sqrt');>sqrt</a><td><a class=b id=zero onclick=Click('0');>0</a><td><a class=b id=decimal onclick=Click('.');>.</a><td><a class=b id=plusminus onclick=Click('+/-');>+/-</a><td><a class=b id=devide onclick=Click('/');>/</a><td><a class=b id=pi4 onclick=Click('e');>e</a></table></form></div></div>
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="style.css" rel="stylesheet">
+    <title>Calculator</title>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div id="result">0</div>
+            <div class="bttns"></div>
+        </div>
+    </section>
+    <script src="index.js"></script>
+</body>
+</html>
