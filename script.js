@@ -1,36 +1,25 @@
-let add = () => {
-let name = document.querySelector('.container #name'); 
-let comment = document.querySelector('.container #comment'); 
- 
-if (name.value !== "" && comment.value != "") { 
- 
-let list = document.querySelector('.list'); 
-let time = new Date();
-let h = time.getHours(); 
-let m = time.getMinutes(); 
-let s = time.getSeconds(); 
-let now = h + " : " + m + " : " + s;
-let list_item = document.createElement ("l1"); 
- 
-list_item.innerHTML = `
-<span>
-<p>${name.value} ${now}</p> 
-</span>
-<p>${comment.value}</p>
-`;
-list.append(list_item); 
-}
- 
-if (name.value == "" || comment.value == "") {
-let list = document.querySelector('.list'); 
-let list_item = document.createElement ("l2"); 
-var warn = 'Please enter name & comment!';  
-list_item.innerHTML = `
-<span>
-<p>${warn}</p> 
-</span>
-`;
-list.append(list_item); 
- }
-name.value=comment.value = "";
-}
+let result = document.getElementById("result");
+let buttons = Array.from(document.getElementsByClassName("btn"));
+
+buttons.map((button) => {
+  button.addEventListener("click", (e) => {
+    if (
+      result.innerText === "0" &&
+      e.target.innerText != "/" &&
+      e.target.innerText != "*"
+    ) {
+      result.innerText = "";
+    }
+    if (e.target.innerText === "AC") {
+      result.innerText = "";
+    } else if (e.target.innerText === "=") {
+      try {
+        result.innerText = eval(result.innerText);
+      } catch {
+        result.innerText = "ERROR.";
+      }
+    } else {
+      result.innerText += e.target.innerText;
+    }
+  });
+});
