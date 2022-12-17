@@ -1,0 +1,14 @@
+<header>
+	<h1><a href="/">Arkanis Development</a></h1>
+	<ul>
+		<li><a href="/projects/simple-chat/weblog.xml">File not found</a></li>
+	</ul>
+	
+	<section>
+		<p>Styles</p>
+		<ul>
+			<li class="modern-ambience" data-style="Modern Ambience"><span>Modern Ambience</span><small>6:00 - 18:00 o'clock</small></li>
+			<li class="scribbles" data-style="Scribbles"><span>Scribbles</span><small>18:00 - 6:00 o'clock</small></li>
+		</ul>
+	</section>
+</header>
