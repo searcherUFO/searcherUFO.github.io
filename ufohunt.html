@@ -108,6 +108,10 @@ function updateGameArea() {
     myRightBtn.update();                                
     myGamePiece.update();
 }
+y += gravity;
+x += horizontalSpeed;
+x=Math.min(Math.max(x,0+20),width-80);
+y=Math.min(Math.max(y,0+80),height-90);
 
 </script>
 
