@@ -3,6 +3,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
+body {
+    margin: 0;
+}
 canvas {
     border:1px black;
     background-color: black;
@@ -11,24 +14,48 @@ canvas {
 </head>
 <body onload="startGame()">
 <script>
-
 var myGamePiece;
+var myUpBtn;
+var myDownBtn;
+var myLeftBtn;
+var myRightBtn;
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 10, 120);
+    myUpBtn = new component(30, 30, "blue", 50, 10);    
+    myDownBtn = new component(30, 30, "blue", 50, 70);    
+    myLeftBtn = new component(30, 30, "blue", 20, 40);    
+    myRightBtn = new component(30, 30, "blue", 80, 40);                
     myGameArea.start();
 }
+
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 890;
-        this.canvas.height = 270;
+        this.canvas.width = 960;
+        this.canvas.height = 405;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
-    },
-    clear : function() {
+        window.addEventListener('mousedown', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        })
+        window.addEventListener('mouseup', function (e) {
+            myGameArea.x = false;
+            myGameArea.y = false;
+        })
+        window.addEventListener('touchstart', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        })
+        window.addEventListener('touchend', function (e) {
+            myGameArea.x = false;
+            myGameArea.y = false;
+        })
+    }, 
+    clear : function(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
@@ -45,48 +72,44 @@ function component(width, height, color, x, y) {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-    this.newPos = function() {
-        this.x += this.speedX;
-        this.y += this.speedY;        
-    }    
+    this.clicked = function() {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var clicked = true;
+        if ((mybottom < myGameArea.y) || (mytop > myGameArea.y) || (myright < myGameArea.x) || (myleft > myGameArea.x)) {
+            clicked = false;
+        }
+        return clicked;
+    }
 }
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.newPos();    
+    if (myGameArea.x && myGameArea.y) {
+        if (myUpBtn.clicked()) {
+            myGamePiece.y -= 1;
+        }
+        if (myDownBtn.clicked()) {
+            myGamePiece.y += 1;
+        }
+        if (myLeftBtn.clicked()) {
+            myGamePiece.x += -1;
+        }
+        if (myRightBtn.clicked()) {
+            myGamePiece.x += 1;
+        }
+    }
+    myUpBtn.update();        
+    myDownBtn.update();        
+    myLeftBtn.update();        
+    myRightBtn.update();                                
     myGamePiece.update();
 }
 
-function moveup() {
-    myGamePiece.speedY = -1; 
-}
-
-function movedown() {
-    myGamePiece.speedY = 1; 
-}
-
-function moveleft() {
-    myGamePiece.speedX = -1; 
-}
-
-function moveright() {
-    myGamePiece.speedX = 1; 
-}
-
-function clearmove() {
-    myGamePiece.speedX = 0; 
-    myGamePiece.speedY = 0; 
-}
 </script>
-<div style="text-align:center;width:480px;">
-  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
-</div>
 
-<p>If you click a button the red square will start moving. The movement will stop when you stop pressing th button.</p>
-<p>We have added the ontouchstart event on the buttons, to make this example work for touch devices.</p>
+<p>Click on the blue "buttons" to make the red square move.</p>
 </body>
 </html>
-
