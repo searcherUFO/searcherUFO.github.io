@@ -15,7 +15,7 @@ canvas {
 var myGamePiece;
 
 function startGame() {
-    myGamePiece = new component((30, 30, "&#128663;", 10, 120);
+    myGamePiece = new component(30, 30, "red", 10, 120);
     myGameArea.start();
 }
 
@@ -58,19 +58,19 @@ function updateGameArea() {
 }
 
 function moveup() {
-    myGamePiece.speedY = -1; 
+    myGamePiece.speedY = -5; 
 }
 
 function movedown() {
-    myGamePiece.speedY = 1; 
+    myGamePiece.speedY = 5; 
 }
 
 function moveleft() {
-    myGamePiece.speedX = -1; 
+    myGamePiece.speedX = -5; 
 }
 
 function moveright() {
-    myGamePiece.speedX = 1; 
+    myGamePiece.speedX = 5; 
 }
 
 function clearmove() {
