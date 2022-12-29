@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basic Bomberman HTML Game</title>
+  <title>Basic Helicopter HTML Game</title>
   <meta charset="UTF-8">
   <style>
   html, body {
@@ -15,388 +15,220 @@
     align-items: center;
     justify-content: center;
   }
-
-  canvas {
-    background: forestgreen;
-  }
   </style>
 </head>
 <body>
-<canvas width="960" height="832" id="game"></canvas>
+<canvas width="800" height="550" id="game"></canvas>
 <script>
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
-const grid = 64;
-const numRows = 13;
-const numCols = 15;
 
-// create a new canvas and draw the soft wall image. then we can use this
-// canvas to draw the images later on
-const softWallCanvas = document.createElement('canvas');
-const softWallCtx = softWallCanvas.getContext('2d');
-softWallCanvas.width = softWallCanvas.height = grid;
+const minTunnelWidth = 400;
+const maxTunnelWidth = canvas.width;
+const minHeight = 10;
+const maxHeight = 100;
 
-softWallCtx.fillStyle = 'black';
-softWallCtx.fillRect(0, 0, grid, grid);
-softWallCtx.fillStyle = '#a9a9a9';
+const obstacleWidth = 65;
+const obstacleHeight = 135;
 
-// 1st row brick
-softWallCtx.fillRect(1, 1, grid - 2, 20);
+// how fast the background moves
+const moveSpeed = 7;
 
-// 2nd row bricks
-softWallCtx.fillRect(0, 23, 20, 18);
-softWallCtx.fillRect(22, 23, 42, 18);
+// downward acceleration
+const gravity = 0.35;
 
-// 3rd row bricks
-softWallCtx.fillRect(0, 43, 42, 20);
-softWallCtx.fillRect(44, 43, 20, 20);
+// keep track of the spacebar being pressed so we can move the
+// helicopter up when pressed and down when not pressed
+let spacePressed = false;
 
-// create a new canvas and draw the soft wall image. then we can use this
-// canvas to draw the images later on
-const wallCanvas = document.createElement('canvas');
-const wallCtx = wallCanvas.getContext('2d');
-wallCanvas.width = wallCanvas.height = grid;
+// clamp a number between min and max values
+function clamp(num, min, max) {
+  return Math.min( Math.max(min, num), max);
+}
 
-wallCtx.fillStyle = 'black';
-wallCtx.fillRect(0, 0, grid, grid);
-wallCtx.fillStyle = 'white';
-wallCtx.fillRect(0, 0, grid - 2, grid - 2);
-wallCtx.fillStyle = '#a9a9a9';
-wallCtx.fillRect(2, 2, grid - 4, grid - 4);
+// return a random integer between min (inclusive) and max (inclusive)
+// @see https://stackoverflow.com/a/1527820/2124254
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-// create a mapping of object types
-const types = {
-  wall: '▉',
-  softWall: 1,
-  bomb: 2
+const helicopter = {
+  x: 200,
+  y: 100,
+  width: 100,
+  height: 60,
+  dy: 0,  // velocity
+  ddy: 0  // acceleration
 };
 
-// keep track of all entities
-let entities = [];
+// just keep track of a tunnel wall current x position, width, start
+// and end height. the top and bottom wall are mirrored, so we only
+// need to keep track of one of them
+let tunnels = [{
+  x: 0,
+  width: canvas.width,
+  start: 50,
+  end: 50
+},
+{
+  x: canvas.width,
+  width: randInt(minTunnelWidth, maxTunnelWidth),
+  start: 50,
+  end: randInt(minHeight, maxHeight)
+}];
 
-// keep track of what is in every cell of the game using a 2d array. the
-// template is used to note where walls are and where soft walls cannot spawn.
-// '▉' represents a wall
-// 'x' represents a cell that cannot have a soft wall (player start zone)
-let cells = [];
-const template = [
-  ['▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉'],
-  ['▉','x','x',   ,   ,   ,   ,   ,   ,   ,   ,   ,'x','x','▉'],
-  ['▉','x','▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉','x','▉'],
-  ['▉','x',   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,'x','▉'],
-  ['▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉'],
-  ['▉',   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,'▉'],
-  ['▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉'],
-  ['▉',   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,'▉'],
-  ['▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉'],
-  ['▉','x',   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,'x','▉'],
-  ['▉','x','▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉',   ,'▉','x','▉'],
-  ['▉','x','x',   ,   ,   ,   ,   ,   ,   ,   ,   ,'x','x','▉'],
-  ['▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉','▉']
-];
+// for the obstacles in the path just need to keep track of the
+// position as they are always the same size
+let obstacles = [{
+  x: canvas.width,
+  y: canvas.height / 2
+},
+{
+  x: canvas.width * 2,
+  y: canvas.height / 2
+}];
 
-// populate the level with walls and soft walls
-function generateLevel() {
-  cells = [];
+// tunnel wall color and rgb value
+const wallColor = 'green';
+context.fillStyle = wallColor;
+context.fillRect(0, 0, 1, 1);
 
-  for (let row = 0; row < numRows; row++) {
-    cells[row] = [];
+// getImageData returns a data object which is a flat array of every
+// pixel of the canvas in the specified rect (x, y, width, height).
+// every 4 indices of the array is a single pixel's r,g,b,a values
+const wallData = context.getImageData(0, 0, 1, 1);
 
-    for (let col = 0; col < numCols; col++) {
-
-      // 90% chance cells will contain a soft wall
-      if (!template[row][col] && Math.random() < 0.90) {
-        cells[row][col] = types.softWall;
-      }
-      else if (template[row][col] === types.wall) {
-        cells[row][col] = types.wall;
-      }
-    }
-  }
-}
-
-// blow up a bomb and its surrounding tiles
-function blowUpBomb(bomb) {
-
-  // bomb has already exploded so don't blow up again
-  if (!bomb.alive) return;
-
-  bomb.alive = false;
-
-  // remove bomb from grid
-  cells[bomb.row][bomb.col] = null;
-
-  // explode bomb outward by size
-  const dirs = [{
-    // up
-    row: -1,
-    col: 0
-  }, {
-    // down
-    row: 1,
-    col: 0
-  }, {
-    // left
-    row: 0,
-    col: -1
-  }, {
-    // right
-    row: 0,
-    col: 1
-  }];
-  dirs.forEach((dir) => {
-    for (let i = 0; i < bomb.size; i++) {
-      const row = bomb.row + dir.row * i;
-      const col = bomb.col + dir.col * i;
-      const cell = cells[row][col];
-
-      // stop the explosion if it hit a wall
-      if (cell === types.wall) {
-        return;
-      }
-
-      // center of the explosion is the first iteration of the loop
-      entities.push(new Explosion(row, col, dir, i === 0 ? true : false));
-      cells[row][col] = null;
-
-      // bomb hit another bomb so blow that one up too
-      if (cell === types.bomb) {
-
-        // find the bomb that was hit by comparing positions
-        const nextBomb = entities.find((entity) => {
-          return (
-            entity.type === types.bomb &&
-            entity.row === row && entity.col === col
-          );
-        });
-        blowUpBomb(nextBomb);
-      }
-
-      // stop the explosion if hit anything
-      if (cell) {
-        return;
-      }
-    }
-  });
-}
-
-// bomb constructor function
-function Bomb(row, col, size, owner) {
-  this.row = row;
-  this.col = col;
-  this.radius = grid * 0.4;
-  this.size = size;    // the size of the explosion
-  this.owner = owner;  // which player placed this bomb
-  this.alive = true;
-  this.type = types.bomb;
-
-  // bomb blows up after 3 seconds
-  this.timer = 3000;
-
-  // update the bomb each frame
-  this.update = function(dt) {
-    this.timer -= dt;
-
-    // blow up bomb if timer is done
-    if (this.timer <= 0) {
-      return blowUpBomb(this);
-    }
-
-    // change the size of the bomb every half second. we can determine the size
-    // by dividing by 500 (half a second) and taking the ceiling of the result.
-    // then we can check if the result is even or odd and change the size
-    const interval = Math.ceil(this.timer / 500);
-    if (interval % 2 === 0) {
-      this.radius = grid * 0.4;
-    }
-    else {
-      this.radius = grid * 0.5;
-    }
-  };
-
-  // render the bomb each frame
-  this.render = function() {
-    const x = (this.col + 0.5) * grid;
-    const y = (this.row + 0.5) * grid;
-
-    // draw bomb
-    context.fillStyle = 'black';
-    context.beginPath();
-    context.arc(x, y, this.radius, 0, 2 * Math.PI);
-    context.fill();
-
-    // draw bomb fuse moving up and down with the bomb size
-    const fuseY = (this.radius === grid * 0.5 ? grid * 0.15 : 0);
-    context.strokeStyle = 'white';
-    context.lineWidth = 5;
-    context.beginPath();
-    context.arc(
-      (this.col + 0.75) * grid,
-      (this.row + 0.25) * grid - fuseY,
-      10, Math.PI, -Math.PI / 2
-    );
-    context.stroke();
-  };
-}
-
-// explosion constructor function
-function Explosion(row, col, dir, center) {
-  this.row = row;
-  this.col = col;
-  this.dir = dir;
-  this.alive = true;
-
-  // show explosion for 0.3 seconds
-  this.timer = 300;
-
-  // update the explosion each frame
-  this.update = function(dt) {
-    this.timer -= dt;
-
-    if (this.timer <=0) {
-      this.alive = false;
-    }
-  };
-
-  // render the explosion each frame
-  this.render = function() {
-    const x = this.col * grid;
-    const y = this.row * grid;
-    const horizontal = this.dir.col;
-    const vertical = this.dir.row;
-
-    // create a fire effect by stacking red, orange, and yellow on top of
-    // each other using progressively smaller rectangles
-    context.fillStyle = '#D72B16';  // red
-    context.fillRect(x, y, grid, grid);
-
-    context.fillStyle = '#F39642';  // orange
-
-    // determine how to draw based on if it's vertical or horizontal
-    // center draws both ways
-    if (center || horizontal) {
-      context.fillRect(x, y + 6, grid, grid - 12);
-    }
-    if (center || vertical) {
-      context.fillRect(x + 6, y, grid - 12, grid);
-    }
-
-    context.fillStyle = '#FFE5A8';  // yellow
-
-    if (center || horizontal) {
-      context.fillRect(x, y + 12, grid, grid - 24);
-    }
-    if (center || vertical) {
-      context.fillRect(x + 12, y, grid - 24, grid);
-    }
-  };
-}
-
-// player character (just a simple circle)
-const player = {
-  row: 1,
-  col: 1,
-  numBombs: 1,
-  bombSize: 3,
-  radius: grid * 0.35,
-  render() {
-    const x = (this.col + 0.5) * grid;
-    const y = (this.row + 0.5) * grid;
-
-    context.save();
-    context.fillStyle = 'white';
-    context.beginPath();
-    context.arc(x, y, this.radius, 0, 2 * Math.PI);
-    context.fill();
-  }
-}
+// destructure the image data array to get the rgb values of the wall
+// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+const [ wallRed, wallGreen, wallBlue ] = wallData.data;
 
 // game loop
-let last;
-let dt;
-function loop(timestamp) {
-  requestAnimationFrame(loop);
+let rAF;
+function loop() {
+  rAF = requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
 
-  // calculate the time difference since the last update. requestAnimationFrame
-  // passes the current timestamp as a parameter to the loop
-  if (!last) {
-    last = timestamp;
+  if (spacePressed) {
+    helicopter.ddy = -0.7;
   }
-  dt = timestamp - last;
-  last = timestamp;
+  else {
+    helicopter.ddy = 0;
+  }
 
-  // update and render everything in the grid
-  for (let row = 0; row < numRows; row++) {
-    for (let col = 0; col < numCols; col++) {
-      switch(cells[row][col]) {
-        case types.wall:
-          context.drawImage(wallCanvas, col * grid, row * grid);
-          break;
-        case types.softWall:
-          context.drawImage(softWallCanvas, col * grid, row * grid);
-          break;
-      }
+  // update position based on acceleration and velocity
+  helicopter.dy += helicopter.ddy + gravity;
+  // clamp velocity
+  helicopter.dy = clamp(helicopter.dy, -8, 8);
+  helicopter.y += helicopter.dy;
+
+  // draw the helicopter
+  context.fillStyle = 'white';
+  context.fillRect(helicopter.x, helicopter.y, helicopter.width, helicopter.height);
+
+  // draw the tunnel walls over the helicopter
+  context.fillStyle = 'green';
+  tunnels.forEach((tunnel, index) => {
+    tunnel.x -= moveSpeed;
+
+    // if the last tunnel is fully on screen, we need to spawn a new
+    // tunnel segment off screen
+    if (
+      index === tunnels.length - 1 &&
+      tunnel.x + tunnel.width <= canvas.width
+    ) {
+      tunnels.push({
+        x: tunnel.x + tunnel.width,
+        width: randInt(minTunnelWidth, maxTunnelWidth),
+        start: tunnel.end,
+        end: randInt(minHeight, maxHeight)
+      });
     }
-  }
 
-  // update and render all entities
-  entities.forEach((entity) => {
-    entity.update(dt);
-    entity.render();
+    // top tunnel wall
+    context.beginPath();
+    context.moveTo(tunnel.x, 0);
+    context.lineTo(tunnel.x, tunnel.start);
+    context.lineTo(tunnel.x + tunnel.width, tunnel.end);
+    context.lineTo(tunnel.x + tunnel.width, 0);
+    context.closePath();
+    context.fill();
+
+    // bottom tunnel wall
+    context.beginPath();
+    context.moveTo(tunnel.x, canvas.height);
+    context.lineTo(tunnel.x, tunnel.start + 450);
+    context.lineTo(tunnel.x + tunnel.width, tunnel.end + 450);
+    context.lineTo(tunnel.x + tunnel.width, canvas.height);
+    context.closePath();
+    context.fill();
   });
 
-  // remove dead entities
-  entities = entities.filter((entity) => entity.alive);
+  // draw obstacles
+  obstacles.forEach((obstacle, index) => {
+    obstacle.x -= moveSpeed;
+    context.fillRect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight);
 
-  player.render();
+    // if the last obstacle is fully on screen, we need to spawn a new
+    // one off screen
+    if (
+      index === obstacles.length - 1 &&
+      obstacle.x + obstacleWidth <= canvas.width
+    ) {
+      obstacles.push({
+        x: canvas.width * 2,
+        y: randInt(maxHeight + 50, canvas.height - obstacleHeight - maxHeight - 50)
+      });
+    }
+  });
+
+  // remove any tunnel segments or obstacles that are off screen
+  tunnels = tunnels.filter(tunnel => tunnel.x + tunnel.width > 0);
+  obstacles = obstacles.filter(obstacle => obstacle.x + obstacleWidth > 0);
+
+  // pixel perfect collision detection
+  // get the pixels of the canvas at the helicopter rect and look for
+  // any pixels that match the wall color. the wall has to be drawn
+  // above the helicopter in order for this to work
+  const { data } = context.getImageData(helicopter.x, helicopter.y, helicopter.width, helicopter.height);
+
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+
+    // if we match the tunnel wall color we have a collision
+    if (r === wallRed && g === wallGreen && b === wallBlue) {
+      // draw a dotted red circle around the helicopter when it
+      // crashes
+      context.strokeStyle = 'red';
+      context.setLineDash([5, 15])
+      context.lineWidth = 4;
+
+      context.beginPath();
+      context.arc(helicopter.x + helicopter.width / 2, helicopter.y + helicopter.height / 2, helicopter.width, 0, 2 * Math.PI);
+      context.stroke();
+
+      cancelAnimationFrame(rAF);
+    }
+  }
 }
 
-// listen to keyboard events to move the snake
+// listen to keyboard events to move the helicopter
 document.addEventListener('keydown', function(e) {
-  let row = player.row;
-  let col = player.col;
-
-  // left arrow key
-  if (e.which === 37) {
-    col--;
+  // spacebar
+  if (e.code === 'Space') {
+    spacePressed = true;
   }
-  // up arrow key
-  else if (e.which === 38) {
-    row--;
-  }
-  // right arrow key
-  else if (e.which === 39) {
-    col++;
-  }
-  // down arrow key
-  else if (e.which === 40) {
-    row++;
-  }
-  // space key (bomb)
-  else if (
-    e.which === 32 && !cells[row][col] &&
-    // count the number of bombs the player has placed
-    entities.filter((entity) => {
-      return entity.type === types.bomb && entity.owner === player
-    }).length < player.numBombs
-  ) {
-    // place bomb
-    const bomb = new Bomb(row, col, player.bombSize, player);
-    entities.push(bomb);
-    cells[row][col] = types.bomb;
-  }
-
-  // don't move the player if something is already at that position
-  if (!cells[row][col]) {
-    player.row = row;
-    player.col = col;
+});
+document.addEventListener('keyup', function(e) {
+  // spacebar
+  if (e.code === 'Space') {
+    spacePressed = false;
   }
 });
 
 // start the game
-generateLevel();
-requestAnimationFrame(loop);
+rAF = requestAnimationFrame(loop);
 </script>
 </body>
 </html>
