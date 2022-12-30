@@ -1,309 +1,448 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Basic Sokoban HTML Game</title>
-  <meta charset="UTF-8">
-  <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
+	<head>
+		<title>Car Racer</title>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript">
 
-  body {
-    background: #ded6ae;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  </style>
-</head>
-<body>
-<canvas width="400" height="400" id="game"></canvas>
-<script>
-const canvas = document.getElementById('game');
-const context = canvas.getContext('2d');
+			$(document).ready(function() {
 
-const grid = 64;
+				var then = Date.now();
+				function init() {			
+					setInterval(main, 20);
+				}
 
-// create a new canvas and draw the wall image. then we can use this
-// canvas to draw the images later on
-const wallCanvas = document.createElement('canvas');
-const wallCtx = wallCanvas.getContext('2d');
-wallCanvas.width = wallCanvas.height = grid;
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	CANVAS
+				 */
 
-wallCtx.fillStyle = '#5b5530';
-wallCtx.fillRect(0, 0, grid, grid);
-wallCtx.fillStyle = '#a19555';
+				function canvas() 
+				{
+					// *** Private vars
+					var canvas = document.getElementById("race-track");
+					var ctx = canvas.getContext("2d");
 
-// 1st row brick
-wallCtx.fillRect(1, 1, grid - 2, 20);
+					var canvasWidth = ctx.canvas.clientWidth;
+					var	canvasHeight = ctx.canvas.clientHeight;
 
-// 2nd row bricks
-wallCtx.fillRect(0, 23, 20, 18);
-wallCtx.fillRect(22, 23, 42, 18);
+					// *** Add public pointer
+					this.getCtx = getCtx;
+					this.getCanvasWidth = getCanvasWidth;
+					this.getCanvasHeight = getCanvasHeight;
 
-// 3rd row bricks
-wallCtx.fillRect(0, 43, 42, 20);
-wallCtx.fillRect(44, 43, 20, 20);
+					// *** Private -> public
+					function getCtx () {
+						return ctx;
+					}
 
-// the direction to move the player each frame. we'll use change in
-// direction so "row: 1" means move down 1 row, "row: -1" means move
-// up one row, etc.
-let playerDir = { row: 0, col: 0 };
-let playerPos = { row: 0, col: 0 };  // player position in the 2d array
-let rAF = null;  // keep track of the animation frame so we can cancel it
-let width = 0;  // find the largest row and use that as the game width
+					// *** Private -> public
+					function getCanvasWidth () {
+						return canvasWidth;
+					}
 
-// create a mapping of object types using the sok file format
-// @see http://www.sokobano.de/wiki/index.php?title=Level_format
-const types = {
-  wall: '#',
-  player: '@',
-  playerOnGoal: '+',
-  block: '$',
-  blockOnGoal: '*',
-  goal: '.',
-  empty: ' '
-};
+					// *** Private -> public
+					function getCanvasHeight () {
+						return canvasHeight;
+					}
 
-// a sokoban level using the sok file format
-const level1 = `
-  #####
-###   #
-#.@$  #
-### $.#
-#.##$ #
-# # . ##
-#$ *$$.#
-#   .  #
-########
-`;
+					// *** Public
+					this.clear = function() {
+						ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+					}
+				}			
 
-// keep track of what is in every cell of the game using a 2d array
-const cells = [];
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	MAIN
+				 */	
 
-// use each line of the level as the row (remove empty lines)
-level1.split('\n')
-  .filter(rowData => !!rowData)
-  .forEach((rowData, row) => {
-    cells[row] = [];
+				function main()
+				{
+					var now = Date.now();
+					var fps = 1000 / (now - then);
 
-    if (rowData.length > width) {
-      width = rowData.length;
-    }
+					update();
+					render(fps);
 
-    // use each character of the level as the col
-    rowData.split('').forEach((colData, col) => {
-      cells[row][col] = colData;
+					then = now;
+				};
 
-      if (colData === types.player || colData === types.playerOnGoal) {
-        playerPos = { row, col };
-      }
-    });
-});
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	RENDER
+				 */	
+				 
+				function update(modifier) 
+				{
+					// *** Calculatge the cars new x,y pos	
+					car1.calcPos(modifier);
 
-// update the size of the canvas to the level size
-canvas.width = width * grid;
-canvas.height = cells.length * grid;
+					// *** Get the current tile the car is on
+					currentTileArray = car1.getTile(trackObj.tileWidth(), trackObj.tileHeight());
+				}
 
-// move an entity from one cell to another
-function move(startPos, endPos) {
-  const startCell = cells[startPos.row][startPos.col];
-  const endCell = cells[endPos.row][endPos.col];
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	DRAW
+				 */	
+				 
+				function render(fps) 
+				{
+					// *** Clear canvas
+					canvas.clear();	
 
-  const isPlayer = startCell === types.player || startCell === types.playerOnGoal;
+					// *** Draw/render map
+					renderMap(trackObj);
+			
+					// *** Draw the car	
+					car1.drawCar(ctx);
 
-  // first remove then entity from its current cell
-  switch(startCell) {
+					// *** Draw the car	
+					hud(ctx, fps);
+				}
 
-    // if the start cell is the player or a block (no goal)
-    // then leave empty
-    case types.player:
-    case types.block:
-      cells[startPos.row][startPos.col] = types.empty;
-      break;
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	Draw Map
+				 */	
 
-    // if the start cell has a goal then leave a goal
-    case types.playerOnGoal:
-    case types.blockOnGoal:
-      cells[startPos.row][startPos.col] = types.goal;
-      break;
-  }
+				function renderMap(mapObj)
+				{
+					var rgt = mapObj.data();		
 
-  // then move then entity into the new cell
-  switch(endCell) {
+					for (matrixY in rgt) {
+						for (matrixX in rgt[matrixY]) {
 
-    // if the end cell is empty, add the block or player
-    case types.empty:
-      cells[endPos.row][endPos.col] = isPlayer ? types.player : types.block;
-      break;
+							var matrixArray = rgt[matrixY][matrixX].split(',');
 
-    // if the cell has a goal then make sure to preserve the goal
-    case types.goal:
-      cells[endPos.row][endPos.col] = isPlayer ? types.playerOnGoal : types.blockOnGoal;
-      break;
-  }
-}
+							var x = matrixArray[1];
+							var y = matrixArray[0];
+							
+							var sx = (x-1) * mapObj.tileWidth();
+							var sy = (y-1) * mapObj.tileHeight();
+							
+							var dx = (matrixX) * mapObj.tileWidth();
+							var dy = (matrixY) * mapObj.tileHeight();
 
-// show the win screen
-function showWin() {
-  cancelAnimationFrame(rAF);
+							ctx.drawImage(mapObj.mapTilesImg(), sx, sy, mapObj.tileWidth(), mapObj.tileHeight(), dx, dy, mapObj.tileWidth(), mapObj.tileHeight());
+						}
+					}
+				}
 
-  context.fillStyle = 'black';
-  context.globalAlpha = 0.75;
-  context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	Cars
+				 */	
 
-  context.globalAlpha = 1;
-  context.fillStyle = 'white';
-  context.font = '36px monospace';
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-  context.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
-}
+				function car(x, y, degrees, carObj) 
+				{
 
-// game loop
-function loop() {
-  rAF = requestAnimationFrame(loop);
-  context.clearRect(0,0,canvas.width,canvas.height);
+					var MAX_TORQUE  = carObj.max_torque;		//(cause the car to spin out if value is reached (see IF statement below)) //1
+					var MAX_ACCEL   = carObj.max_speed; 		// px. per frame. squared (maximum speed) //1
+					var TURN_RADIUS = carObj.turn_radius; 	    // px (The smaller this number is, the sharper the turn the car will make.)
+					var DRAG		= carObj.drag; 			// ratio  (the larger the value, the faster the car loses speed)
 
-  // check to see if the player can move in the desired direction
-  const row = playerPos.row + playerDir.row;
-  const col = playerPos.col + playerDir.col;
-  const cell = cells[row][col];
-  switch(cell) {
+					var spinDrag    = 0.2;		
 
-    // allow the player to move into empty or goal cells
-    case types.empty:
-    case types.goal:
-      move(playerPos, { row, col });
+					// *** Initialise
+					var xPos = x;
+					var yPos = y;
+					var _turn = 0;			// 1, 0, -1
+					var _accel = 0;			// 1, 0, -1
+					var _rotation = degrees;	
 
-      playerPos.row = row;
-      playerPos.col = col;
-      break;
+					var xVel = 0; 			// px. per frame (point)
+					var yVel = 0;
+					var heading = degrees;	// radians
+					var spin = 0;			// radians per frame			
+					var spinImpact = 0;
 
-    // don't allow the player to move into a wall cell
-    case types.wall:
-      break;
+					// *** Car image
+					var carImage = new Image();   // Create new img element  
+					carImage.src = carObj.image; // Set source path  
 
-    // only allow the player to move into a block cell if the cell
-    // after the block is empty or a goal
-    case types.block:
-    case types.blockOnGoal:
-      const nextRow = row + playerDir.row;
-      const nextCol = col + playerDir.col;
-      const nextCell = cells[nextRow][nextCol];
+					var rightKey = false;
+					var leftKey = false;
+					var upKey = false;
+					var downKey = false;
 
-      if (nextCell === types.empty || nextCell === types.goal) {
-        // move the block first, then the player
-        move({ row, col }, { row: nextRow, col: nextCol });
-        move(playerPos, { row, col });
+					this.drawCar = function(ctx) {
 
-        playerPos.row = row;
-        playerPos.col = col;
-      }
-      break;
-  }
+						// *** Draw car (find center)
+					    var transX = xPos-(carImage.width/2);
+					    var transY = yPos-(carImage.height/2);
+					    
+					    ctx.save();
+					    ctx.translate(transX, transY);
 
-  // reset player dir after checking move
-  playerDir = { row: 0, col: 0 };
+					    // *** Rotate car
+					    ctx.rotate(heading);
+					    ctx.translate(-xPos, -yPos);
+					      
+					    ctx.drawImage(carImage, transX, transY);  
+					    ctx.restore();  
+					}
 
-  // check to see if all blocks are on goals
-  let allBlocksOnGoals = true;
+					this.calcPos = function() {
 
-  // draw the board. because multiple things can be drawn on the same
-  // cell we shouldn't use a switch as that would only allow us to draw
-  // a single thing per cell
-  context.strokeStyle = 'black';
-  context.lineWidth = 2;
-  for (let row = 0; row < cells.length; row++) {
-    for (let col = 0; col < cells[row].length; col++) {
-      const cell = cells[row][col];
+						// *** Add drag. Slows car down when not accelerating (also reduces spin)
+						xVel *= (1 - DRAG);
+						yVel *= (1 - DRAG);
 
-      if (cell === types.wall) {
-        context.drawImage(wallCanvas, col * grid, row * grid);
-      }
+						spinImpact *= spinDrag;
+						if ( Math.abs(spinImpact) <= 1 ) {
+							spinImpact = 0;
+						}
 
-      if (cell === types.block || cell === types.blockOnGoal) {
-        if (cell === types.block) {
-          context.fillStyle = '#ffbb5b';
+						// *** Direction
+						heading = (_rotation * Math.PI / 180);
 
-          // block is not on goal
-          allBlocksOnGoals = false;
-        }
-        else {
-          context.fillStyle = '#ba6a15';
-        }
+						// *** Add acceleration
+						xVel += MAX_ACCEL * _accel * Math.sin(heading) //* modifier;
+						yVel -= MAX_ACCEL * _accel * Math.cos(heading) //* modifier;
 
-        context.fillRect(col * grid, row * grid, grid, grid);
-        context.strokeRect(col * grid, row * grid, grid, grid);
-        context.strokeRect((col + 0.1) * grid, (row + 0.1) * grid, grid - (0.2 * grid), grid - (0.2 * grid));
+						var velMag = Math.sqrt(xVel * xVel + yVel * yVel);
+						spin  = velMag / TURN_RADIUS * _turn; // something like (_turn * 3) is good for simulating oil slip
+						
+						/* calculate torque (turning the car changes the direction it travels).
+						 * "First we calculate how much the velocity will change to get the car moving in the direction 
+						 * it is pointed. I'm calling this value torque"
+						 */
+						var torqueX = 0;
+						var torqueY = 0;
+						var newHeading = heading + spin + spinImpact;
 
-        // X
-        context.beginPath();
-        context.moveTo((col + 0.1) * grid, (row + 0.1) * grid);
-        context.lineTo((col + 0.9) * grid, (row + 0.9) * grid);
-        context.moveTo((col + 0.9) * grid, (row + 0.1) * grid);
-        context.lineTo((col + 0.1) * grid, (row + 0.9) * grid);
-        context.stroke();
-      }
+						torqueX = Math.sin(newHeading) * velMag - xVel;
+						torqueY = -Math.cos(newHeading) * velMag - yVel;
+						var torqueMag = Math.sqrt(Math.pow(torqueX,2) + Math.pow(torqueY,2));
 
-      if (cell === types.goal || cell === types.playerOnGoal) {
-        context.fillStyle = '#914430';
-        context.beginPath();
-        context.arc((col + 0.5) * grid, (row + 0.5) * grid, 10, 0, Math.PI * 2);
-        context.fill();
-      }
+						// *** Limit torque, so the car will "spin out" if turning too fast
+						if (torqueMag > MAX_TORQUE) {
+							torqueX = MAX_TORQUE * torqueX / torqueMag;
+							torqueY = MAX_TORQUE * torqueY / torqueMag;
+						}
 
-      if (cell === types.player || cell === types.playerOnGoal) {
-        context.fillStyle = 'black';
-        context.beginPath();
+						// *** Apply torque to velocity
+						xVel += torqueX;
+						yVel += torqueY;
 
-        // head
-        context.arc((col + 0.5) * grid, (row + 0.3) * grid, 8, 0, Math.PI * 2);
-        context.fill();
-        // body
-        context.fillRect((col + 0.48) * grid, (row + 0.3) * grid, 2, grid/ 2.5 );
-        // arms
-        context.fillRect((col + 0.3) * grid, (row + 0.5) * grid, grid / 2.5, 2);
-        // legs
-        context.moveTo((col + 0.5) * grid, (row + 0.7) * grid);
-        context.lineTo((col + 0.65) * grid, (row + 0.9) * grid);
-        context.moveTo((col + 0.5) * grid, (row + 0.7) * grid);
-        context.lineTo((col + 0.35) * grid, (row + 0.9) * grid);
-        context.stroke();
-      }
-    }
-  }
+						// *** Set the new position and values
+						xPos += xVel;
+						yPos += yVel;
+						heading   = newHeading;
+						_rotation = heading * 180 / Math.PI;
+					}
 
-  if (allBlocksOnGoals) {
-    showWin();
-  }
-}
+					// *** Setters and getters
+					this.forwardOn    = function (value) { _accel = 1; }
+					this.forwardOff   = function (value) { _accel = 0; }
+					this.reverseOn    = function (value) {	_accel = -1; }
+					this.reverseOff   = function (value) { _accel = 0; }
+					this.rightTurnOn  = function (value) { _turn = 1 }
+					this.rightTurnOff = function (value) { _turn = 0 }
+					this.leftTurnOn   = function (value) { _turn = -1; }
+					this.leftTurnOff  = function (value) { _turn = 0; }
 
-// listen to keyboard events to move the snake
-document.addEventListener('keydown', function(e) {
-  playerDir = { row: 0, col: 0};
+					this.setX         = function (x) { xPos = x; }
+					this.setY         = function (y) { yPos = y; }
+					this.setDirection = function (degreesx) { direction = degreesx; }
+					this.setSpeed     = function (speed) { speed = speed; }	
 
-  // left arrow key
-  if (e.which === 37) {
-    playerDir.col = -1;
-  }
-  // up arrow key
-  else if (e.which === 38) {
-    playerDir.row = -1;
-  }
-  // right arrow key
-  else if (e.which === 39) {
-    playerDir.col = 1;
-  }
-  // down arrow key
-  else if (e.which === 40) {
-    playerDir.row = 1;
-  }
-});
+					this.getX         = function () { return xPos; }
+					this.getY         = function () { return yPos; }
+					this.getDirection = function () { return direction; }
+					this.getSpeed     = function () { return speed; }
+					this.getTile      = function (tileWidth, tileHeight) {
+						var tileX = Math.ceil(xPos / tileWidth);
+						var tileY = Math.ceil(yPos / tileHeight);
+					}
+				}
 
-// start the game
-requestAnimationFrame(loop);
-</script>
-</body>
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	Draw HUD
+				 */	
+
+				function hud(ctx, fps)
+				{
+					ctx.fillStyle = "rgb(250, 250, 250)";
+					ctx.font = "24px Helvetica";
+					ctx.textAlign = "left";
+					ctx.textBaseline = "top";
+					ctx.fillText("FPS: " + fps, 32, 32);
+				}
+
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	Keys
+				 */	
+
+				function onKeyDown(evt) 
+				{
+					switch (evt.keyCode) {
+						case 38:  // Up arrow 
+							car1.forwardOn();
+							break;
+						case 40:  // Down arrow
+							car1.reverseOn();
+							break;
+						case 37:  // Left arrow
+							car1.leftTurnOn();
+							break;
+						case 39:  // Right arrow
+							car1.rightTurnOn();
+							break;
+					}
+				}
+
+				function onKeyUp(evt) 
+				{
+					switch (evt.keyCode) {
+						case 38:  // Up arrow
+							car1.forwardOff();
+							break;
+						case 40:  // Down arrow
+							car1.reverseOff();
+							break;
+						case 37:  // Left arrow
+							car1.leftTurnOff();
+							break;
+						case 39:  // Right arrow
+							car1.rightTurnOff();
+							break;
+					}
+				}
+
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	MAPS
+				 */	
+
+				var track1 = {
+					tileset: "images/tileset-g-100.jpg",
+					tileWidth: 128,
+					tileHeight: 128,
+					startTile: '3,1',
+					startFacing: 'n',
+					rgt: [	['2,1', '1,2', '4,4', '1,2', '4,2', '2,2'],	
+							['4,3', '5,4', '7,1', '7,1', '13,4', '4,1'],
+							['3,4', '7,1', '7,3', '7,1', '2,1', '6,2'],
+							['1,1', '15,1', '7,1', '7,2', '4,1', '7,1'],
+							['6,1', '1,2', '4,2', '1,4', '6,2', '7,1']
+						],
+					trackMarkers: ['1,1', '1,6', '3,6', '4,5', '5,5', '5,1']
+				}
+				
+				function track(track) // CAN PROBABLY REMOVE THIS AND METHOD setStartPos CAN BE PART OF RENDER MAP.
+				{
+					var mapTilesImg = new Image();    
+					mapTilesImg.src = track.tileset;
+
+					this.mapTilesImg = function() {
+						return mapTilesImg;
+					}
+
+					this.tileset = function() {
+						return track.tileset;
+					}
+
+					this.tileWidth = function() {
+						return track.tileWidth;
+					}
+
+					this.tileHeight = function() {
+						return track.tileHeight;
+					}
+
+					this.data = function() {
+						return track.rgt;
+					}
+
+					this.trackMarkers = function() {
+						return track.trackMarkers;
+					}
+
+					this.setStartPos = function() 
+					{
+						var startTileArray = track.startTile.split(',');
+						var startTileX = startTileArray[1];
+						var startTileY = startTileArray[0];
+
+						var startX = (startTileX * track.tileWidth) - (track.tileWidth/2);				
+						var startY = (startTileY * track.tileHeight) - (track.tileHeight/2)
+
+						var rotation = 0;
+
+						switch (track.startFacing) {
+							case 'n':  
+								startY += 50; 
+								rotation = 0;
+								break;
+							case 's':   
+								startY -= (50 - 34); // 34 is the length of the car
+								rotation = 180;
+								break;
+							case 'w': 
+								startX += 50;
+								rotation = 270;
+								break;
+							case 'e':  
+								startX -= (50 - 20);
+								rotation = 90;
+								break;
+						}
+
+						// *** Stored as x,y
+						return posArray = [startX, startY, rotation];
+					}
+				}
+
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	CARS
+				 */	
+
+				var car1 = {
+					image: "images/carred.png",
+					max_speed: 0.5,
+					max_torque: 0.4,
+					turn_radius: 100,
+					drag: 0.05
+				}
+
+				var car2 = {
+					image: "images/carred.png",
+					max_speed: 0.4,
+					max_torque: 0.5,
+					turn_radius: 90,
+					drag: 0.05
+				}
+
+				/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* 
+				 *	RUN
+				 */	
+				 
+				// *** Create the canvas object
+				var canvas = new canvas();
+
+				// *** Get the canvas
+				var ctx = canvas.getCtx();
+
+				// *** Clear canvas
+				canvas.clear();	
+		
+				// *** Create map object
+				var trackObj = new track(track1);	
+				x = trackObj.setStartPos()[0];
+				y = trackObj.setStartPos()[1];
+				direction = trackObj.setStartPos()[2];
+				
+				// *** Create car object
+				car1 = new car(x, y, direction, car1);
+
+				// *** Run
+				init();
+
+				// *** Bind keys
+				$(document).keydown(onKeyDown);
+				$(document).keyup(onKeyUp);
+
+			});
+		</script>
+	</head>
+	<body>
+		<canvas id="race-track"  width="768" height="640" style="border:1px solid black;"></canvas>
+	</body>
 </html>
