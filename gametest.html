@@ -31,20 +31,12 @@ const wallCanvas = document.createElement('canvas');
 const wallCtx = wallCanvas.getContext('2d');
 wallCanvas.width = wallCanvas.height = grid;
 
-wallCtx.fillStyle = '#5b5530';
+wallCtx.fillStyle = 'black';
 wallCtx.fillRect(0, 0, grid, grid);
-wallCtx.fillStyle = '#a19555';
-
-// 1st row brick
-wallCtx.fillRect(1, 1, grid - 2, 20);
-
-// 2nd row bricks
-wallCtx.fillRect(0, 23, 20, 18);
-wallCtx.fillRect(22, 23, 42, 18);
-
-// 3rd row bricks
-wallCtx.fillRect(0, 43, 42, 20);
-wallCtx.fillRect(44, 43, 20, 20);
+wallCtx.fillStyle = 'white';
+wallCtx.fillRect(0, 0, grid - 2, grid - 2);
+wallCtx.fillStyle = '#a9a9a9';
+wallCtx.fillRect(2, 2, grid - 4, grid - 4);
 
 // the direction to move the player each frame. we'll use change in
 // direction so "row: 1" means move down 1 row, "row: -1" means move
