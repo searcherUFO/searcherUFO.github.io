@@ -240,24 +240,13 @@ function loop() {
       }
 
       if (cell === types.player || cell === types.playerOnGoal) {
-        const player = {
-  row: 1,
-  col: 1,
-  numBombs: 1,
-  bombSize: 3,
-  radius: grid * 0.35,
-  render() {
-    const x = (this.col + 0.5) * grid;
-    const y = (this.row + 0.5) * grid;
+        context.fillStyle = 'black';
+        context.beginPath();
 
-    context.save();
-    context.fillStyle = 'white';
-    context.beginPath();
-    context.arc(x, y, this.radius, 0, 2 * Math.PI);
-    context.fill();
-  }
-}
-
+        // head
+        context.arc((col + 0.5) * grid, (row + 0.3) * grid, 8, 0, Math.PI * 2);
+        context.fill();
+        
   if (allBlocksOnGoals) {
     showWin();
   }
