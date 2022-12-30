@@ -119,7 +119,12 @@ this.newPos = function() {
       this.y = rockbottom;
     }
   }
-
+}
+    function updateGameArea() {
+    myGameArea.clear();
+    myGamePiece.newPos();
+    myGamePiece.update();
+}
 </script>
 
 <p>Click on the blue "buttons" to make the red square move.</p>
