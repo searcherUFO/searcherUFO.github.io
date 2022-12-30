@@ -47,7 +47,7 @@ let rAF = null;  // keep track of the animation frame so we can cancel it
 let width = 0;  // find the largest row and use that as the game width
 
 // create a mapping of object types using the sok file format
-// @see http://www.sokobano.de/wiki/index.php?title=Level_format
+// 
 const types = {
   wall: '▉',
   player: '@',
@@ -241,22 +241,10 @@ function loop() {
       }
 
       if (cell === types.player || cell === types.playerOnGoal) {
-        context.fillStyle = 'black';
+         context.fillStyle = 'grey';
         context.beginPath();
-
-        // head
-        context.arc((col + 0.5) * grid, (row + 0.3) * grid, 8, 0, Math.PI * 2);
+        context.arc((col + 0.5) * grid, (row + 0.5) * grid, 10, 0, Math.PI * 2);
         context.fill();
-        // body
-        context.fillRect((col + 0.48) * grid, (row + 0.3) * grid, 2, grid/ 2.5 );
-        // arms
-        context.fillRect((col + 0.3) * grid, (row + 0.5) * grid, grid / 2.5, 2);
-        // legs
-        context.moveTo((col + 0.5) * grid, (row + 0.7) * grid);
-        context.lineTo((col + 0.65) * grid, (row + 0.9) * grid);
-        context.moveTo((col + 0.5) * grid, (row + 0.7) * grid);
-        context.lineTo((col + 0.35) * grid, (row + 0.9) * grid);
-        context.stroke();
       }
     }
   }
