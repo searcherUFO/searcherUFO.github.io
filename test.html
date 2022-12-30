@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+        #root{
+            width: 100vw;
+            height: 100vh;
+            background-color: aqua;
+            position: relative;
+        }
+        #score{
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <h1 id="score">Score : 0</h1>
+    </div>
+    <script>
+        let root = document.getElementById("root");
+        let scoreHeading = document.getElementById("score");
+        let score = 0;
+        
+
+        setInterval(function(){
+            let image = document.createElement("img");
+            let available = true;
+            image.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Gold_coin_icon.png/481px-Gold_coin_icon.png");
+            image.style.setProperty("height", "50px");
+            image.style.setProperty("position", "absolute");
+            let left = parseInt(Math.random() * window.innerWidth);
+            let top = parseInt(Math.random() * window.innerHeight);
+
+            image.style.setProperty("left", `${left}px`);
+            image.style.setProperty("top", `${top}px`);
+            root.appendChild(image);
+
+            setTimeout(function(){
+                if(available){
+                    root.removeChild(image);
+                }
+            }, 2000);
+
+            image.onmouseover = function(){
+                let coindrop = new Audio("./coin.mp3");
+                console.log("ping");
+                root.removeChild(image);
+                available = false;
+                score += 10;
+                scoreHeading.innerHTML = `Score : ${score}`;
+                coindrop.play();
+            }
+
+        }, 200);
+
+        
+
+        // setInterval(function(){
+        //     image.style.setProperty("top", `${top}px`);
+        //     top += 10;
+        // }, 100);
+
+        
+
+
+       
+
+
+
+    </script>
+</body>
+
+</html>
