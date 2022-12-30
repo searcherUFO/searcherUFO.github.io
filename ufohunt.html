@@ -107,11 +107,6 @@ function updateGameArea() {
     myRightBtn.update();                                
     myGamePiece.update();
 }
-this.newPos = function() {
-    this.gravitySpeed += this.gravity;
-    this.x += this.speedX;
-    this.y += this.speedY + this.gravitySpeed;
-    this.hitBottom();
   }
   this.hitBottom = function() {
     var rockbottom = myGameArea.canvas.height - this.height;
