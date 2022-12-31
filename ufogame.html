@@ -63,7 +63,7 @@ function component(width, height, color, x, y) {
         var otherbottom = otherobj.y + (otherobj.height);
         var crash = true;
         if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-            crash = false;
+            crash = true;
         }
         return crash;
     }
