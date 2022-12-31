@@ -449,3 +449,4 @@ var GamePoints = function() {
   };
 
   this.step = function(dt) { };
+};
