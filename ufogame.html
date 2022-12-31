@@ -21,6 +21,17 @@ function startGame() {
     myObstacle  = new component(10, 200, "green", 300, 120);    
     myGameArea.start();
 }
+   makeSolid(object1, object2)
+{
+    if(this.collisionDetectedBetween(object1, object2) && object1.x > object2.x - object2.width && object1.x < object2.x)
+        object1.x = object2.x - object2.width;
+    else if(this.collisionDetectedBetween(object1, object2) && object1.x < object2.x + object2.width && object1.x > object2.x)
+        object1.x = object2.x + object2.width;
+    else if(this.collisionDetectedBetween(object1, object2) && object1.y < object2.y + object2.height && object1.y > object2.y)
+        object1.y = object2.y + object2.height;
+    else if(this.collisionDetectedBetween(object1, object2) && object1.y > object2.y - object2.height && object1.y < object2.y)
+        object1.y = object2.y - object2.height;
+}
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
