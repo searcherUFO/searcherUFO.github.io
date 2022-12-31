@@ -49,33 +49,6 @@ var myGameArea = {
         clearInterval(this.interval);
     }
 }
-const wallCanvas = document.createElement('canvas');
-const wallCtx = wallCanvas.getContext('2d');
-wallCanvas.width = wallCanvas.height = grid;
-
-wallCtx.fillStyle = 'black';
-wallCtx.fillRect(0, 0, grid, grid);
-wallCtx.fillStyle = 'white';
-wallCtx.fillRect(0, 0, grid - 2, grid - 2);
-wallCtx.fillStyle = '#a9a9a9';
-wallCtx.fillRect(2, 2, grid - 4, grid - 4);
-
-// create a mapping of object types
-const types = {
-  wall: '▉',
-
-
-// keep track of all entities
-let entities = [];
-
-// keep track of what is in every cell of the game using a 2d array. the
-// template is used to note where walls are and where soft walls cannot spawn.
-// '▉' represents a wall
-// 'x' represents a cell that cannot have a soft wall (player start zone)
-let cells = [];
-const template = [
-  ['▉'],
-
 
 
 function component(width, height, color, x, y) {
