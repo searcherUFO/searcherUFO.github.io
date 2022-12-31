@@ -17,7 +17,7 @@ var myGamePiece;
 var myObstacle;
 
 function startGame() {
-    myGamePiece = new component(30, 30, "smiley.gif", 10, 120, "image");
+    myGamePiece = new component(30, 30, "grey", 10, 120, "image");
     myObstacle  = new component(10, 200, "green", 300, 120);    
     myGameArea.start();
 }
@@ -41,11 +41,6 @@ var myGameArea = {
 
 
 function component(width, height, color, x, y) {
-    this.type = type;
-    if (type == "image") {
-        this.image = new Image();
-        this.image.src = color;
-    }
     this.width = width;
     this.height = height;
     this.speedX = 0;
@@ -54,12 +49,6 @@ function component(width, height, color, x, y) {
     this.y = y;    
     this.update = function() {
         ctx = myGameArea.context;
-        if (type == "image") {
-            ctx.drawImage(this.image, 
-                this.x, 
-                this.y,
-                this.width, this.height);
-        } else {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
