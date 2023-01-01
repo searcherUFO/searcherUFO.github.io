@@ -1,89 +1,165 @@
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128126;</text></svg>">
-<title>UFOgame</title>
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <style>
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
+
+canvas {/*from  ww w  . j  a va2  s  .  com*/
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+div {
+  margin: 15px 0px;
+}
+
+button {
+  padding: 4px 10px;
+}
+
+input[type=number] {
+  width: 50px;
+  margin-right: 15px;
 }
 </style>
-</head>
-<body onload="startGame()">
 <script>
 
-var myGamePiece;
-
-function startGame() {
-    myGamePiece = new component(30, 30, "red", 80, 75);
-    myGameArea.start();
+// These are the details that represent an individual ball.
+function Ball(x, y, dx, dy, radius) {
+  this.x = x;
+  this.y = y;
+  this.dx = dx;
+  this.dy = dy;
+  this.radius = radius;
+  this.strokeColor = "black";
+  this.fillColor = "red";
 }
 
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 380;
-        this.canvas.height = 400;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);        
-    },
-    stop : function() {
-        clearInterval(this.interval);
-    },    
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
+// This is an array that will hold all the balls on the canvas
+let balls = [];
+
+let canvas;
+let context;
+
+window.onload = function() {
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
+
+  canvas.onmousedown = canvasClick;
+
+  // Redraw every 20 milliseconds.
+  setTimeout(drawFrame, 20);
+};
+
+function addBall() {
+  // Get the requested size.
+  let radius = parseFloat(document.getElementById("ballSize").value);
+
+  // Create the new ball.
+  let ball = new Ball(50,50,1,1,radius);
+
+  // Store it in the ball array.
+  balls.push(ball);
 }
 
-function component(width, height, color, x, y, type) {
-    this.type = type;
-    this.width = width;
-    this.height = height;
-    this.x = x;
-    this.y = y;    
-    this.speedX = 0;
-    this.speedY = 0;    
-    this.gravity = 0.05;
-    this.gravitySpeed = 0;
-    this.bounce = 0.6;
-    this.update = function() {
-        ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    this.newPos = function() {
-        this.gravitySpeed += this.gravity;
-        this.x += this.speedX;
-        this.y += this.speedY + this.gravitySpeed;
-        this.hitBottom();
-    }
-    this.hitBottom = function() {
-        var rockbottom = myGameArea.canvas.height - this.height;
-        if (this.y > rockbottom) {
-            this.y = rockbottom;
-            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
-        }
-    }
+function clearBalls() {
+  // Remove all the balls.
+  balls = [];
 }
 
-function updateGameArea() {
-    myGameArea.clear();
-    myGamePiece.newPos();
-    myGamePiece.update();
+
+function drawFrame() {
+  // Clear the canvas.
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Note that you need to call beginPath() to make sure you don't redraw part of what
+  // you were drawing before.
+  context.beginPath();
+
+  // Go through all the balls.
+  for(let i=0; i<balls.length; i++) {
+    // Move each ball to its new position.
+    let ball = balls[i];
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+
+    // Add in a "gravity" effect that makes the ball fall faster.
+    if ((ball.y) < canvas.height) ball.dy += 0.22;
+
+    // Add in a "friction" effect that slows down the ball's side-to-side motion.
+    ball.dx = ball.dx * 0.998;
+
+    // If the ball has hit the side, bounce it.
+    if ((ball.x + ball.radius > canvas.width) || (ball.x - ball.radius < 0)) {
+      ball.dx = -ball.dx;
+    }
+
+    // If the ball has hit the bottom, bounce it, but slow it down slightly.
+    if ((ball.y + ball.radius > canvas.height) || (ball.y - ball.radius < 0)) { 
+      ball.dy = -ball.dy*0.96; 
+    }
+
+    // Check if the user wants lines.
+    if (!document.getElementById("connectedBalls").checked) {
+      context.beginPath();
+      context.fillStyle = ball.fillColor;
+    }
+    else {
+      context.fillStyle = "white";
+    }
+
+    // Draw the ball.
+    context.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+    context.lineWidth = 1;
+    context.fill();
+    context.stroke(); 
+  }
+
+  // Draw the next frame in 20 milliseconds.
+  setTimeout(drawFrame, 20);
 }
 
-function accelerate(n) {
-    myGamePiece.gravity = n;
+function canvasClick(e) {
+  // Get the canvas click coordinates.
+  let clickX = e.pageX - canvas.offsetLeft;
+  let clickY = e.pageY - canvas.offsetTop;
+
+
+  // Look for the clicked ball.
+  for(let i in balls)
+  {
+    let ball = balls[i];
+    if ((clickX > (ball.x-ball.radius)) && (clickX < (ball.x+ball.radius)))
+    {
+      if ((clickY > (ball.y-ball.radius)) && (clickY < (ball.y+ball.radius)))
+      {
+        // Change the clicked ball's speed.
+        ball.dx -= 2;
+        ball.dy -= 3;
+        return;
+      }
+    }
+  }
 }
 </script>
 
-<br>
-<button <button style="background-color:white; border-color:white;height:100px;width:250px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
+  
+</head>
 
-<p>Try accelerate the red square.</p>
+<body>
+
+  <canvas id="canvas" width="400" height="300">
+  </canvas>
+
+  <div>
+    <button onclick="addBall()">Add Ball</button>
+    <button onclick="clearBalls()">Clear Canvas</button>
+  </div>
+  <div>
+    Ball Size:<input id="ballSize" type="number" min="0" max="50" value="15">
+    <input id="connectedBalls" type="checkbox">Connect Balls<br>
+    
+  </div>
 
 </body>
 </html>
