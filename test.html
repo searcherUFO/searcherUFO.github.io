@@ -56,10 +56,15 @@ function component(width, height, color, x, y, type) {
     }
     this.newPos = function() {
         this.gravitySpeed += this.gravity;
-        y += gravity;
-  x += horizontalSpeed;
-  x=Math.min(Math.max(x,0+20),width-80);
-  y=Math.min(Math.max(y,0+80),height-90);
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+    }
+    this.hitBottom = function() {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
     }
 }
