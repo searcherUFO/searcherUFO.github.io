@@ -15,7 +15,7 @@ canvas {
 var myGamePiece;
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 80, 75);
+    myGamePiece = new component(30, 30, "smiley.gif", 10, 120, "image");
     myGameArea.start();
 }
 
@@ -38,6 +38,10 @@ var myGameArea = {
 
 function component(width, height, color, x, y, type) {
     this.type = type;
+    if (type == "image") {
+    this.image = new Image();
+    this.image.src = color;
+  }
     this.width = width;
     this.height = height;
     this.x = x;
@@ -48,6 +52,12 @@ function component(width, height, color, x, y, type) {
     this.gravitySpeed = 0;
     this.update = function() {
         ctx = myGameArea.context;
+        if (type == "image") {
+      ctx.drawImage(this.image,
+        this.x,
+        this.y,
+        this.width, this.height);
+    } else {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
