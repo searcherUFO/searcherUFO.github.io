@@ -41,7 +41,7 @@ var myGameArea = {
 function component(width, height, color, x, y, type) {
     this.type = type;
     this.width = width;
-    this.angle = 0;
+    this.height = height;
     this.x = x;
     this.y = y;    
     this.speedX = 0;
@@ -51,12 +51,7 @@ function component(width, height, color, x, y, type) {
     this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
-        ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
         ctx.fillStyle = color;
-        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-    ctx.restore();
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.newPos = function() {
@@ -67,7 +62,7 @@ function component(width, height, color, x, y, type) {
     }
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
-            if (this.y > rockbottom) {
+        if (this.y > rockbottom) {
             this.y = rockbottom;
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
@@ -76,7 +71,7 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.angle += 1 * Math.PI / 180;
+    myGamePiece.newPos();
     myGamePiece.update();
 }
 
