@@ -60,6 +60,7 @@ function component(width, height, color, x, y, type) {
         this.x += this.speedX;
         this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
+        this.hitTop();
     }
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
@@ -67,6 +68,10 @@ function component(width, height, color, x, y, type) {
             this.y = rockbottom;
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
+         this.hitTop = function() {
+    var rocktop = myGameArea.canvas.height - this.height;
+    if (this.x > rocktop) {
+      this.x = rocktop;
     }
 }
 
