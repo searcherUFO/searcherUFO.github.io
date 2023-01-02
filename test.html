@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px black;
-    background-color: black;
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
 }
 </style>
 </head>
@@ -18,7 +18,6 @@ var myGamePiece;
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
-    myObstacle = new component(2, 2, "white", 100, 100,);
     myGameArea.start();
 }
 
@@ -67,32 +66,17 @@ function component(width, height, color, x, y, type) {
             this.y = rockbottom;
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
+         this.hitTop = function() {
+        var rocktop = myGameArea.canvas.height - this.height;
+        if (this.x > rocktop) {
+            this.x = rocktop;
+            this.speedX =
+        }
     }
-    this.crashWith = function(otherobj) {
-    var myleft = this.x;
-    var myright = this.x + (this.width);
-    var mytop = this.y;
-    var mybottom = this.y + (this.height);
-    var otherleft = otherobj.x;
-    var otherright = otherobj.x + (otherobj.width);
-    var othertop = otherobj.y;
-    var otherbottom = otherobj.y + (otherobj.height);
-    var crash = true;
-    if ((mybottom < othertop) ||
-    (mytop > otherbottom) ||
-    (myright < otherleft) ||
-    (myleft > otherright)) {
-      crash = false;
-    }
-    return crash;
-  }
+}
 
 function updateGameArea() {
-    if (myGamePiece.crashWith(myObstacle)) {
-    myGameArea.stop();
-  } else {
     myGameArea.clear();
-    myObstacle.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
@@ -103,8 +87,9 @@ function accelerate(n) {
 </script>
 
 <br>
-<center><button <button style="background-color:white; border-color:white;height:100px;width:250px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button></center>
+<button <button style="background-color:white; border-color:white;height:100px;width:250px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
 
+<p>Try accelerate the red square.</p>
 
 </body>
 </html>
