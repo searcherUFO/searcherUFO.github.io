@@ -16,10 +16,16 @@ canvas {
 <script>
 
 var myGamePiece;
+var myStarOne
+var myStarTwo
+var myStarThree
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
-    myStar = new component(4, 4, "white", 100, 110,);
+    myStarOne = new component(4, 4, "white", 100, 110,);
+    myStarTwo = new component(4, 4, "white", 90, 90,);
+    myStarThree = new component (40, 40, "white", 30, 30,);
+    
     myGameArea.start();
 }
 
@@ -73,7 +79,9 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
-    myStar.update();
+    myStarOne.update();
+    myStarTwo.update();
+    myStarThree.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
