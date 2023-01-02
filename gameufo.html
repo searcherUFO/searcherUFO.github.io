@@ -25,6 +25,8 @@ function startGame() {
     myStar = new component(45, 45, "white", 15, 15,);
     myStarDecorationOne = new component(15, 15, "#d9d9d9", 40, 40,);
     myStarDecorationTwo = new component(25, 25, "#b3b3b3", 18, 18,);
+    myStarOne = new component(7, 7, "white" 120, 90,);
+    myStarTwo = new component(7, 7, "white" 50, 250,);
     
     myGameArea.start();
 }
@@ -82,6 +84,8 @@ function updateGameArea() {
     myStar.update();
     myStarDecorationOne.update();
     myStarDecorationTwo.update();
+    myStarOne.update();
+    myStarTwo.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
