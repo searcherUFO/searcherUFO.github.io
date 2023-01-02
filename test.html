@@ -72,6 +72,7 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
+    myObstacle.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
