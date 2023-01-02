@@ -49,6 +49,7 @@ function component(width, height, color, x, y, type) {
     this.y = y;
     this.gravity = 0;
     this.gravitySpeed = 0;
+    this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
         if (this.type == "text") {
