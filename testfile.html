@@ -111,8 +111,8 @@ function updateGameArea() {
         minHeight = 30;
         maxHeight = 90;
         height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
-        minGap = 100;
-        maxGap = 300;
+        minGap = 60;
+        maxGap = 180;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
         myObstacles.push(new component(30, height, "green", x, 0));
         myObstacles.push(new component(30, x - height - gap, "green", x, height + gap));
