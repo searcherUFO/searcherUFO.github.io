@@ -4,8 +4,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
+    border:1px black;
+    background-color: black;
 }
 </style>
 </head>
@@ -20,14 +20,17 @@ function startGame() {
     myGamePiece = new component(30, 30, "red", 10, 120);
     myGamePiece.gravity = 0.05;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myStar = new component(45, 45, "white", 15, 15,);
+    myStarDecorationOne = new component(15, 15, "#d9d9d9", 40, 40,);
+    myStarDecorationTwo = new component(25, 25, "#b3b3b3", 18, 18,);
     myGameArea.start();
 }
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
+        this.canvas.width = 380;
+        this.canvas.height = 500;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
@@ -117,6 +120,9 @@ function updateGameArea() {
     }
     myScore.text="SCORE: " + myGameArea.frameNo;
     myScore.update();
+    myStar.update();
+    myStarDecorationOne.update();
+    myStarDecorationTwo.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
@@ -133,8 +139,6 @@ function accelerate(n) {
 }
 </script>
 <br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-<p>Click the ACCELERATE button to start the game</p>
-<p>How long can you stay alive? Use the ACCELERATE button to stay in the air..</p>
+<button <button style="background-color:white; border-color:white;height:100px;width:380px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
 </body>
 </html>
