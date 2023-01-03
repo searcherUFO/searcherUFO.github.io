@@ -71,7 +71,7 @@ function updateGameArea() {
     if (myGamePiece.crashWith(myObstacle)) {
         myGameArea.restartGame();
     } else {
-        myGameArea.restartGame();
+        myGameArea.clear();
         myObstacle.update();
         myGamePiece.x += myGamePiece.speedX;
         myGamePiece.y += myGamePiece.speedY;    
