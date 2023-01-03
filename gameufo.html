@@ -69,7 +69,7 @@ function component(width, height, color, x, y) {
 
 function updateGameArea() {
     if (myGamePiece.crashWith(myObstacle)) {
-        myGameArea.start();
+        myGameArea.clear();
     } else {
         myGameArea.clear();
         myObstacle.update();
