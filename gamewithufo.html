@@ -121,13 +121,13 @@ function updateGameArea() {
         myObstacles[i].x += -1;
         myObstacles[i].update();
     }
-    myScore.text="SCORE: " + myGameArea.frameNo;
     myScore.update();
     myStar.update();
     myStarDecorationOne.update();
     myStarDecorationTwo.update();
     myGamePiece.newPos();
     myGamePiece.update();
+    myScore.text="SCORE: " + myGameArea.frameNo;
 }
 
 function everyinterval(n) {
