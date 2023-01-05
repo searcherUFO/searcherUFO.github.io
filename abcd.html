@@ -1,11 +1,14 @@
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128126;</text></svg>">
+<body style="background-color:black">
+<title>UFOgame</title>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
+    border:1px black;
+    background-color: black;
 }
 </style>
 </head>
@@ -16,14 +19,18 @@ var myGamePiece;
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
+    myScore = new component("30px", "Consolas", "white", 100, 40, "text");
+    myStar = new component(45, 45, "white", 15, 15,);
+    myStarDecorationOne = new component(15, 15, "#d9d9d9", 40, 40,);
+    myStarDecorationTwo = new component(25, 25, "#b3b3b3", 18, 18,);
     myGameArea.start();
 }
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
+        this.canvas.width = 380;
+        this.canvas.height = 460;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);        
@@ -69,6 +76,11 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
+    myScore.text="SCORE: " + myGameArea.frameNo;
+    myScore.update();
+    myStar.update();
+    myStarDecorationOne.update();
+    myStarDecorationTwo.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
