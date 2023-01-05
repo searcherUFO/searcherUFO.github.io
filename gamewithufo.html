@@ -24,10 +24,6 @@ function startGame() {
     myStarDecorationTwo = new component(25, 10, "white", 30, 10,);
     myStarDecorationThree = new component(10, 25, "white", 65, 30,);
     myStarDecorationFour = new component(25, 10, "white", 30, 65,);
-    myStarDecorationFive = new component(10, 30, "white", 10, 25,);
-    myStarDecorationSix = new component(30, 10, "white", 25, 10,);
-    myStarDecorationSeven = new component(10, 30, "white", 65, 25,);
-    myStarDecorationEight = new component(30, 10, "white", 25, 65,);
     myGameArea.start();
 }
 
@@ -86,10 +82,6 @@ function updateGameArea() {
     myStarDecorationTwo.update();
     myStarDecorationThree.update();
     myStarDecorationFour.update();
-    myStarDecorationFive.update();
-    myStarDecorationSix.update();
-    myStarDecorationSeven.update();
-    myStarDecorationEight.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
