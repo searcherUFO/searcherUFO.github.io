@@ -19,7 +19,6 @@ var myGamePiece;
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
-    myScore = new component("30px", "Consolas", "white", 100, 40, "text");
     myStar = new component(45, 45, "white", 15, 15,);
     myStarDecorationOne = new component(15, 15, "#d9d9d9", 40, 40,);
     myStarDecorationTwo = new component(25, 25, "#b3b3b3", 18, 18,);
@@ -76,8 +75,6 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
-    myScore.text="SCORE: " + myGameArea.frameNo;
-    myScore.update();
     myStar.update();
     myStarDecorationOne.update();
     myStarDecorationTwo.update();
@@ -98,10 +95,9 @@ function moveright() {
 </script>
 
 <br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
-<button onclick="moveleft()">LEFT</button>
-<button onclick="moveright()">RIGHT</button>
-<p>Try to accelerate the red square.</p>
+<button style="background-color:white; border-color:white;height:100px;width:100px" onclick="moveleft()">LEFT</button>
+<button style="background-color:white; border-color:white;height:100px;width:180px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
+<button style="background-color:white; border-color:white;height:100px;width:100px" onclick="moveright()">RIGHT</button>
 
 </body>
 </html>
