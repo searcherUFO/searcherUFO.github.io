@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px black;
-    background-color: black;
+    border:1px #80ffff;
+    background-color: #80ffff;
 }
 </style>
 </head>
@@ -20,12 +20,10 @@ var myGamePiece;
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
     myStar = new component(45, 45, "white", 20, 20,);
-    myStarDecorationOne = new component(5, 35, "white", 15, 25,);
-    myStarDecorationTwo = new component(35, 5, "white", 25, 15,);
-    myStarDecorationThree = new component(5, 35, "white", 65, 25,);
-    myStarDecorationFour = new component(35, 5, "white", 25, 65,);
-    myStarDecorationFive = new component(25, 25, "#b3b3b3", 25, 25,);
-    myStarDecorationSix = new component(10, 10, "#cccccc", 50, 50,);
+    myStarDecorationOne = new component(5, 35, "yellow", 15, 25,);
+    myStarDecorationTwo = new component(35, 5, "yellow", 25, 15,);
+    myStarDecorationThree = new component(5, 35, "yellow", 65, 25,);
+    myStarDecorationFour = new component(35, 5, "yellow", 25, 65,);
     myGameArea.start();
 }
 
@@ -84,8 +82,6 @@ function updateGameArea() {
     myStarDecorationTwo.update();
     myStarDecorationThree.update();
     myStarDecorationFour.update();
-    myStarDecorationFive.update();
-    myStarDecorationSix.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
