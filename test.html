@@ -19,7 +19,16 @@ var myGamePiece;
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
-    myFloor = new component(250, 50, "white", 65, 420,);
+    myStar = new component(260, 40, "white", 60, 430,);
+    myStarDecorationOne = new component(30, 30, "white", 30, 440,);
+    myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
+    myStarDecorationThree = new component(30, 20, "white", 0, 450,);
+    myStarDecorationFour = new component(30, 20, "white", 350, 450,);
+    myPlanet = new component(160, 160, "#79ff4d", 110, 90,);
+    myPlanetOne = new component(190, 130, "#79ff4d", 95, 105,);  
+    myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
+    myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
+    myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
     myGameArea.start();
 }
 
@@ -73,7 +82,16 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
-    myFloor.update();
+    myStar.update();
+    myStarDecorationOne.update();
+    myStarDecorationTwo.update();
+    myStarDecorationThree.update();
+    myStarDecorationFour.update();
+    myPlanet.update();
+    myPlanetOne.update();
+    myPlanetTwo.update();
+    myPlanetThree.update();
+    myPlanetFour.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
@@ -91,9 +109,9 @@ function moveright() {
 </script>
 
 <br>
-<button style="background-color:white; border-color:white;height:85px;width:95px" onclick="moveleft()"></button>
-<button style="background-color:white; border-color:white;height:85px;width:179px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
-<button style="background-color:white; border-color:white;height:85px;width:95px" onclick="moveright()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:180.5px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
 
 </body>
 </html>
