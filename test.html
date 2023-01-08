@@ -29,7 +29,6 @@ function startGame() {
     myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
     myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
     myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
-    myObstacle  = new component(10, 200, "green", 300, 120);
     myGameArea.start();
 }
 
@@ -71,35 +70,24 @@ function component(width, height, color, x, y, type) {
         this.x += this.speedX;
         this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
+        this.hitTop();
     }
-     this.crashWith = function(otherobj) {
-        var myleft = this.x;
-        var myright = this.x + (this.width);
-        var mytop = this.y;
-        var mybottom = this.y + (this.height);
-        var otherleft = otherobj.x;
-        var otherright = otherobj.x + (otherobj.width);
-        var othertop = otherobj.y;
-        var otherbottom = otherobj.y + (otherobj.height);
-        var crash = true;
-        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-            crash = false;
-        }
-        return crash;
-    }
-}
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
         if (this.y > rockbottom) {
             this.y = rockbottom;
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
+    this.hitTop = function() {
+        var rocktop = myGameArea.canvas.height - this.height;
+        if (this.y > rocktop) {
+            this.y = rocktop;
+            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
+        }
     }
 }
+
 function updateGameArea() {
-    if (myGamePiece.crashWith(myObstacle)) {
-        myGameArea.stop();
-    } else {
     myGameArea.clear();
     myStar.update();
     myStarDecorationOne.update();
@@ -111,7 +99,6 @@ function updateGameArea() {
     myPlanetTwo.update();
     myPlanetThree.update();
     myPlanetFour.update();
-    myObstacle.x += -1;
     myGamePiece.newPos();
     myGamePiece.update();
 }
