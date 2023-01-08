@@ -28,6 +28,7 @@ function startGame() {
     myPlanetOne = new component(190, 130, "#79ff4d", 95, 105,);  
     myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
     myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
+    myPlanetFour = new component(210, 90, "#79ff4d", 100, 110,);
     myGameArea.start();
 }
 
@@ -90,6 +91,7 @@ function updateGameArea() {
     myPlanetOne.update();
     myPlanetTwo.update();
     myPlanetThree.update();
+    myPlanetFour.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
