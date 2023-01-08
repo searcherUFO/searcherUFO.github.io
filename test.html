@@ -29,7 +29,7 @@ function startGame() {
     myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
     myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
     myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
-    mySattelite = new component(220, 20, "grey", 180, 160,); 
+    mySattelite = new component(15, 200, "grey", 180, 160,);
     myGameArea.start();
 }
 
@@ -68,7 +68,8 @@ function component(width, height, color, x, y, type) {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
         ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+        ctx.restore();
     }
     this.newPos = function() {
         this.gravitySpeed += this.gravity;
@@ -92,13 +93,13 @@ function updateGameArea() {
     myStarDecorationTwo.update();
     myStarDecorationThree.update();
     myStarDecorationFour.update();
+    mySattelite.angle += 1 * Math.PI / 180;
+    mySattelite.update();
     myPlanet.update();
     myPlanetOne.update();
     myPlanetTwo.update();
     myPlanetThree.update();
     myPlanetFour.update();
-    mySattelite.angle += 1 * Math.PI / 180;
-    mySattelite.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
@@ -117,7 +118,7 @@ function moveright() {
 
 <br>
 <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:180.5px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
 <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
 
 </body>
