@@ -97,6 +97,9 @@ function component(width, height, color, x, y, type) {
     }
 }
 function updateGameArea() {
+    if (myGamePiece.crashWith(myObstacle)) {
+        myGameArea.stop();
+    } else {
     myGameArea.clear();
     myStar.update();
     myStarDecorationOne.update();
