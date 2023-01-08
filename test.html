@@ -102,6 +102,8 @@ function updateGameArea() {
         myGameArea.stop();
     } else {
     myGameArea.clear();
+    myObstacle.x -= 1;        
+    myObstacle.update();
     myStar.update();
     myStarDecorationOne.update();
     myStarDecorationTwo.update();
@@ -112,8 +114,6 @@ function updateGameArea() {
     myPlanetTwo.update();
     myPlanetThree.update();
     myPlanetFour.update();
-    myObstacle.x -= 1;        
-    myObstacle.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
@@ -127,10 +127,9 @@ function moveleft() {
 
 function moveright() {
   myGamePiece.speedX += 1;
-}
-function clearmove() {
-    myGamePiece.speedX = 0;  
-}       
+}   
+
+    
 </script>
 
 <br>
