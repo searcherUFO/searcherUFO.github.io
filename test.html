@@ -29,6 +29,7 @@ function startGame() {
     myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
     myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
     myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
+    mySattelite = new component(220, 20, "grey", 180, 160,); 
     myGameArea.start();
 }
 
@@ -53,6 +54,7 @@ function component(width, height, color, x, y, type) {
     this.type = type;
     this.width = width;
     this.height = height;
+    this.angle = 0;
     this.x = x;
     this.y = y;    
     this.speedX = 0;
@@ -62,7 +64,12 @@ function component(width, height, color, x, y, type) {
     this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
         ctx.fillStyle = color;
+        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+        ctx.restore();
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.newPos = function() {
@@ -92,6 +99,8 @@ function updateGameArea() {
     myPlanetTwo.update();
     myPlanetThree.update();
     myPlanetFour.update();
+    mySattelite.angle += 1 * Math.PI / 180;
+    mySattelite.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
