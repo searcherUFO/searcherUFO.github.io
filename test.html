@@ -72,8 +72,8 @@ function component(width, height, color, x, y, type) {
         this.hitTop();
     }
     this.hitTop = function() {
-        var rocktop = myGameArea.canvas.height - this.height;
-        if (this.x > rocktop) {
+        var rocktop = myGameArea.canvas.width - this.width;
+        if (this.y > rocktop) {
             this.y = rocktop; 
         }
     }
