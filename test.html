@@ -16,7 +16,8 @@ canvas {
 <script>
 
 var myGamePiece;
-
+var myObstacle;
+    
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
     myStar = new component(260, 40, "white", 60, 430,);
@@ -29,6 +30,7 @@ function startGame() {
     myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
     myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
     myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
+    myObstacle  = new component(10, 200, "green", 300, 120);
     myGameArea.start();
 }
 
@@ -71,6 +73,22 @@ function component(width, height, color, x, y, type) {
         this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
     }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    }
+}
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
         if (this.y > rockbottom) {
@@ -81,6 +99,9 @@ function component(width, height, color, x, y, type) {
 }
 
 function updateGameArea() {
+     if (myGamePiece.crashWith(myObstacle)) {
+        myGameArea.stop();
+    } else {
     myGameArea.clear();
     myStar.update();
     myStarDecorationOne.update();
@@ -106,6 +127,9 @@ function moveleft() {
 function moveright() {
   myGamePiece.speedX += 1;
 }
+function clearmove() {
+    myGamePiece.speedX = 0;  
+}       
 </script>
 
 <br>
