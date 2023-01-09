@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
+    border:1px black;
+    background-color: black;
 }
 </style>
 </head>
@@ -20,6 +20,16 @@ var myObstacles = [];
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 10, 120);
+    myStar = new component(260, 40, "white", 60, 430,);
+    myStarDecorationOne = new component(30, 30, "white", 30, 440,);
+    myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
+    myStarDecorationThree = new component(30, 20, "white", 0, 450,);
+    myStarDecorationFour = new component(30, 20, "white", 350, 450,);
+    myPlanet = new component(160, 160, "#79ff4d", 110, 90,);
+    myPlanetOne = new component(190, 130, "#79ff4d", 95, 105,);  
+    myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
+    myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
+    myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
     myGameArea.start();
 }
 
@@ -48,15 +58,28 @@ function component(width, height, color, x, y) {
     this.speedY = 0;    
     this.x = x;
     this.y = y;    
+    this.gravity = 0.05;
+    this.gravitySpeed = 0;
+    this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.newPos = function() {
+        this.gravitySpeed += this.gravity;
         this.x += this.speedX;
-        this.y += this.speedY;        
-    }    
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();      
+    }
+    this.hitBottom = function() {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
+        }
+    }
+}    
     this.crashWith = function(otherobj) {
         var myleft = this.x;
         var myright = this.x + (this.width);
@@ -93,6 +116,16 @@ function updateGameArea() {
         myObstacles[i].x += -1;
         myObstacles[i].update();
     }
+    myStar.update();
+    myStarDecorationOne.update();
+    myStarDecorationTwo.update();
+    myStarDecorationThree.update();
+    myStarDecorationFour.update();
+    myPlanet.update();
+    myPlanetOne.update();
+    myPlanetTwo.update();
+    myPlanetThree.update();
+    myPlanetFour.update();
     myGamePiece.newPos();    
     myGamePiece.update();
 }
@@ -102,14 +135,9 @@ function everyinterval(n) {
     return false;
 }
 
-function moveup() {
-    myGamePiece.speedY = -1; 
+function accelerate(n) {
+    myGamePiece.gravity = n;
 }
-
-function movedown() {
-    myGamePiece.speedY = 1; 
-}
-
 function moveleft() {
     myGamePiece.speedX = -1; 
 }
@@ -120,16 +148,11 @@ function moveright() {
 
 function clearmove() {
     myGamePiece.speedX = 0; 
-    myGamePiece.speedY = 0; 
 }
 </script>
-<div style="text-align:center;width:480px;">
-  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
-</div>
-<p>Here comes a new obstacle at every 150. frame, and we have 50 frames per second, so one obstacle every third second!</p>
-
+<br>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
 </body>
 </html>
