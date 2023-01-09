@@ -19,7 +19,7 @@ var myGamePiece;
 var myObstacles = [];
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 80, 75);
+    myGamePiece = new component(30, 30, "red", 10, 120);
     myGamePiece.gravity = 0.05;
     myStar = new component(260, 40, "white", 60, 430,);
     myStarDecorationOne = new component(30, 30, "white", 30, 440,);
@@ -43,14 +43,14 @@ var myGameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         updateGameArea();
-    },    
+        },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
 function component(width, height, color, x, y, type) {
-   this.type = type;
+    this.type = type;
     this.score = 0;
     this.width = width;
     this.height = height;
@@ -63,8 +63,14 @@ function component(width, height, color, x, y, type) {
     this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
     this.newPos = function() {
         this.gravitySpeed += this.gravity;
@@ -93,15 +99,13 @@ function component(width, height, color, x, y, type) {
             crash = false;
         }
         return crash;
-        }
     }
 }
 
 function updateGameArea() {
-    var x, y;
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
-            myGameArea.stop();
             return;
         } 
     }
@@ -109,8 +113,14 @@ function updateGameArea() {
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(150)) {
         x = myGameArea.canvas.width;
-        y = myGameArea.canvas.height - 200;
-        myObstacles.push(new component(10, 200, "green", x, y));
+        minHeight = 35;
+        maxHeight = 40;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        minGap = 0;
+        maxGap = 0;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new component(35, height, "green", x, 0));
+        myObstacles.push(new component(35, x - height - gap, "green", x, height + gap));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -1;
@@ -134,22 +144,27 @@ function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
+
 function accelerate(n) {
+    if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
+
     myGamePiece.gravity = n;
 }
 function moveleft() {
-  myGamePiece.speedX -= 1;
+   if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
+  
+   myGamePiece.speedX -= 1;
 }
 
 function moveright() {
-  myGamePiece.speedX += 1;
+   if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
+   
+   myGamePiece.speedX += 1;
 }
 </script>
-
 <br>
 <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
 <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
 <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
-
 </body>
 </html>
