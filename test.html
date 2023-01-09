@@ -16,9 +16,11 @@ canvas {
 <script>
 
 var myGamePiece;
+var myObstacle;
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
+    myObstacle  = new component(10, 200, "green", 300, 120);
     myStar = new component(260, 40, "white", 60, 430,);
     myStarDecorationOne = new component(30, 30, "white", 30, 440,);
     myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
@@ -78,10 +80,30 @@ function component(width, height, color, x, y, type) {
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
     }
+ this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    }
 }
 
 function updateGameArea() {
+if (myGamePiece.crashWith(myObstacle)) {
+    myGameArea.stop();
+    } else {
     myGameArea.clear();
+    myObstacle.x -= 1;        
+    myObstacle.update();
     myStar.update();
     myStarDecorationOne.update();
     myStarDecorationTwo.update();
