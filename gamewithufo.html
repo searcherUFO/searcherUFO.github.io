@@ -112,7 +112,7 @@ function updateGameArea() {
     }
     myGameArea.clear();
     myGameArea.frameNo += 1;
-    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+    if (myGameArea.frameNo == 1 || everyinterval(300)) {
         myObstacles.push(new component(25, 20, "#a3a3c2", 425, 25,));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
