@@ -63,11 +63,6 @@ function component(width, height, color, x, y, type) {
     this.update = function() {
         ctx = myGameArea.context;
         ctx.fillStyle = color;
-        } else if (this.type == "player") { // player
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, 35,0,2*Math.PI);
-            ctx.fill();
-            ctx.stroke();
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.newPos = function() {
