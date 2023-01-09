@@ -131,11 +131,15 @@ function accelerate(n) {
     myGamePiece.gravity = n;
 }
 function moveleft() {
-  myGamePiece.speedX -= 1;
+   if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
+  
+   myGamePiece.speedX -= 1;
 }
 
 function moveright() {
-  myGamePiece.speedX += 1;
+   if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
+   
+   myGamePiece.speedX += 1;
 }
 </script>
 <br>
