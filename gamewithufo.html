@@ -141,18 +141,15 @@ function everyinterval(n) {
 }
 
 function accelerate(n) {
-    if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
 
     myGamePiece.gravity = n;
 }
 function moveleft() {
-   if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
   
    myGamePiece.speedX -= 1;
 }
 
 function moveright() {
-   if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
    
    myGamePiece.speedX += 1;
 }
