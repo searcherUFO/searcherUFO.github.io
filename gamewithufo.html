@@ -80,8 +80,8 @@ function component(width, height, color, x, y, type) {
         }
      this.hitRight = function() {
         var rockright = myGameArea.canvas.width - this.width;
-        if (this.x > rockright) {
-            this.x = rockright;
+        if (this.y > rockright) {
+            this.y = rockright;
         }
     }
 }
