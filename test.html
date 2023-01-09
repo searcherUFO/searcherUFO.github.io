@@ -1,3 +1,6 @@
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128126;</text></svg>">
+<body style="background-color:black">
+<title>UFOgame</title>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +17,6 @@ canvas {
 
 var myGamePiece;
 var myObstacles = [];
-var myScore;
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 10, 120);
@@ -48,6 +50,7 @@ function component(width, height, color, x, y, type) {
     this.y = y;
     this.gravity = 0;
     this.gravitySpeed = 0;
+    this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
         if (this.type == "text") {
@@ -69,7 +72,7 @@ function component(width, height, color, x, y, type) {
         var rockbottom = myGameArea.canvas.height - this.height;
         if (this.y > rockbottom) {
             this.y = rockbottom;
-            this.gravitySpeed = 0;
+            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
     }
     this.crashWith = function(otherobj) {
