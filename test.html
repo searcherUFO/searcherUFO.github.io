@@ -20,6 +20,7 @@ var myObstacles = [];
     
 function startGame() {
     myGamePiece = new component(30, 30, "red", 80, 75);
+    myGamePiece.gravity = 0.05;
     myStar = new component(260, 40, "white", 60, 430,);
     myStarDecorationOne = new component(30, 30, "white", 30, 440,);
     myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
