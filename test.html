@@ -106,7 +106,12 @@ function updateGameArea() {
     var x, y;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
-            var myGamePiece;
+
+
+<body onload="startGame()">
+
+
+var myGamePiece;
 var myObstacles = [];
 
 function startGame() {
@@ -241,7 +246,7 @@ function moveleft() {
 function moveright() {
    
    myGamePiece.speedX += 1;
-}
+}        
             return;
         } 
     }
