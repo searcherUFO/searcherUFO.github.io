@@ -121,16 +121,6 @@ function updateGameArea() {
     myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
     myGameArea.start();
     }
-    
-    var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 380;
-        this.canvas.height = 470;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
