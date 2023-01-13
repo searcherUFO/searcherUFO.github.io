@@ -15,7 +15,7 @@ canvas {
 var myGamePiece;
 
 function startGame() {
-    myGamePiece = new component(40, 35, "blue", 0, 0,);
+    myGamePiece = new component(25, 25, "blue", 0, 0,);
     myGamePiece.gravity = 0.00;
     myGameArea.start();
 }
@@ -62,12 +62,12 @@ function component(width, height, color, x, y, type) {
         this.gravitySpeed += this.gravity;
         this.x += this.speedX;
         this.y += this.speedY + this.gravitySpeed;
-        this.hitBottom();
+        this.hitRight();
     }
-    this.hitBottom = function() {
-        var rockbottom = myGameArea.canvas.height - this.height;
-        if (this.y > rockbottom) {
-            this.y = rockbottom;
+    this.hitRight = function() {
+        var rockright = myGameArea.canvas.height + 45 - this.width + 90;
+        if (this.x > rockright) {
+            this.x = rockright;
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
     }
