@@ -1,5 +1,5 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128126;</text></svg>">
-<body style="background-color:white">
+<body style="background-color:#151515">
 <title>UFOgame</title>
 <!DOCTYPE html>
 <html>
@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px white;
-    background-color: white;
+    border:1px #151515;
+    background-color: #151515;
 }
 </style>
 </head>
@@ -16,24 +16,34 @@ canvas {
 <script>
 
 var myGamePiece;
+var myObstacles = [];
 
 function startGame() {
-    myGamePiece = new component(30, 30, "red", 80, 75);
+    myGamePiece = new component(40, 35, "#79b3ec", 170, 350,);
+    myGamePiece.gravity = 0.05;
+    myStar = new component(260, 40, "white", 60, 430,);
+    myStarDecorationOne = new component(30, 30, "white", 30, 440,);
+    myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
+    myStarDecorationThree = new component(30, 20, "white", 0, 450,);
+    myStarDecorationFour = new component(30, 20, "white", 350, 450,);
+    myPlanet = new component(160, 160, "#79ff4d", 110, 90,);
+    myPlanetOne = new component(190, 130, "#79ff4d", 95, 105,);  
+    myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
+    myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
+    myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
     myGameArea.start();
 }
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
+        this.canvas.width = 380;
+        this.canvas.height = 470;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);        
-    },
-    stop : function() {
-        clearInterval(this.interval);
-    },    
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+        },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
@@ -41,18 +51,26 @@ var myGameArea = {
 
 function component(width, height, color, x, y, type) {
     this.type = type;
+    this.score = 0;
     this.width = width;
     this.height = height;
-    this.x = x;
-    this.y = y;    
     this.speedX = 0;
     this.speedY = 0;    
-    this.gravity = 0.05;
+    this.x = x;
+    this.y = y;
+    this.gravity = 0;
     this.gravitySpeed = 0;
+    this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
     this.newPos = function() {
         this.gravitySpeed += this.gravity;
@@ -64,52 +82,79 @@ function component(width, height, color, x, y, type) {
         var rockbottom = myGameArea.canvas.height - this.height;
         if (this.y > rockbottom) {
             this.y = rockbottom;
-            this.gravitySpeed = 0;
+            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
+    }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
     }
 }
 
 function updateGameArea() {
+    var x, y;
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+            myGameArea.start();
+            return;
+        } 
+    }
     myGameArea.clear();
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(300)) {
+        myObstacles.push(new component(25, 20, "#a3a3c2", 425, 25,));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].x += -1;
+        myObstacles[i].update();
+    }
+    myStar.update();
+    myStarDecorationOne.update();
+    myStarDecorationTwo.update();
+    myStarDecorationThree.update();
+    myStarDecorationFour.update();
+    myPlanet.update();
+    myPlanetOne.update();
+    myPlanetTwo.update();
+    myPlanetThree.update();
+    myPlanetFour.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
 
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
 function accelerate(n) {
+
     myGamePiece.gravity = n;
 }
-
-function moveup() {
-    myGamePiece.speedY = -1; 
-}
-
-function movedown() {
-    myGamePiece.speedY = 1; 
-}
-
 function moveleft() {
-    myGamePiece.speedX = -1; 
+  
+   myGamePiece.speedX -= 1;
 }
 
 function moveright() {
-    myGamePiece.speedX = 1; 
-}
-
-function clearmove() {
-    myGamePiece.speedX = 0; 
-    myGamePiece.speedY = 0; 
-}
+   
+   myGamePiece.speedX += 1;
 }
 </script>
-
 <br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()"></button><br><br>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()"></button>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()"></button><br><br>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()"></button>
-<p>Try to accelerate the red square.</p>
-
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
 </body>
 </html>
-
