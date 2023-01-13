@@ -1,11 +1,14 @@
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128126;</text></svg>">
+<body style="background-color:white">
+<title>UFOgame</title>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style>
 canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
+    border:1px white;
+    background-color: white;
 }
 </style>
 </head>
@@ -74,12 +77,35 @@ function updateGameArea() {
 
 function accelerate(n) {
     myGamePiece.gravity = n;
+function moveup() {
+    myGamePiece.speedY = -1; 
+}
+
+function movedown() {
+    myGamePiece.speedY = 1; 
+}
+
+function moveleft() {
+    myGamePiece.speedX = -1; 
+}
+
+function moveright() {
+    myGamePiece.speedX = 1; 
+}
+
+function clearmove() {
+    myGamePiece.speedX = 0; 
+    myGamePiece.speedY = 0; 
+}
 }
 </script>
 
 <br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
-
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)">ACCELERATE</button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()"></button><br><br>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()"></button><br><br>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()"></button>
 <p>Try to accelerate the red square.</p>
 
 </body>
