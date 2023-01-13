@@ -16,21 +16,10 @@ canvas {
 <script>
 
 var myGamePiece;
-var myObstacles = [];
 
 function startGame() {
     myGamePiece = new component(40, 35, "#79b3ec", 170, 350,);
     myGamePiece.gravity = 0.05;
-    myStar = new component(260, 40, "white", 60, 430,);
-    myStarDecorationOne = new component(30, 30, "white", 30, 440,);
-    myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
-    myStarDecorationThree = new component(30, 20, "white", 0, 450,);
-    myStarDecorationFour = new component(30, 20, "white", 350, 450,);
-    myPlanet = new component(160, 160, "#79ff4d", 110, 90,);
-    myPlanetOne = new component(190, 130, "#79ff4d", 95, 105,);  
-    myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
-    myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
-    myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
     myGameArea.start();
 }
 
@@ -85,50 +74,8 @@ function component(width, height, color, x, y, type) {
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
     }
-    this.crashWith = function(otherobj) {
-        var myleft = this.x;
-        var myright = this.x + (this.width);
-        var mytop = this.y;
-        var mybottom = this.y + (this.height);
-        var otherleft = otherobj.x;
-        var otherright = otherobj.x + (otherobj.width);
-        var othertop = otherobj.y;
-        var otherbottom = otherobj.y + (otherobj.height);
-        var crash = true;
-        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-            crash = false;
-        }
-        return crash;
-    }
 }
-
 function updateGameArea() {
-    var x, y;
-    for (i = 0; i < myObstacles.length; i += 1) {
-        if (myGamePiece.crashWith(myObstacles[i])) {
-            myGameArea.start();
-            return;
-        } 
-    }
-    myGameArea.clear();
-    myGameArea.frameNo += 1;
-    if (myGameArea.frameNo == 1 || everyinterval(300)) {
-        myObstacles.push(new component(25, 20, "#a3a3c2", 425, 25,));
-    }
-    for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].x += -1;
-        myObstacles[i].update();
-    }
-    myStar.update();
-    myStarDecorationOne.update();
-    myStarDecorationTwo.update();
-    myStarDecorationThree.update();
-    myStarDecorationFour.update();
-    myPlanet.update();
-    myPlanetOne.update();
-    myPlanetTwo.update();
-    myPlanetThree.update();
-    myPlanetFour.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
