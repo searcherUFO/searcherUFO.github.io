@@ -23,7 +23,7 @@ function startGame() {
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 450;
+        this.canvas.width = 471;
         this.canvas.height = 200;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
@@ -110,9 +110,9 @@ function clearmove() {
 }
 </script>
 <br>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:100px" onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()"></button>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:100px" onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()"></button>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:100px" onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()"></button>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:100px" onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:117px" onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:117px" onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:117px" onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:50px;width:117px" onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()"></button>
 </body>
 </html>
