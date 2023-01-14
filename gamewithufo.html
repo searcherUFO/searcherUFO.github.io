@@ -20,7 +20,7 @@ var myObstacles = [];
 
 function startGame() {
     myGamePiece = new component(40, 35, "#79b3ec", 170, 350,);
-    myGamePiece.gravity = 0.01;
+    myGamePiece.gravity = 0.05;
     myStar = new component(260, 40, "white", 60, 430,);
     myStarDecorationOne = new component(30, 30, "white", 30, 440,);
     myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
@@ -82,6 +82,7 @@ function component(width, height, color, x, y, type) {
         var rockbottom = myGameArea.canvas.height - this.height;
         if (this.y > rockbottom) {
             this.y = rockbottom;
+            this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
     }
     this.crashWith = function(otherobj) {
