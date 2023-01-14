@@ -114,13 +114,13 @@ function updateGameArea() {
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
             myGameArea.start();
-            myGamePieceTwo.newPos();
-            myGamePieceTwo.update();
             myPlanetY.update();
             myPlanetYOne.update(); 
             myPlanetYTwo.update();
             myPlanetYThree.update();
             myPlanetYFour.update();
+            myGamePieceTwo.newPos();
+            myGamePieceTwo.update();
             return;
         } 
     }
