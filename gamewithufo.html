@@ -31,6 +31,13 @@ function startGame() {
     myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
     myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
     myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
+    myGamePieceTwo = new component(40, 35, "#79b3ec", 170, 350,);
+    myGamePieceTwo.gravity = 0.05;
+    myPlanetY = new component(160, 160, "#79ff4d", 110, 90,);
+    myPlanetYOne = new component(190, 130, "#79ff4d", 95, 105,);  
+    myPlanetYTwo = new component(130, 190, "#79ff4d", 125, 75,);
+    myPlanetYThree = new component(90, 210, "#79ff4d", 145, 65,);
+    myPlanetYFour = new component(210, 90, "#79ff4d", 85, 125,);
     myGameArea.start();
 }
 
@@ -107,6 +114,13 @@ function updateGameArea() {
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
             myGameArea.start();
+            myGamePieceTwo.newPos();
+            myGamePieceTwo.update();
+            myPlanetY.update();
+            myPlanetYOne.update(); 
+            myPlanetYTwo.update();
+            myPlanetYThree.update();
+            myPlanetYFour.update();
             return;
         } 
     }
