@@ -138,10 +138,10 @@ function everyinterval(n) {
     return false;
 }
 
-function accelerate(n) {
-
-    myGamePiece.gravity = n;
+function moveup() {
+    myGamePiece.speedY = -1; 
 }
+    
 function moveleft() {
   
    myGamePiece.speedX -= 1;
@@ -159,7 +159,7 @@ function clearmove() {
 </script>
 <br>
 <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
-<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onclick="moveup()"></button>
 <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
 </body>
 </html>
