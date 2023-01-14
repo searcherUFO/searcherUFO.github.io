@@ -32,7 +32,7 @@ function startGame() {
     myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
     myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
     myGamePieceTwo = new component(40, 35, "#79b3ec", 170, 350,);
-    myGamePieceTwo.gravity = 0.001;
+    myGamePieceTwo.gravity = 0.05;
     myPlanetY = new component(160, 160, "#79ff4d", 110, 90,);
     myPlanetYOne = new component(190, 130, "#79ff4d", 95, 105,);  
     myPlanetYTwo = new component(130, 190, "#79ff4d", 125, 75,);
@@ -154,7 +154,7 @@ function everyinterval(n) {
 
 function accelerate(n) {
   myGamePiece.gravity = n;
-  myGamePieceTwo.gravity = n - 1000;
+  myGamePieceTwo.gravity = n;
 }
     
 function moveleft() {
