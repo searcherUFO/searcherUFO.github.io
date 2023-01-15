@@ -38,6 +38,7 @@ function startGame() {
     myPlanetYTwo = new component(90, 150, "#79ff4d", 145, 95,);
     myPlanetYThree = new component(50, 170, "#79ff4d", 165, 85,);
     myPlanetYFour = new component(170, 50, "#79ff4d", 105, 145,);
+    myMeteorit = new component(380, 20, "#79ff4d", 0, 450,);
     myGameArea.start();
 }
 
@@ -121,6 +122,7 @@ function updateGameArea() {
             myPlanetYFour.update();
             myGamePieceTwo.newPos();
             myGamePieceTwo.update();
+            myMeteorit.update();
             return;
         } 
     }
