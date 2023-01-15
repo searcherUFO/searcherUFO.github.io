@@ -24,12 +24,12 @@ var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
         this.canvas.width = 380;
-        this.canvas.height = 250;
+        this.canvas.height = 470;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
-      window.addEventListener('keydown', function (e) {
+         window.addEventListener('keydown', function (e) {
             e.preventDefault();
             myGameArea.keys = (myGameArea.keys || []);
             myGameArea.keys[e.keyCode] = (e.type == "keydown");
@@ -37,9 +37,9 @@ var myGameArea = {
         window.addEventListener('keyup', function (e) {
             myGameArea.keys[e.keyCode] = (e.type == "keydown");
         })
-      },
+    },
     stop : function() {
-        clearInterval(this.interval);  
+        clearInterval(this.interval);
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -47,7 +47,7 @@ var myGameArea = {
 }
 
 function component(width, height, color, x, y, type) {
-   this.type = type;
+    this.type = type;
     this.width = width;
     this.height = height;
     this.speed = 0;
@@ -125,5 +125,28 @@ function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
+
+function accelerate(n) {
+  myGamePiece.gravity = n;
+  myGamePieceTwo.gravity = n;
+}
+    
+function moveleft() {
+  
+   myGamePiece.speedX -= 1;
+   myGamePieceTwo.speedX -= 0.02;
+}
+
+function moveright() {
+   
+   myGamePiece.speedX += 1;
+   myGamePieceTwo.speedX += 0.02;
+}
+
+</script>
+<br>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)" ontouchstop="accelerate(0.1)"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
 </body>
 </html>
