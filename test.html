@@ -50,6 +50,7 @@ function component(width, height, color, x, y, type) {
     this.type = type;
     this.width = width;
     this.height = height;
+    this.speedY = 0;
     this.speed = 0;
     this.angle = 0;
     this.moveAngle = 0;
@@ -68,6 +69,8 @@ function component(width, height, color, x, y, type) {
         this.angle += this.moveAngle * Math.PI / 180;
         this.x += this.speed * Math.sin(this.angle);
         this.y -= this.speed * Math.cos(this.angle);
+        this.x += this.speedY * Math.sin(this.angle);
+        this.y -= this.speedY * Math.cos(this.angle);
         this.hitBottom();
     }
     this.hitBottom = function() {
@@ -126,7 +129,26 @@ function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
+function rotate() {
+   myGamePiece.angle += 1 * Math.PI / 180;
+}
 
+function up() {
+    myGamePiece.speedY = 1.5; 
+}
+
+function down() {
+    myGamePiece.speedY = -1.5; 
+}
+
+function clearmove() { 
+    myGamePiece.speedY = 0; 
+}
 </script>
+  <br>
+  <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="up" ontouchstop="clearmove"></button>
+ <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="down" ontouchstop="clearmove"></button>
+  <br>
+</div>
 </body>
 </html>
