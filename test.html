@@ -140,14 +140,10 @@ function up() {
 function down() {
     myGamePiece.speedY = -1.5; 
 }
-
-function clearmove() { 
-    myGamePiece.speedY = 0; 
-}
 </script>
   <br>
-  <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="up" ontouchstop="clearmove"></button>
- <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="down" ontouchstop="clearmove"></button>
+  <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="up"></button>
+ <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="down"></button>
   <br>
 </div>
 </body>
