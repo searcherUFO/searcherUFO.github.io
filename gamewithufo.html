@@ -19,7 +19,7 @@ var myGamePiece;
 var myObstacles = [];
 
 function startGame() {
-    myGamePiece = new component(40, 35, "#79b3ec", 170, 350,);
+    myGamePiece = new component(40, 35, "#79b3ec", 100, 100,);
     myGameArea.start();
 }
 
@@ -68,9 +68,9 @@ function component(width, height, color, x, y, type) {
         this.hitBottom();
     }
     this.hitBottom = function() {
-        var rockbottom = myGameArea.canvas.height - this.height - 20;
-        if (this.y > rockbottom) {
-            this.y = rockbottom;
+        var rockbottom = myGameArea.canvas.width - this.width;
+        if (this.x > rockbottom) {
+            this.x = rockbottom;
             this.gravitySpeed = -(this.gravitySpeed * this.bounce);
         }
     }
@@ -118,24 +118,30 @@ function everyinterval(n) {
 }
 
 function moveup() {
-  myGamePiece.speedY -= 1;
+    myGamePiece.speedY = -1; 
 }
 
 function movedown() {
-  myGamePiece.speedY += 1;
+    myGamePiece.speedY = 1; 
 }
 
 function moveleft() {
-  myGamePiece.speedX -= 1;
+    myGamePiece.speedX = -1; 
 }
 
 function moveright() {
-  myGamePiece.speedX += 1;
+    myGamePiece.speedX = 1; 
+}
+
+function clearmove() {
+    myGamePiece.speedX = 0; 
+    myGamePiece.speedY = 0; 
 }
 </script>
-<button onclick="moveup()">UP</button>
-<button onclick="movedown()">DOWN</button>
-<button onclick="moveleft()">LEFT</button>
-<button onclick="moveright()">RIGHT</button>
+<div style="text-align:center;width:480px;">
+  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()" ontouchstop="clearmove()">UP</button><br><br>
+  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()" ontouchstop="clearmove()">LEFT</button>
+  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()" ontouchstop="clearmove()">RIGHT</button><br><br>
+  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()" ontouchstop="clearmove()">DOWN</button>
 </body>
 </html>
