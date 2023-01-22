@@ -74,10 +74,10 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.newPos();    
-    myGamePiece.update();
     myBackground.newPos();    
     myBackground.update();
+    myGamePiece.newPos();    
+    myGamePiece.update();
 }
 
 function move(dir) {
