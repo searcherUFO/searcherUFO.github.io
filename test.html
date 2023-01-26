@@ -17,6 +17,25 @@ var myObstacles = [];
 
 function startGame() {
     myGamePiece = new component(40, 35, "#79b3ec", 170, 350,);
+    myGamePiece.gravity = 0.05;
+    myStar = new component(260, 40, "white", 60, 430,);
+    myStarDecorationOne = new component(30, 30, "white", 30, 440,);
+    myStarDecorationTwo = new component(30, 30, "white", 320, 440,);
+    myStarDecorationThree = new component(30, 20, "white", 0, 450,);
+    myStarDecorationFour = new component(30, 20, "white", 350, 450,);
+    myPlanet = new component(160, 160, "#79ff4d", 110, 90,);
+    myPlanetOne = new component(190, 130, "#79ff4d", 95, 105,);  
+    myPlanetTwo = new component(130, 190, "#79ff4d", 125, 75,);
+    myPlanetThree = new component(90, 210, "#79ff4d", 145, 65,);
+    myPlanetFour = new component(210, 90, "#79ff4d", 85, 125,);
+    myGamePieceTwo = new component(40, 35, "#79b3ec", 170, 350,);
+    myGamePieceTwo.gravity = 5;
+    myPlanetY = new component(120, 120, "#79ff4d", 130, 110,);
+    myPlanetYOne = new component(150, 90, "#79ff4d", 115, 125,);  
+    myPlanetYTwo = new component(90, 150, "#79ff4d", 145, 95,);
+    myPlanetYThree = new component(50, 170, "#79ff4d", 165, 85,);
+    myPlanetYFour = new component(170, 50, "#79ff4d", 105, 145,);
+    myMeteorit = new component(380, 20, "#a3a3c2", 0, 450,);
     myGameArea.start();
 }
 
@@ -29,17 +48,6 @@ var myGameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateGameArea, 20);
-         window.addEventListener('keydown', function (e) {
-            e.preventDefault();
-            myGameArea.keys = (myGameArea.keys || []);
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-        window.addEventListener('keyup', function (e) {
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-    },
-    stop : function() {
-        clearInterval(this.interval);
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -48,29 +56,31 @@ var myGameArea = {
 
 function component(width, height, color, x, y, type) {
     this.type = type;
+    this.score = 0;
     this.width = width;
     this.height = height;
-    this.speedY = 0;
-    this.speed = 0;
-    this.angle = 0;
-    this.moveAngle = 0;
+    this.speedX = 0;
+    this.speedY = 0;    
     this.x = x;
-    this.y = y;    
+    this.y = y;
+    this.gravity = 0;
+    this.gravitySpeed = 0;
+    this.bounce = 0.6;
     this.update = function() {
         ctx = myGameArea.context;
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-        ctx.fillStyle = color;
-        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        ctx.restore();    
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
     this.newPos = function() {
-        this.angle += this.moveAngle * Math.PI / 180;
-        this.x += this.speed * Math.sin(this.angle);
-        this.y -= this.speed * Math.cos(this.angle);
-        this.x += this.speedY * Math.sin(this.angle);
-        this.y -= this.speedY * Math.cos(this.angle);
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
     }
     this.hitBottom = function() {
@@ -102,6 +112,14 @@ function updateGameArea() {
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
             myGameArea.start();
+            myPlanetY.update();
+            myPlanetYOne.update(); 
+            myPlanetYTwo.update();
+            myPlanetYThree.update();
+            myPlanetYFour.update();
+            myGamePieceTwo.newPos();
+            myGamePieceTwo.update();
+            myMeteorit.update();
             return;
         } 
     }
@@ -114,37 +132,46 @@ function updateGameArea() {
         myObstacles[i].x += -1;
         myObstacles[i].update();
     }
-    myGamePiece.moveAngle = 0;
-    myGamePiece.speed = 0;
-    if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.moveAngle = -1.5;} 
-    if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.moveAngle = 1.5; }
-    if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speed= 1.5; }
-    if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speed= -1.5; }
+    myStar.update();
+    myStarDecorationOne.update();
+    myStarDecorationTwo.update();
+    myStarDecorationThree.update();
+    myStarDecorationFour.update();
+    myPlanet.update();
+    myPlanetOne.update();
+    myPlanetTwo.update();
+    myPlanetThree.update();
+    myPlanetFour.update();
     myGamePiece.newPos();
     myGamePiece.update();
 }
-
 
 function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
-function rotate() {
-   myGamePiece.angle += 1 * Math.PI / 180;
+
+function accelerate(n) {
+  myGamePiece.gravity = n;
+  myGamePieceTwo.gravity = n;
+}
+    
+function moveleft() {
+  
+   myGamePiece.speedX -= 1;
+   myGamePieceTwo.speedX -= 0.02;
 }
 
-function up() {
-    myGamePiece.speedY = 1.5; 
+function moveright() {
+   
+   myGamePiece.speedX += 1;
+   myGamePieceTwo.speedX += 0.02;
 }
 
-function down() {
-    myGamePiece.speedY = -1.5; 
-}
 </script>
-  <br>
-  <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="up"></button>
- <button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" ontouchstart="down"></button>
-  <br>
-</div>
+<br>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveleft()"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:178.6px" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.1)" ontouchstart="accelerate(-0.2)" ontouchstop="accelerate(0.1)"></button>
+<button style="background-color:#66ffc2; border-color:#66ffc2;height:85px;width:95px" onclick="moveright()"></button>
 </body>
 </html>
