@@ -1,3 +1,4 @@
+<center>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,11 +41,9 @@ function component(width, height, color, x, y) {
     ctx = myGameArea.context;
     ctx.fillStyle = color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
-ctx.font = "30px Arial";
-ctx.fillText("⬜⬜⬜⬜", 1, 50);
 }
 </script>
-
+</center>
 <form name="calculator">
         <input style="height:25px;width:535px" type="text" id="display" name="display" readonly>
 <br><input class="button digits" type="button" value="7" onclick="calculator.display.value += '7'">
