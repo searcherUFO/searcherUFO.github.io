@@ -11,77 +11,103 @@ background-color: #6e6e6e;
 opacity: 1;
 background: linear-gradient(135deg, #6f7877 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(225deg, #3b3d3d 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(315deg, #6f7877 25%, transparent 25%) 0px 0/ 80px 80px, linear-gradient(45deg, #3b3d3d 25%, #8c9191 25%) 0px 0/ 80px 80px;
 </style>
-<center><h1 style="font-size:5.5em; ">Searcher <t>UFO</t></h1></center>
-<center><h1 style="font-size:5em; ">Games Fans Forum</h1></center>
+<center><h3 style="font-size:5.5em; ">Searcher <t>UFO</t></h3></center>
+<center><h3 style="font-size:5em; ">Games Fans Forum</h3></center>
 <style>
  t {
  color: #42eda0;
-</style>
-<style>
- h1 {
- color: white;
-</style>
-<center><div class="controlls linkbutton">
-<r>TOP 3 Ubisoft mobile games</r> <h3>Ubisoft is one of the biggest game makers and of course they have also been involved in creating mobile games.Ubisoft makes lot of great games but this is the Top 3 of their best mobile games ever.</h3><g>1.Hungry Shark Evolution</g> <h2>Hungry Shark Evolution is very good game.Map in this game is really big and have a lot of easter eggs.One of this easter eggs is Kempy, fish with human face.This game is offcourse mobile and playable without WI-FI connection.Hungry Shark Evolution is created by Ubisoft studio and studio FGOL(Future Games Of London). <b>Story of game </b>You are hungry shark in the sea.in the game you start with a Reef Shark which has a lot of disadvantages, two of them are that it can't eat jellyfish and has very Low Health. when you collect enough money you can buy a better shark like Tiger Shark or Megalodon.</h2> <g>2.Hungry Shark World</g> 
-<h2>Hungry Shark World is similiar to Hungry Shark Evolution but Hungry Shark World is more sophisticated because it has more maps, better graphics and controls.There are also more easter eggs and Kempy is also here, but in the form of a yetti in the Antarctica level.In Hungry Shark World, it is easier to collect gems. In Hungry Shark World, you can also collect pearls in Extinction Levels. You can then buy sharks from the DNA series with pearls.</h2><o>3.Hungry Shark Arena</o><h2>Hungry Shark Arena is an online multiplayer game that is quite similar to other Hungry Shark games, but the game has different graphics. In the game, you have a shark that you fight against other sharks. The last shark left in the arena wins. You can gradually improve the sharks in this game.You can play this Hungry Shark game on the Ubisoft Nano website.</h2><v>This was a list of the best Hungry Shark games, of course there are more but this was a list of the most played ones. You can also check out our other games articles.</v><a href="welcome.html"><button class="link linkbutton">INFO</button></a><a href="index.html"><button class="link linkbutton">2Dvs3D</button></a></div></center>
-<style>
- .link {
- height: 195px;
- width: 445px;
- font-size: 116px;
- font-family: Copperplate, Papyrus, fantasy;
- cursor: pointer;
-}
-.linkbutton {border-radius: 12px;}
-</style>
-<style>
- v {
- color: #140880;
- font-size: 50px;
- font-family: Copperplate, Papyrus, fantasy;
-</style>
-<style>
- o {
- color: #140880;
- font-size: 101px;
- font-family: Copperplate, Papyrus, fantasy;
-</style>
-<style>
- b {
- color: #140880;
- font-size: 130px;
- font-family: Arial, sans-serif;
-</style>
-<style>
- h2 {
- color: #140880;
- font-size: 35px;
  font-family: Geneva, Verdana, sans-serif;
 </style>
 <style>
  h3 {
- color: #140880;
- font-size: 30.5px;
+ color: white;
  font-family: Geneva, Verdana, sans-serif;
 </style>
-<style>
- r {
- color: #140880;
- font-size: 79px;
- font-family: Copperplate, Papyrus, fantasy;
-</style>
+    <center><div class="controlls linkbutton"><center><g>TOP 3</g></center><center><h2>Browser Games</h2></center><center><h1>Browser Games are very popular because they have a lot of advantages. First, you don't need to download and update them. Every game, especially the graphics-intensive ones, slow down your computer and take up a lot of space. There are a lot of 3D Browser Games with fairly good graphics that you can play. Second, to you don't have to log in to many Browser Games. If you have to log in to every game, it becomes annoying after a while, although nowadays services like Steam make it easier, it is still problematic in some games. The third advantage is that because there are ads in Browser Games so you don't have to pay for most of them.</h1></center>
+<center><h2>3.OnlineChess&#9817;</h2></center><center><h1>Online Chess is a very good way to learn chess. There are many websites where you can play chess. You can play chess with a bot or you can play against another player. Many of these sites also have chess learning programs. The game of Chess is based on simple logic, you have a chess board of 8x8 squares. Every square on board has a name.</h1></center>
+<center><canvas id="chess"></canvas>
+<script>class Board {
+  constructor(config) {
+    this.options = {
+      selector: document.querySelector("#board"),
+      width: 400,
+      size: 8,
+      light: 'white',
+      dark: 'black'
+    };
+    if(config) Object.assign(this.options, this.options, config);
+    this.draw();
+  }
+
+  draw() {
+    let el = this.options.selector;
+    let ctx = el.getContext("2d");
+    let squareWidth = this.options.width / this.options.size;
+    let totalSquares = Math.pow(this.options.size, 2);
+    let i, x, y = -1;
+    
+    el.width = this.options.width;
+    el.height = this.options.width;
+    
+    for (i = 0; i < totalSquares; i++) {
+      x++;
+      if (i % this.options.size == 0) {
+        y++; 
+        x = 0;
+      }     
+      
+      ctx.beginPath();
+      ctx.rect(x * squareWidth, y * squareWidth, squareWidth, squareWidth);
+      ctx.fillStyle = (x + y) % 2 ? this.options.dark : this.options.light; 
+      ctx.fill();
+    }
+  }
+}
+
+let chessBoard = new Board({
+  selector: document.querySelector("#chess")
+});
+</script>
+</center><center><h1>There are 6 types of 16 figures in the game. The tower figure can only move forward, sideways and backwards. The shooter figure can move diagonally. The horse figure moves according to a kind of "L" pattern. The queen piece can move as a rook and bishop together. The king piece can move one square to the sides next to itself. The pawn piece can move forward or diagonally up when it can pick up another piece. The aim of this game is to make a so-called checkmate which prevent the king piece from continuing to move without
+received by the opponent.</h1></center>
+<center><h2>2.Agar.io</h2></center>
+<center><h1>Agar.io used to be a very popular game. Nowadays, only a small number of people play it, but it deserves to be labeled as one of the best Browser Games. In the game, you play for a circle that keeps getting bigger by eating points and opponents. There are four modes in the game, FFA, Team, Battle royale, and experimental. As for the components, the only difference is in the experimental, there are also red cells. If you are smaller than a red cell and enter it, it will eat you and offer other players to collect the points you had and add a little to them. If you are the same size as the red cell, nothing will happen to you, but if you are bigger, the circle will turn into several smaller circles. In the experimental mode, you can also move the green cells after the first shot. In Agar.io there are also skins that you buy with the coins you collect. Agar.io is not just a browser game, you can also download it to your phone.</h1></center>
+<center><h2>1.1v1.lol</h2></center>
+<center><h1>1v1.lol is a really great game. This game is a 3D third person battle royale. 1v1.lol can be played without registration and is free. In 1v1.lol there are many mods that you can choose. In Battle royale mode, you have a choice between Solo and Duo. In Solo mode, a maximum of 10 people and a minimum of 4 people can play. A maximum of 10 people and a minimum of 6 people can play in Duo mode. In Duo, there are teams of two people who fight together, they can revive themselves if one of them is knocked down. There are two types of map, one for the phone version and the second for the computer version.</h1></center>
+<center><a href="welcome.html"><button class="link linkbutton">INFO</button></a><a href="bestthree.html"><button class="link linkbutton">TOP 3</button></a></center></div>
 <style>
  g {
+ color: black; 
+ font-size: 300px;
+ font-family: Arial, sans-serif; fantasy;
+</style>
+<style>
+ h2 { 
+ color: black;
+ font-size: 110px;
+ font-family: Arial, sans-serif;
+</style>
+<style>
+ h1 { 
  color: #140880;
- font-size: 86px;
- font-family: Copperplate, Papyrus, fantasy;
+ font-size: 35px;
+ font-family: Verdana, sans-serif; fantasy;
 </style>
 <style>
  .controlls {
  background-color: white;
- height: 2950px;
+ height: 5500px;
  width: 895px;
- opacity: 0.9; 
+</style>
+<style>
+ .link {
+ height: 195px;
+ width: 445px;
+ font-size: 126px;
+ font-family: Copperplate, Papyrus, fantasy;
+ cursor: pointer;
+}
+.linkbutton {border-radius: 12px;}
 </style>
 </body>
 </html>
