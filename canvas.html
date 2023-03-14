@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+ <html>
+  <head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128125;</text></svg>"> 
+<title>HTML Canvas - shapes,drawing and gradient</title>
 <style>
  body {
 background-color: #6e6e6e;
@@ -17,7 +22,7 @@ background: linear-gradient(135deg, #6f7877 25%, transparent 25%) -40px 0/ 80px 
  font-family: Geneva, Verdana, sans-serif;
 </style>
     <center><div class="controlls linkbutton"><center><g>Canvas</g></center><center><h2>HTML using JS</h2></center><center><h1>Canvas is a very important part of game programming. Canvas is an area that can be adjusted using X and Y coordinates. Various shapes can be created inside the canvas. You can make these shapes move using additional code. Their movement can also be controlled using buttons and keys. The possibilities of the canvas thus enable the creation of games, animations and computer drawings. There are several examples of canvas codes on this page.</h1></center>
-<center><h2>Square</h2></center>
+<center><h2>Draw square</h2></center>
 <canvas id="canvaswithsquare" width="400" height="200"
 style="border:2px solid black;">
 Your browser does not support the canvas element.
@@ -26,11 +31,11 @@ Your browser does not support the canvas element.
 <script>
 var canvas = document.getElementById("canvaswithsquare");
 var ctx = canvas.getContext("2d");
-ctx.fillStyle = "blue";
+ctx.fillStyle = "#045880";
 ctx.fillRect(150,50,100,100);
 </script>
 <center><h1>This blue 100x100 square in a 400x200 canvas is created using coordinates. This is one of the simplest shapes that can be created in canvas. In the code of this shape, ctx.fillRect(150,50,100,100) means ctx.fillRect(X,Y,/canvas/X,Y/shape/).</h1></center>
-<center><textarea readonly style="resize:none;width:840px;height:350px;font-size:27px"><canvas id="canvaswithsquare" width="400" height="200"
+<center><textarea readonly class="text"><canvas id="canvaswithsquare" width="400" height="200"
 style="border:2px solid black;">
 </canvas>
 
@@ -40,8 +45,147 @@ var ctx = canvas.getContext("2d");
 ctx.fillStyle = "blue";
 ctx.fillRect(150,50,100,100);
 </script></textarea></center>
-<center><h2>Controll shape</h2></center>
+<center><h2>Draw gradient</h2></center>
+<center><canvas id="canvaswithgradient" width="400" height="200"
+style="border:2px solid black;">
+Your browser doesnt support the canvas element.
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvaswithgradient");
+var ctx = canvas.getContext("2d");
+var grd = ctx.createLinearGradient(0, 0, 370, 0);
+grd.addColorStop(0, "white");
+grd.addColorStop(1, "blue");
+//gradient
+ctx.fillStyle = grd;
+ctx.fillRect(150,50,100,100);
+</script></center>
+<center><h1>A gradient is something like a shadow or fog. In canvas, a gradient is used by taking two or more colors and creating a kind of cluster. It can also be used as shading in the canvas.</h1></center>
+<center><textarea readonly class="text"><canvas id="canvaswithgradient" width="400" height="200"
+style="border:2px solid black;">
+Your browser doesnt support the canvas element.
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvaswithgradient");
+var ctx = canvas.getContext("2d");
+var grd = ctx.createLinearGradient(0, 0, 370, 0);
+grd.addColorStop(0, "white");
+grd.addColorStop(1, "blue");
+//gradient
+ctx.fillStyle = grd;
+ctx.fillRect(150,50,100,100);
+</script></textarea></center>
+<center><h2>Draw cube</h2></center>
+<canvas id="canvaswithcube" width="400" height="200"
+style="border:2px solid black">
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvaswithcube");
+var ctx = canvas.getContext("2d");
+//cube
+var grd = ctx.createLinearGradient(0, 0, 250, 0);
+grd.addColorStop(0, "#001a26");
+grd.addColorStop(1, "#026ea1");
+//cube
+ctx.fillStyle = grd;
+ctx.fillRect(165,85,75,75);
+//cube
+ctx.fillStyle = '#0275ab';
+ctx.fillRect(170,65,65,20);
+//cube
+ctx.moveTo(170, 65);
+ctx.lineTo(165, 85);
+ctx.lineTo(240, 85);
+ctx.lineTo(170, 65);
+ctx.fillStyle = '#0275ab';
+ctx.fill();
+//cube
+ctx.moveTo(235, 65);
+ctx.lineTo(165, 85);
+ctx.lineTo(240, 85);
+ctx.lineTo(235, 65);
+ctx.fillStyle = '#0275ab';
+ctx.fill();
+</script>
+<center><h1>This cube is made of two triangles and two rectangles. A gradient is also used here, which creates the impression of a shadow. This cube contains three colors and they are three shades of azure. #0275ab was used for the upper part of the cube, #001a26 and #026ea1 were used for the gradient.</h1></center>
+<center><textarea readonly class="text"><canvas id="canvaswithcube" width="400" height="200"
+style="border:2px solid black">
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvaswithcube");
+var ctx = canvas.getContext("2d");
+//cube
+var grd = ctx.createLinearGradient(0, 0, 250, 0);
+grd.addColorStop(0, "#001a26");
+grd.addColorStop(1, "#026ea1");
+//cube
+ctx.fillStyle = grd;
+ctx.fillRect(165,85,75,75);
+//cube
+ctx.fillStyle = '#0275ab';
+ctx.fillRect(170,65,65,20);
+//cube
+ctx.moveTo(170, 65);
+ctx.lineTo(165, 85);
+ctx.lineTo(240, 85);
+ctx.lineTo(170, 65);
+ctx.fillStyle = '#0275ab';
+ctx.fill();
+//cube
+ctx.moveTo(235, 65);
+ctx.lineTo(165, 85);
+ctx.lineTo(240, 85);
+ctx.lineTo(235, 65);
+ctx.fillStyle = '#0275ab';
+ctx.fill();
+</script></textarea></center>
+<center><h2>Draw triangle</h2></center>
+<center><canvas id="canvaswithtriangle" width="400" height="200"
+style="border:2px solid black">
+Your browser does not support the canvas element.
+</canvas>
+<script>
+var canvas = document.getElementById("canvaswithtriangle");
+var ctx = canvas.getContext("2d");
+ctx.moveTo(200, 20);
+ctx.lineTo(300, 180);
+ctx.lineTo(100, 180);
+ctx.lineTo(200, 20);
+ctx.fillStyle = '#0275ab';
+ctx.fill();
+</script></center>
+<center><h1>A triangle looks like a simple shape, but its coordinates are quite complex. A triangle has three corners, and each corner has an X and Y coordinate, and the top of the triangle has two X and Y coordinates. And like any other shape, a gradient can be applied to a triangle.</h1></center>
+<center><textarea readonly class="text"><canvas id="canvaswithtriangle" width="400" height="200"
+style="border:2px solid black">
+Your browser does not support the canvas element.
+</canvas>
+<script>
+var canvas = document.getElementById("canvaswithtriangle");
+var ctx = canvas.getContext("2d");
+ctx.moveTo(200, 20);
+ctx.lineTo(300, 180);
+ctx.lineTo(100, 180);
+ctx.lineTo(200, 20);
+ctx.fillStyle = '#0275ab';
+ctx.fill();
+</script></textarea></center>
+<center><h1>
+Canvas is definitely a very important element. In addition to canvas, there is SVG. But SVG is not as reliable and not as good for creating games as canvas. But SVG is also relatively simpler than canvas.</h1></center>
 <center><a href="welcome.html"><button class="link linkbutton">INFO</button></a><a href="index.html"><button class="link linkbutton">2Dvs3D</button></a></center></div>
+<style>
+ .text {
+ resize: none;
+ background-color: #81cdf0;
+ height: 300px;
+ width: 800px;
+ color: black;
+ font-size: 25px;
+ font-family: Arial, sans-serif; fantasy;
+</style>
 <style>
  g {
  color: black; 
@@ -63,7 +207,7 @@ ctx.fillRect(150,50,100,100);
 <style>
  .controlls {
  background-color: white;
- height: 5515px;
+ height: 6000px;
  width: 895px;
 </style>
 <style>
