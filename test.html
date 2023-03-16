@@ -28,7 +28,7 @@ background: linear-gradient(135deg, #6f7877 25%, transparent 25%) -40px 0/ 80px 
 <center><a href="welcome.html"><button class="link linkbutton">INFO</button></a><a href="bestthree.html"><button class="link linkbutton">TOP 3</button></a></center></div>
 <style>
 body{
-	font-size: 39px;
+	font-size: 45px;
 	font-family: sans-serif;
 	color: #333;
 }
@@ -43,17 +43,23 @@ body{
 }
 #submit{
 	font-family: sans-serif;
-	font-size: 20px;
+	font-size: 30px;
 	background-color: #279;
 	color: #fff;
 	border: 0px;
 	border-radius: 3px;
-	padding: 20px;
+	padding: 30px;
 	cursor: pointer;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 }
 #submit:hover{
 	background-color: #38a;
+}
+.block{
+    cursor: pointer;
+    height: 55px;
+    width: 55px;
+    margin-bottom: 60px;
 }
 </style>
 <script>
@@ -75,7 +81,7 @@ body{
           // ...add an HTML radio button
           answers.push(
             `<label>
-              <input type="radio" name="question${questionNumber}" value="${letter}">
+              <input class="block" type="radio" name="question${questionNumber}" value="${letter}">
               ${letter} :
               ${currentQuestion.answers[letter]}
             </label>`
@@ -156,7 +162,7 @@ body{
         a: "Farcry",
         b: "Asphalt",
         c: "Assasins creed",
-        d: "Hungry Shark Evolution"
+        d: "Hungry Shark"
       },
       correctAnswer: "b"
     }
@@ -188,7 +194,7 @@ body{
 <style>
  .controlls {
  background-color: white;
- height: 1350px;
+ height: 2220px;
  width: 895px; 
 </style>
 <style>
