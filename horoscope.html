@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128126;</text></svg>">
+<title>Online Fortune Teller and Predict Future Bot</title>
+<center><h3 style="font-size:5.5em; ">Searcher <t>UFO</t></h3></center>
+<center><h3 style="font-size:6em; ">Horoscopes</h3></center>
+<style>
+ t {
+ color: #42eda0;
+ font-family: Arial, sans-serif;
+</style>
+<style>
+ h3 {
+ color: white;
+ font-family: Arial, sans-serif;
+</style>
+<center><div class="sign roundeddiv">&#9808;&#9800;&#9810;&#9801;</div></center>
+<div class="controlls linkbutton">
+<center><div class="container">
+  <h1>Based on a random numbers generator.</h1>
+  <h2 id="predict"></h2>
+  <button class="future futurebutton" id="another">Know more</button><div class="informations futurebutton"><center><h3>Informations</h3></center><center><b>This is an example of how a random number generator can work as a fortune teller.</b></center></div><center><h2>You can look at another articles.</h2></center><center><a href="welcome.html"><button class="link linkbutton">INFO</button></a><a href="bestthree.html"><button class="link linkbutton">TOP 3</button></a></center>
+</div></center>
+<script>
+// #3 create a random sentence generator
+
+function getRandomInt(min, max) {
+  return Math.round(Math.random() * (max - min)) + min;
+}
+
+var predict = document.getElementById('predict');
+var one = 0;
+var two = 0;
+
+var predicts = function () {
+  switch ( getRandomInt( 1, 4 ) ) {
+    case 1:
+      one = 'Your life will change because';
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'you will meet a new person';
+          break;
+        case 2:
+          two = 'you will change job';
+          break;
+        case 3:
+          two = 'worry will enter your life';
+          break;
+        case 5:
+          two = 'someone you wouldnt expect will help you';
+          break;
+      }
+      break;
+    case 2:
+      one = "In the future";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'the person you missed will return to your life';
+          break;
+        case 2:
+          two = 'you will meet a new person';
+          break;
+        case 3:
+          two = 'someone you wouldnt expect will help you';
+          break;
+        case 5:
+          two = 'you will trust yourself more';
+          break;
+      }
+      break;
+    case 3:
+      one = "In the near future";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'new things will come and you will have to adapt';
+          break;
+        case 2:
+          two = 'the person you missed will return to your life';
+          break;
+        case 3:
+          two = 'you will meet a new person';
+          break;
+        case 5:
+          two = 'someone you wouldnt expect will help you';
+          break;
+      }
+      break;
+    case 4:
+      one = "Your life will change completely and then";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'it will be better';
+          break;
+        case 2:
+          two = 'the person you missed will return to your life';
+          break;
+        case 3:
+          two = 'someone you wouldnt expect will help you';
+          break;
+        case 5:
+          two = 'it wont be easy';
+          break;
+      }
+      break;
+  }
+  predict.textContent = one + ' ' + two + '.';
+};
+
+predicts();
+
+var another = document.getElementById('another');
+another.onmousedown = function(){ predicts(); };
+</script>
+<style>
+body {
+background-color: #6e6e6e;
+opacity: 1;
+background: linear-gradient(135deg, #6f7877 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(225deg, #3b3d3d 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(315deg, #6f7877 25%, transparent 25%) 0px 0/ 80px 80px, linear-gradient(45deg, #3b3d3d 25%, #8c9191 25%) 0px 0/ 80px 80px;
+}
+
+.container {
+  margin: 3em auto;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+b {
+  font-size: 50px;
+  font-family: Arial, sans serif;
+  color: white;
+}
+
+h2 {
+  margin: 15px 0 25px;
+  font-size: 60px;
+  font-weight: 100;
+  }
+}
+</style>
+</div>
+<style>
+ .controlls {
+ background-color: white;
+ height: 1850px;
+ width: 950px; 
+</style>
+<style>
+ .sign {
+ background-color: #4e4f4f;
+ height: 250px;
+ width: 950px; 
+ font-size: 170px;
+</style>
+<style>
+ .informations {
+ background-color: #4e4f4f;
+ height: 400px;
+ width: 900px; 
+ font-size: 65px;
+ margin-top: 200px;
+ margin-bottom: 200px;
+</style>
+<style>
+ .link {
+ height: 250px;
+ width: 470px;
+ font-size: 150px;
+</style>
+<style>
+ .future {
+  height: 450px;
+  width: 450px;
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 75px;
+}
+
+.future:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.future:hover {
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.future:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+.futurebutton {border-radius: 225px;}
+.linkbutton {border-radius: 30px;}
+.roundeddiv {border-radius: 30px;}
+</style>
+</body>
+</html>
+
+
