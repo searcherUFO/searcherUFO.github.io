@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Comment Box</title>
-  </head>
-  <body>
-    <h1>Comment Box</h1>
-    <div id="comment-container"></div>
-    <form id="comment-form">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name"><br><br>
-      <label for="comment">Comment:</label>
-      <textarea id="comment" name="comment"></textarea><br><br>
-      <button type="submit">Submit</button>
-    </form>
-    <script>// Load comments from XML file
+<head>
+	<title>Real-time Comment Box</title>
+	<script>// Load existing comments on page load
+window.onload = function() {
+  loadComments();
+}
+
+// Load comments from XML file
 function loadComments() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -82,47 +76,42 @@ function renderComment(name, comment) {
   commentDiv.appendChild(namePara);
   commentDiv.appendChild(commentPara);
   document.getElementById('comment-container').appendChild(commentDiv);
-  document.getElementById('name').value = '';
-  document.getElementById('comment').value = '';
+  document.getElementById('comment-input').value = ''; // clear the comment input field
 }
 
-// Load existing comments on page load
-window.onload = function() {
-loadComments();
-};
-
-// Save comment on form submit
-document.getElementById('comment-form').addEventListener('submit', function(event) {
-event.preventDefault();
-var name = document.getElementById('name').value;
-var comment = document.getElementById('comment').value;
-if (name && comment) {
+// Handle submit button click event
+document.getElementById('submit-btn').addEventListener('click', function(event) {
+event.preventDefault(); // prevent form submission
+var name = document.getElementById('name-input').value;
+var comment = document.getElementById('comment-input').value;
 saveComment(name, comment);
-}
 });
 
-// Clear comments
-document.getElementById('clear-comments').addEventListener('click', function() {
-var commentContainer = document.getElementById('comment-container');
-while (commentContainer.firstChild) {
-commentContainer.removeChild(commentContainer.firstChild);
-}
-localStorage.removeItem('comments');
-});
-
-// Load comments from localStorage on page load
-var comments = localStorage.getItem('comments');
-if (comments) {
+// Check if comments are stored in local storage and load them if available
+if (localStorage.getItem('comments')) {
+var xmlString = localStorage.getItem('comments');
 var parser = new DOMParser();
-var xmlDoc = parser.parseFromString(comments, 'text/xml');
-var savedComments = xmlDoc.getElementsByTagName('comment');
-for (var i = 0; i < savedComments.length; i++) {
-var nameElem = savedComments[i].getElementsByTagName('name')[0];
+var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+var comments = xmlDoc.getElementsByTagName('comment');
+var commentContainer = document.getElementById('comment-container');
+for (var i = 0; i < comments.length; i++) {
+var nameElem = comments[i].getElementsByTagName('name')[0];
 var name = nameElem.childNodes[0].nodeValue;
-var commentElem = savedComments[i].getElementsByTagName('text')[0];
+var commentElem = comments[i].getElementsByTagName('text')[0];
 var commentText = commentElem.childNodes[0].nodeValue;
 renderComment(name, commentText);
 }
 }</script>
-  </body>
+</head>
+<body>
+	<h1>Real-time Comment Box</h1>
+	<div id="comment-container"></div>
+	<form>
+		<label>Name:</label>
+		<input type="text" id="name" required><br>
+		<label>Comment:</label>
+		<textarea id="comment" required></textarea><br>
+		<input type="button" value="Submit" onclick="submitComment()">
+	</form>
+</body>
 </html>
