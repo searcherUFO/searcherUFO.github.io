@@ -2,8 +2,7 @@
 <html>
 <head>
 	<title>Real-time Comment Box</title>
-	<script>// Load existing comments on page load
-window.onload = function() {
+	<script>window.onload = function() {
   loadComments();
 }
 
@@ -76,42 +75,30 @@ function renderComment(name, comment) {
   commentDiv.appendChild(namePara);
   commentDiv.appendChild(commentPara);
   document.getElementById('comment-container').appendChild(commentDiv);
-  document.getElementById('comment-input').value = ''; // clear the comment input field
+  document.getElementById('name-input').value = '';
+  document.getElementById('comment-input').value = '';
 }
 
-// Handle submit button click event
-document.getElementById('submit-btn').addEventListener('click', function(event) {
-event.preventDefault(); // prevent form submission
-var name = document.getElementById('name-input').value;
-var comment = document.getElementById('comment-input').value;
-saveComment(name, comment);
-});
-
-// Check if comments are stored in local storage and load them if available
-if (localStorage.getItem('comments')) {
-var xmlString = localStorage.getItem('comments');
-var parser = new DOMParser();
-var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-var comments = xmlDoc.getElementsByTagName('comment');
-var commentContainer = document.getElementById('comment-container');
-for (var i = 0; i < comments.length; i++) {
-var nameElem = comments[i].getElementsByTagName('name')[0];
-var name = nameElem.childNodes[0].nodeValue;
-var commentElem = comments[i].getElementsByTagName('text')[0];
-var commentText = commentElem.childNodes[0].nodeValue;
-renderComment(name, commentText);
-}
+// Submit comment
+function submitComment() {
+  var name = document.getElementById('name-input').value;
+  var comment = document.getElementById('comment-input').value;
+  if (name === '' || comment === '') {
+    alert('Name and comment fields are required.');
+    return;
+  }
+  saveComment(name, comment);
 }</script>
 </head>
 <body>
 	<h1>Real-time Comment Box</h1>
-	<div id="comment-container"></div>
-	<form>
-		<label>Name:</label>
-		<input type="text" id="name" required><br>
-		<label>Comment:</label>
-		<textarea id="comment" required></textarea><br>
-		<input type="button" value="Submit" onclick="submitComment()">
-	</form>
+<div id="comment-container"></div>
+<form>
+  <input type="text" placeholder="Name" id="name-input">
+  <br>
+  <textarea placeholder="Comment" id="comment-input"></textarea>
+  <br>
+  <input type="button" value="Submit" onclick="submitComment()">
+</form>
 </body>
 </html>
