@@ -55,7 +55,7 @@
 			var comment = document.getElementById('comment').value;
 			var date = new Date().toISOString().slice(0, 10);
 			var xml = '<comment><name>' + name + '</name><email>' + email + '</email><date>' + date + '</date><text>' + comment + '</text></comment>';
-			xhr.open('POST', 'comments.xml', true);
+			xhr.open('POST', 'horoscopes.xml', true);
 			xhr.setRequestHeader('Content-type', 'application/xml');
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
