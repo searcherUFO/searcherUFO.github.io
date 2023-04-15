@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<horoscopes>
+  <horoscope>
+    <sign>Aries</sign>
+    <text>You will experience a major breakthrough in your career today.</text>
+  </horoscope>
+  <horoscope>
+    <sign>Taurus</sign>
+    <text>You will have a pleasant surprise in your love life today.</text>
+  </horoscope>
+  <horoscope>
+    <sign>Gemini</sign>
+    <text>You may face unexpected challenges in your work today.</text>
+  </horoscope>
+  <!-- add more horoscopes here -->
+</horoscopes>
