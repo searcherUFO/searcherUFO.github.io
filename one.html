@@ -1,37 +1,82 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Horoscope Generator</title>
-</head>
-<body>
-  <h1>Horoscope Generator</h1>
-  <div id="horoscope"></div>
-  
-  <script>
-    var xmlHttpRequest = new XMLHttpRequest();
-    var horoscopeIndex = 0;
+  <head>
+    <title>Horoscope Generator</title>
+  </head>
+  <body>
+    <h1>Horoscope Generator</h1>
+    <form>
+      <label for="sign-select">Select your horoscope sign:</label>
+      <select id="sign-select">
+        <option value="Aries">Aries</option>
+        <option value="Taurus">Taurus</option>
+        <option value="Gemini">Gemini</option>
+        <option value="Cancer">Cancer</option>
+        <!-- add the rest of the signs -->
+      </select>
+      <button type="submit">Get Horoscope</button>
+    </form>
+    <div id="prediction"></div>
+    <script>var xmlHttpRequest = new XMLHttpRequest();
+var predictionElement = document.getElementById('prediction');
+var signSelect = document.getElementById('sign-select');
+var horoscopes;
 
-    function displayHoroscope() {
-      xmlHttpRequest.open('GET', 'horoscopes.xml');
-      xmlHttpRequest.onload = function() {
-        if (xmlHttpRequest.status === 200) {
-          var xmlDoc = xmlHttpRequest.responseXML;
-          var horoscopeList = xmlDoc.getElementsByTagName('horoscope');
-          var horoscope = horoscopeList[horoscopeIndex];
-          var sign = horoscope.getElementsByTagName('sign')[0].textContent;
-          var text = horoscope.getElementsByTagName('text')[0].textContent;
-          var html = '<h2>' + sign + '</h2><p>' + text + '</p>';
-          document.getElementById('horoscope').innerHTML = html;
-          horoscopeIndex = (horoscopeIndex + 1) % horoscopeList.length; // increment index, wrap around to 0 when out of bounds
-        }
-      };
-      xmlHttpRequest.send();
-    }
+function loadHoroscopes() {
+  xmlHttpRequest.open('GET', 'horoscopes.xml');
+  xmlHttpRequest.onload = function() {
+    if (xmlHttpRequest.status === 200)</script>
+  {
+var xmlDoc = xmlHttpRequest.responseXML;
+horoscopes = xmlDoc.getElementsByTagName('horoscope');
+setInterval(updateHoroscope, 60000); // update horoscope every 6 hours
+}
+};
+xmlHttpRequest.send();
+}
 
-    displayHoroscope(); // display the initial horoscope
+function updateHoroscope() {
+// get the selected sign
+var selectedSign = signSelect.value;
 
-    setInterval(displayHoroscope, 0.1 * 60 * 60 * 1000); // update horoscope every 24 hours
-  </script>
-</body>
+// get all horoscopes for the selected sign
+var signHoroscopes = [];
+for (var i = 0; i < horoscopes.length; i++) {
+var horoscope = horoscopes[i];
+var sign = horoscope.getAttribute('sign');
+if (sign === selectedSign) {
+signHoroscopes.push(horoscope.textContent);
+}
+}
+
+// select a random horoscope
+var randomIndex = Math.floor(Math.random() * signHoroscopes.length);
+var horoscopeText = signHoroscopes[randomIndex];
+
+// display the horoscope
+predictionElement.textContent = horoscopeText;
+}
+
+loadHoroscopes(); // load the horoscopes for the first time
+
+// update the horoscope whenever the user selects a different sign
+signSelect.addEventListener('change', updateHoroscope);
+
+// delete previous horoscope for each sign every 6 hours
+setInterval(deletePreviousHoroscopes, 21600000);
+
+function deletePreviousHoroscopes() {
+for (var i = 0; i < horoscopes.length; i++) {
+var horoscope = horoscopes[i];
+var sign = horoscope.getAttribute('sign');
+var currentDate = new Date();
+var horoscopeDate = new Date(horoscope.getAttribute('date'));
+var timeDiff = currentDate.getTime() - horoscopeDate.getTime();
+var hoursDiff = timeDiff / (1000 * 3600);
+if (hoursDiff >= 6) {
+horoscope.parentNode.removeChild(horoscope);
+}
+}
+}
+  </body>
 </html>
