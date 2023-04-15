@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Horoscope Generator</title>
+</head>
+<body>
+  <h1>Horoscope Generator</h1>
+  <div id="horoscope"></div>
+  
+  <script>
+    var xmlHttpRequest = new XMLHttpRequest();
+    var horoscopeIndex = 0;
+
+    function displayHoroscope() {
+      xmlHttpRequest.open('GET', 'horoscopes.xml');
+      xmlHttpRequest.onload = function() {
+        if (xmlHttpRequest.status === 200) {
+          var xmlDoc = xmlHttpRequest.responseXML;
+          var horoscopeList = xmlDoc.getElementsByTagName('horoscope');
+          var horoscope = horoscopeList[horoscopeIndex];
+          var sign = horoscope.getElementsByTagName('sign')[0].textContent;
+          var text = horoscope.getElementsByTagName('text')[0].textContent;
+          var html = '<h2>' + sign + '</h2><p>' + text + '</p>';
+          document.getElementById('horoscope').innerHTML = html;
+          horoscopeIndex = (horoscopeIndex + 1) % horoscopeList.length; // increment index, wrap around to 0 when out of bounds
+        }
+      };
+      xmlHttpRequest.send();
+    }
+
+    displayHoroscope(); // display the initial horoscope
+
+    setInterval(displayHoroscope, 24 * 60 * 60 * 1000); // update horoscope every 24 hours
+  </script>
+</body>
+</html>
