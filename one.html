@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Comment Box Example</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>// Load comments from XML file
+function loadComments() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var xmlDoc = this.responseXML;
+            var comments = xmlDoc.getElementsByTagName("comment");
+            for (var i = 0; i < comments.length; i++) {
+                var comment = comments[i];
+                var name = comment.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+                var text = comment.getElementsByTagName("text")[0].childNodes[0].nodeValue;
+                var date = comment.getElementsByTagName("date")[0].childNodes[0].nodeValue;
+                renderComment(name, text, date);
+            }
+        }
+    };
+    xhr.open("GET", "comments.xml", true);
+    xhr.send();
+}
+
+// Render a comment
+function renderComment(name, text, date) {
+    var container = document.getElementById("comment-container");
+    var commentDiv = document.createElement("div");
+    commentDiv.classList.add("comment-box");
+    var nameHeader = document.createElement("h5");
+    nameHeader.classList.add("comment-author");
+    nameHeader.appendChild(document.createTextNode(name));
+    var textParagraph = document.createElement("p");
+    textParagraph.classList.add("comment-text");
+    textParagraph.appendChild(document.createTextNode(text));
+    var dateParagraph = document.createElement("p");
+    dateParagraph.classList.add("comment-date");
+    dateParagraph.appendChild(document.createTextNode(date));
+    commentDiv.appendChild(nameHeader);
+    commentDiv.appendChild(textParagraph);
+    commentDiv.appendChild(dateParagraph);
+    container.appendChild(commentDiv);
+}
+
+// Add event listener to form submit
+document.getElementById("comment-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    var name = document.getElementById("name").value;
+    var text = document.getElementById("comment").value;
+    var date = new Date().toLocaleString();
+    renderComment(name, text, date);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "savecomment.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send("name=" + name + "&text=" + text + "&date=" + date);
+    document.getElementById("comment-form").reset();
+});
+
+// Load comments on page load
+loadComments();</script>
+</head>
+<body>
+	<div id="comment-container"></div>
+	<form id="comment-form">
+		<label>Name:</label><br>
+		<input type="text" id="name" required><br>
+		<label>Comment:</label><br>
+		<textarea id="comment" required></textarea><br>
+		<button type="submit">Submit</button>
+	</form>
+</body>
+</html>
