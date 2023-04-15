@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Comment Box</title>
+</head>
+<body>
+	<h1>Comment Box</h1>
+	<div id="comments"></div>
+	<form id="comment-form">
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name"><br>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email"><br>
+		<label for="comment">Comment:</label><br>
+		<textarea id="comment" name="comment"></textarea><br>
+		<input type="submit" value="Submit">
+	</form>
+	
+	<script>
+		// Initialize XMLHTTPRequest object
+		var xhr = new XMLHttpRequest();
 
+		// Load comments on page load
+		window.onload = function() {
+			displayComments();
+		}
+
+		// Display comments function
+		function displayComments() {
+			xhr.open('GET', 'comments.xml', true);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var xmlDoc = xhr.responseXML;
+					var comments = xmlDoc.getElementsByTagName('comment');
+					var html = '';
+					for (var i = 0; i < comments.length; i++) {
+						var name = comments[i].getElementsByTagName('name')[0].childNodes[0].nodeValue;
+						var email = comments[i].getElementsByTagName('email')[0].childNodes[0].nodeValue;
+						var comment = comments[i].getElementsByTagName('text')[0].childNodes[0].nodeValue;
+						var date = comments[i].getElementsByTagName('date')[0].childNodes[0].nodeValue;
+						html += '<div><strong>' + name + '</strong> (' + email + ') - ' + date + '<br>' + comment + '</div>';
+					}
+					document.getElementById('comments').innerHTML = html;
+				}
+			}
+			xhr.send(null);
+		}
+
+		// Add comment function
+		document.getElementById('comment-form').onsubmit = function(e) {
+			e.preventDefault();
+			var name = document.getElementById('name').value;
+			var email = document.getElementById('email').value;
+			var comment = document.getElementById('comment').value;
+			var date = new Date().toISOString().slice(0, 10);
+			var xml = '<comment><name>' + name + '</name><email>' + email + '</email><date>' + date + '</date><text>' + comment + '</text></comment>';
+			xhr.open('POST', 'comments.xml', true);
+			xhr.setRequestHeader('Content-type', 'application/xml');
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					displayComments();
+					document.getElementById('comment-form').reset();
+				}
+			}
+			xhr.send(xml);
+		}
+	</script>
+</body>
+</html>
