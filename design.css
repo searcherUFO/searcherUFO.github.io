@@ -1,0 +1,111 @@
+h2 { 
+ color: #140880;
+ font-size: 39px;
+ font-family: Arial, sans-serif;
+}
+ .UFO-Div {
+ background-color: #fcfcfc;
+ width: 915px;
+ border-radius: 40px;
+}
+    body {
+      background-color: #c9c9c9;
+      opacity: 1;
+      background: linear-gradient(135deg, #bababa 25%, transparent 25%) -40px 0/ 80px 80px, 
+                  linear-gradient(225deg, #ababab 25%, transparent 25%) -40px 0/ 80px 80px, 
+                  linear-gradient(315deg, #bababa 25%, transparent 25%) 0px 0/ 80px 80px, 
+                  linear-gradient(45deg, #ababab 25%, #c9c9c9 25%) 0px 0/ 80px 80px;
+    }
+   logo1 {
+   color: white;
+   font-size: 6em;
+   font-family: Arial, sans-serif;
+   font-weight: bold;
+}
+   logo2 {
+   color: #42eda0;
+}
+       .UFO-LinkButton {
+      display: inline-block;
+      padding: 15px 25px;
+      font-size: 126px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #000000;
+      background-color: #f2f2f2;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 9px #999;
+      width: 445px;
+      height: 195px;
+    }
+    
+    .UFO-LinkButton:hover {
+      background-color: #e3e3e3;
+    }
+    
+    .UFO-LinkButton:active {
+      background-color: #e3e3e3;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+    .UFO-DarkModeButton {
+      display: inline-block;
+      padding: 15px 25px;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #ff5e5e;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 9px #999;
+      margin-bottom: -5px;
+      weight: 230px;
+      height: 70px;
+    }
+    
+    .UFO-DarkModeButton:hover {
+      background-color: #fc3232;
+    }
+    
+    .UFO-DarkModeButton:active {
+      background-color: #fc3232;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+    
+    /* Dark mode styles */
+    .dark-mode {
+      background-color: #6e6e6e;
+      opacity: 1;
+      background: linear-gradient(135deg, #555555 25%, transparent 25%) -40px 0/ 80px 80px, 
+                  linear-gradient(225deg, #292929 25%, transparent 25%) -40px 0/ 80px 80px, 
+                  linear-gradient(315deg, #555555 25%, transparent 25%) 0px 0/ 80px 80px, 
+                  linear-gradient(45deg, #292929 25%, #4a4a4a 25%) 0px 0/ 80px 80px;
+    }
+    
+    .dark-mode .UFO-DarkModeButton {
+      background-color: #555;
+      box-shadow: 0 9px #000;
+    }
+    
+    .dark-mode .UFO-DarkModeButton:hover {
+      background-color: #444;
+    }
+    
+    .dark-mode .UFO-DarkModeButton:active {
+      background-color: #444;
+      box-shadow: 0 5px #111;
+      transform: translateY(4px);
+    }
+    UFO-Text {
+    font-weight: bold;
+    font-family: arial, sans serif;
+    color: #000000;
