@@ -46,12 +46,14 @@ h2 {
     
     .UFO-LinkButton:hover {
       background-color: #e3e3e3;
-    }
+      user-select: none;
+   }
     
     .UFO-LinkButton:active {
       background-color: #e3e3e3;
       box-shadow: 0 5px #666;
       transform: translateY(4px);
+      user-select: none;
     }
     .UFO-DarkModeButton {
       display: inline-block;
@@ -70,16 +72,19 @@ h2 {
       margin-bottom: -5px;
       width: 245px;
       height: 70px;
+      user-select: none;
     }
     
     .UFO-DarkModeButton:hover {
       background-color: #fc3232;
+      user-select: none;
     }
     
     .UFO-DarkModeButton:active {
       background-color: #fc3232;
       box-shadow: 0 5px #666;
       transform: translateY(4px);
+      user-select: none;
     }
     
     /* Dark mode styles */
@@ -95,16 +100,19 @@ h2 {
     .dark-mode .UFO-DarkModeButton {
       background-color: #555;
       box-shadow: 0 9px #000;
+      user-select: none;
     }
     
     .dark-mode .UFO-DarkModeButton:hover {
       background-color: #444;
+      user-select: none;
     }
     
     .dark-mode .UFO-DarkModeButton:active {
       background-color: #444;
       box-shadow: 0 5px #111;
       transform: translateY(4px);
+      user-select: none;
     }
     UFO-Text {
     font-weight: bold;
