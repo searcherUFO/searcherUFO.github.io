@@ -41,6 +41,7 @@ h2 {
       box-shadow: 0 9px #999;
       width: 445px;
       height: 195px;
+      user-select: none;
     }
     
     .UFO-LinkButton:hover {
