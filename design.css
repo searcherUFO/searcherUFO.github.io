@@ -109,3 +109,58 @@ h2 {
     font-weight: bold;
     font-family: arial, sans serif;
     color: #000000;
+.chatbox {
+    width: 550px;
+    height: 700px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    overflow-y: scroll;
+  }
+
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .user-message {
+    background-color: #ffffff;
+    color: red;
+  }
+
+  .bot-message {
+    background-color: #d7f2d7;
+    color: green; 
+    font-size: 25px;
+  }
+
+  .send-button {
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    width: 110px;
+    height: 70px;
+    margin-top: 20px;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .send-button:hover {
+    background-color: black;
+    color: white;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .messagesend {
+    width: 471px;
+    height: 66px;
+    border: none;
+    font-size: 21px;
+    margin-top: 20px;
+    border-radius: 20px;
+    font-family: "JetBrains Mono", monospace;
+  }
