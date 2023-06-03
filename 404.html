@@ -19,54 +19,23 @@ const setFavicon = (emoji) => {
 
 setFavicon('👽');
 </script>
-  <style>
- body {
-background-color: #6e6e6e;
-opacity: 1;
-background: linear-gradient(135deg, #6f7877 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(225deg, #3b3d3d 25%, transparent 25%) -40px 0/ 80px 80px, linear-gradient(315deg, #6f7877 25%, transparent 25%) 0px 0/ 80px 80px, linear-gradient(45deg, #3b3d3d 25%, #8c9191 25%) 0px 0/ 80px 80px;
-</style>
-<center><h3 style="font-size:5.5em; ">Searcher "<t>UFO</t>"</h3></center>
-<center><h1>404</h1></center>
-<style>
- t {
- color: #42eda0;
- font-family: Arial, sans-serif;
-</style>
-<style>
- h3 {
- color: white;
- font-family: Arial, sans-serif;
-</style>
-    <center><div class="controlls linkbutton"><center><h2>This page does not exist, but here is a link to our pages that do exist and you can visit them.
-</h2></center>
-<center><a href="horoscope.html"><button class="link linkbutton">Future</button></a><a href="bestthree.html"><button class="link linkbutton">TOP 3</button></a></center></div>
-<style>
- h2 { 
- color: #140880;
- font-size: 50px;
- font-family: Arial, sans-serif;
-</style>
-<style>
- h1 { 
- font-size: 150px;
- font-family: Arial, sans-serif;
- color: #fc5353;
-</style>
-<style>
- .controlls {
- background-color: white;
- height: 430px;
- width: 895px; 
-</style>
-<style>
- .link {
- height: 195px;
- width: 445px;
- font-size: 126px;
- font-family: Copperplate, Papyrus, fantasy;
- cursor: pointer;
-}
-.linkbutton {border-radius: 30px;}
-</style>
+  <link rel="stylesheet" href="design.css">
+<button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
+<center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
+<center><logo1>404</logo1></center>
+<center><div class="UFO-Div" style="height:525px"><center><UFO-Text style="font-size:65px">This page does not exist, but here is a link to our pages that do exist and you can visit them.</UFO-Text></center><center><a href="bestthree.html"><button class="UFO-LinkButton">TOP 3</button></a><a href="index.html"><button class="UFO-LinkButton">2Dvs3D</button></a></center></div></center>
+<script>
+    const darkModeButton = document.getElementById('darkModeButton');
+    const body = document.body;
+
+    darkModeButton.addEventListener('click', function() {
+      body.classList.toggle('dark-mode');
+      if (body.classList.contains('dark-mode')) {
+        darkModeButton.textContent = 'Dark Mode ON';
+      } else {
+        darkModeButton.textContent = 'Dark Mode OFF';
+      }
+    });
+  </script>
 </body>
 </html>
