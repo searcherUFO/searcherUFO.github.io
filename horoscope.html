@@ -145,72 +145,72 @@ setFavicon('♒');
       var one = '';
       var two = '';
 
-      switch (getRandomInt(1, 4)) {
+      switch ( getRandomInt( 1, 4 ) ) {
+    case 1:
+      one = 'Your life will change because';
+      switch ( getRandomInt( 1, 5 ) ) {
         case 1:
-          one = 'Your life will change because';
-          switch (getRandomInt(1, 5)) {
-            case 1:
-              two = 'you will meet a new person';
-              break;
-            case 2:
-              two = 'you will change jobs';
-              break;
-            case 3:
-              two = 'worry will enter your life';
-              break;
-            case 4:
-              two = 'someone you wouldn\'t expect will help you';
-              break;
-          }
+          two = 'you will meet a new person';
           break;
         case 2:
-          one = "In the future";
-          switch (getRandomInt(1, 5)) {
-            case 1:
-              two = 'the person you missed will return to your life';
-              break;
-            case 2:
-              two = 'you will meet a new person';
-              break;
-            case 3:
-              two = 'someone you wouldn\'t expect will help you';
-              break;
-            case 4:
-              two = 'you will trust yourself more';
-              break;
-          }
+          two = 'you will change job';
           break;
         case 3:
-          one = "In the near future";
-          switch (getRandomInt(1, 5)) {
-            case 1:
-              two = 'new things will come and you will have to adapt';
-              break;
-            case 2:
-              two = 'the person you missed will return to your life';
-              break;
-            case 3:
-              two = 'you will meet a new person';
-              break;
-            case 4:
-              two = 'someone you wouldn\'t expect will help you';
-              break;
-          }
+          two = 'worry will enter your life';
           break;
-        case 4:
-          one = "Your life will change completely and then";
-          switch (getRandomInt(1, 5)) {
-            case 1:
-              two = 'it will be better';
-              break;
-            case 2:
-              two = 'the person you missed will return to your life';
-              break;
-            case 3:
-              two = 'someone you wouldn\'t expect will help you';
-              break;
-            case 4:
-              two = 'it won\'t be easy';
+        case 5:
+          two = 'someone you wouldnt expect will help you';
+          break;
+      }
+      break;
+    case 2:
+      one = "In the future";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'the person you missed will return to your life';
+          break;
+        case 2:
+          two = 'you will meet a new person';
+          break;
+        case 3:
+          two = 'someone you wouldnt expect will help you';
+          break;
+        case 5:
+          two = 'you will trust yourself more';
+          break;
+      }
+      break;
+    case 3:
+      one = "In the near future";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'new things will come and you will have to adapt';
+          break;
+        case 2:
+          two = 'the person you missed will return to your life';
+          break;
+        case 3:
+          two = 'you will meet a new person';
+          break;
+        case 5:
+          two = 'someone you wouldnt expect will help you';
+          break;
+      }
+      break;
+    case 4:
+      one = "Your life will change completely and then";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'it will be better';
+          break;
+        case 2:
+          two = 'the person you missed will return to your life';
+          break;
+        case 3:
+          two = 'someone you wouldnt expect will help you';
+          break;
+        case 5:
+          two = 'it wont be easy';
               break;
           }
           break;
