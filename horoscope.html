@@ -20,29 +20,13 @@ const setFavicon = (emoji) => {
 
 setFavicon('♒');
 </script>
-<title>Online Fortune Teller Bot with Random Horoscope Generator</title>
+<title>Online Fortune Teller and Random Future Prediction Generator</title>
 <link rel="stylesheet" href="design.css">
 <button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
 <center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
 <center><logo1>Horoscopes</logo1></center>
-<center><div class="UFO-Div" style="height:860px;"><div class="chatbox" id="chatbox"><div class="bot-message message"><div id="prediction">Choose sign to generate random prediction</div></div><div class="bot-message message">
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Aries</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Taurus</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Gemini</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Cancer</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Leo</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Virgo</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Libra</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Scorpio</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Sagittarius</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Capricorn</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Aquarius</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Pisces</button></div></div>
+<center><div class="UFO-Div" style="height:860px;"><div class="chatbox" id="chatbox"><div class="bot-message message"><div id="predict">Click the button to generate random prediction</div></div><div class="bot-message message">
+  <button class="UFO-LinkButton" id="another">Predict</button></div></div>
 <div class="input-container">
   <input class="messagesend" type="text" id="userInput" autocomplete="off" placeholder="How does this work?" />
   <button class="send-button" onclick="sendMessage()">Send</button>
@@ -82,10 +66,13 @@ setFavicon('♒');
       const botMessage = createMessage('bot-message', 'Minecraft is a strategic game in which you can build and fight. In this game, there is multiplayer and skins. There is also crafting and weapons in Minecraft.');
       chatbox.appendChild(botMessage);
     } else if (lowercaseInput.includes('this work')) {
-      const botMessage = createMessage('bot-message', 'This Bot is based on a random number generator and one answer is randomly assigned to each number, which will be displayed after clicking the button.');
+      const botMessage = createMessage('bot-message', 'This is an example of how a random number generator can work as a fortune teller.');
       chatbox.appendChild(botMessage);
     } else if (lowercaseInput.includes('chess')) {
       const botMessage = createMessage('bot-message', 'Chess is a very logical and strategic game. Not everyone has the patience for chess, but almost everyone can learn it. The game itself is both complex and simple at the same time. Recently, online chess has become quite popular. You can play them against other players or against bots. Some online chess games may even have bots that will teach you chess. Chess has relatively simple rules, but there are also lesser-known parts that not many people know about. The game takes place on a simple board of 8x8 squares.');
+      chatbox.appendChild(botMessage);
+    } else if (lowercaseInput.includes('doesnt work')) {
+      const botMessage = createMessage('bot-message', 'Sorry, but I cant help you with this problem.');
       chatbox.appendChild(botMessage);
     } else {
       const userMessage = createMessage('user-message', 'Error-message: ' + userInput);
@@ -148,33 +135,94 @@ setFavicon('♒');
 
   loadConversationFromURL();
   
-      function showPrediction(button) {
-      var predictions = [
-        "Your life will change because you will meet a new person.",
-        "Your life will change because you will change job.",
-        "Your life will change completely because someone you wouldnt expect will help you.",
-        "Your life will change because the person you missed will return to your life.",
-      "Your life will change completely because new things will come and you will have to adapt.",
-      "Your life will change completely and then it wont be easy",
-      "In the near future it will be better",
-      "In the near future you will trust yourself more",
-      "Your life will change completely and then you will trust yourself more",
-      "In the future the person you missed will return to your life.",
-      "Your life will change completely and then the person you missed will return to your life.",     
-      "In the future your life will change completely and then someone you wouldnt expect will help you.",
-      "In the future your life will change and then you will trust yourself more.",
-      "In the near future new things will come and you will have to adapt.",
-      "Your life will change because it wont be easy",
-      "Your life will change because it will be better",
-      "In the near future it wont be easy",
-      ];
+          // #3 create a random sentence generator
 
-      var prediction = document.getElementById("prediction");
-      var randomIndex = Math.floor(Math.random() * predictions.length);
+function getRandomInt(min, max) {
+  return Math.round(Math.random() * (max - min)) + min;
+}
 
-      prediction.textContent = predictions[randomIndex];
-      button.disabled = true;
-    }
+var predict = document.getElementById('predict');
+var one = 0;
+var two = 0;
+
+var predicts = function () {
+  switch ( getRandomInt( 1, 4 ) ) {
+    case 1:
+      one = 'Your life will change because';
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'you will meet a new person';
+          break;
+        case 2:
+          two = 'you will change job';
+          break;
+        case 3:
+          two = 'worry will enter your life';
+          break;
+        case 5:
+          two = 'someone you wouldnt expect will help you';
+          break;
+      }
+      break;
+    case 2:
+      one = "In the future";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'the person you missed will return to your life';
+          break;
+        case 2:
+          two = 'you will meet a new person';
+          break;
+        case 3:
+          two = 'someone you wouldnt expect will help you';
+          break;
+        case 5:
+          two = 'you will trust yourself more';
+          break;
+      }
+      break;
+    case 3:
+      one = "In the near future";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'new things will come and you will have to adapt';
+          break;
+        case 2:
+          two = 'the person you missed will return to your life';
+          break;
+        case 3:
+          two = 'you will meet a new person';
+          break;
+        case 5:
+          two = 'someone you wouldnt expect will help you';
+          break;
+      }
+      break;
+    case 4:
+      one = "Your life will change completely and then";
+      switch ( getRandomInt( 1, 5 ) ) {
+        case 1:
+          two = 'it will be better';
+          break;
+        case 2:
+          two = 'the person you missed will return to your life';
+          break;
+        case 3:
+          two = 'someone you wouldnt expect will help you';
+          break;
+        case 5:
+          two = 'it wont be easy';
+          break;
+      }
+      break;
+  }
+  predict.textContent = one + ' ' + two + '.';
+};
+
+predicts();
+
+var another = document.getElementById('another');
+another.onmousedown = function(){ predicts(); };
   
       const darkModeButton = document.getElementById('darkModeButton');
     const body = document.body;
