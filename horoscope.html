@@ -136,7 +136,7 @@ setFavicon('♒');
   loadConversationFromURL();
   
     function getRandomInt(min, max) {
-      return Math.round(Math.random() * (max - min)) + min;
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     var predictionElement = document.getElementById('prediction');
@@ -145,76 +145,77 @@ setFavicon('♒');
       var one = '';
       var two = '';
 
-      while (one === '' || two === '') {   
-      switch ( getRandomInt( 1, 4 ) ) {
-    case 1:
-      one = 'Your life will change because';
-      switch ( getRandomInt( 1, 5 ) ) {
-        case 1:
-          two = 'you will meet a new person';
-          break;
-        case 2:
-          two = 'you will change job';
-          break;
-        case 3:
-          two = 'worry will enter your life';
-          break;
-        case 5:
-          two = 'someone you wouldnt expect will help you';
-          break;
-      }
-      break;
-    case 2:
-      one = "In the future";
-      switch ( getRandomInt( 1, 5 ) ) {
-        case 1:
-          two = 'the person you missed will return to your life';
-          break;
-        case 2:
-          two = 'you will meet a new person';
-          break;
-        case 3:
-          two = 'someone you wouldnt expect will help you';
-          break;
-        case 5:
-          two = 'you will trust yourself more';
-          break;
-      }
-      break;
-    case 3:
-      one = "In the near future";
-      switch ( getRandomInt( 1, 5 ) ) {
-        case 1:
-          two = 'new things will come and you will have to adapt';
-          break;
-        case 2:
-          two = 'the person you missed will return to your life';
-          break;
-        case 3:
-          two = 'you will meet a new person';
-          break;
-        case 5:
-          two = 'someone you wouldnt expect will help you';
-          break;
-      }
-      break;
-    case 4:
-      one = "Your life will change completely and then";
-      switch ( getRandomInt( 1, 5 ) ) {
-        case 1:
-          two = 'it will be better';
-          break;
-        case 2:
-          two = 'the person you missed will return to your life';
-          break;
-        case 3:
-          two = 'someone you wouldnt expect will help you';
-          break;
-        case 5:
-          two = 'it wont be easy';
-              break;
-          }
-          break;
+      while (one === '' || two === '') {
+        switch (getRandomInt(1, 4)) {
+          case 1:
+            one = 'Your life will change because';
+            switch (getRandomInt(1, 5)) {
+              case 1:
+                two = 'you will meet a new person';
+                break;
+              case 2:
+                two = 'you will change jobs';
+                break;
+              case 3:
+                two = 'worry will enter your life';
+                break;
+              case 4:
+                two = 'someone you wouldn\'t expect will help you';
+                break;
+            }
+            break;
+          case 2:
+            one = "In the future";
+            switch (getRandomInt(1, 5)) {
+              case 1:
+                two = 'the person you missed will return to your life';
+                break;
+              case 2:
+                two = 'you will meet a new person';
+                break;
+              case 3:
+                two = 'someone you wouldn\'t expect will help you';
+                break;
+              case 4:
+                two = 'you will trust yourself more';
+                break;
+            }
+            break;
+          case 3:
+            one = "In the near future";
+            switch (getRandomInt(1, 5)) {
+              case 1:
+                two = 'new things will come and you will have to adapt';
+                break;
+              case 2:
+                two = 'the person you missed will return to your life';
+                break;
+              case 3:
+                two = 'you will meet a new person';
+                break;
+              case 4:
+                two = 'someone you wouldn\'t expect will help you';
+                break;
+            }
+            break;
+          case 4:
+            one = "Your life will change completely and then";
+            switch (getRandomInt(1, 5)) {
+              case 1:
+                two = 'it will be better';
+                break;
+              case 2:
+                two = 'the person you missed will return to your life';
+                break;
+              case 3:
+                two = 'someone you wouldn\'t expect will help you';
+                break;
+              case 4:
+                two = 'it won\'t be easy';
+                break;
+            }
+            break;
+        }
       }
 
       predictionElement.textContent = one + ' ' + two + '.';
