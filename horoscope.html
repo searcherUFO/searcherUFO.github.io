@@ -25,8 +25,8 @@ setFavicon('♒');
 <button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
 <center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
 <center><logo1>Horoscopes</logo1></center>
-<center><div class="UFO-Div" style="height:860px;"><div class="chatbox" id="chatbox"><div class="bot-message message"><div id="predict">Click the button to generate random prediction</div></div><div class="bot-message message">
-  <button class="UFO-LinkButton" id="another">Predict</button></div></div>
+<center><div class="UFO-Div" style="height:860px;"><div class="chatbox" id="chatbox"><div class="bot-message message"><div id="prediction">Click the button to generate random prediction</div></div><div class="bot-message message">
+  <button class="UFO-LinkButton" onclick="generateRandomPrediction()">Predict</button></div></div>
 <div class="input-container">
   <input class="messagesend" type="text" id="userInput" autocomplete="off" placeholder="How does this work?" />
   <button class="send-button" onclick="sendMessage()">Send</button>
@@ -135,94 +135,89 @@ setFavicon('♒');
 
   loadConversationFromURL();
   
-          // #3 create a random sentence generator
+    function getRandomInt(min, max) {
+      return Math.round(Math.random() * (max - min)) + min;
+    }
 
-function getRandomInt(min, max) {
-  return Math.round(Math.random() * (max - min)) + min;
-}
+    var predictionElement = document.getElementById('prediction');
 
-var predict = document.getElementById('predict');
-var one = 0;
-var two = 0;
+    function generateRandomPrediction() {
+      var one = '';
+      var two = '';
 
-var predicts = function () {
-  switch ( getRandomInt( 1, 4 ) ) {
-    case 1:
-      one = 'Your life will change because';
-      switch ( getRandomInt( 1, 5 ) ) {
+      switch (getRandomInt(1, 4)) {
         case 1:
-          two = 'you will meet a new person';
+          one = 'Your life will change because';
+          switch (getRandomInt(1, 5)) {
+            case 1:
+              two = 'you will meet a new person';
+              break;
+            case 2:
+              two = 'you will change jobs';
+              break;
+            case 3:
+              two = 'worry will enter your life';
+              break;
+            case 4:
+              two = 'someone you wouldn\'t expect will help you';
+              break;
+          }
           break;
         case 2:
-          two = 'you will change job';
+          one = "In the future";
+          switch (getRandomInt(1, 5)) {
+            case 1:
+              two = 'the person you missed will return to your life';
+              break;
+            case 2:
+              two = 'you will meet a new person';
+              break;
+            case 3:
+              two = 'someone you wouldn\'t expect will help you';
+              break;
+            case 4:
+              two = 'you will trust yourself more';
+              break;
+          }
           break;
         case 3:
-          two = 'worry will enter your life';
+          one = "In the near future";
+          switch (getRandomInt(1, 5)) {
+            case 1:
+              two = 'new things will come and you will have to adapt';
+              break;
+            case 2:
+              two = 'the person you missed will return to your life';
+              break;
+            case 3:
+              two = 'you will meet a new person';
+              break;
+            case 4:
+              two = 'someone you wouldn\'t expect will help you';
+              break;
+          }
           break;
-        case 5:
-          two = 'someone you wouldnt expect will help you';
-          break;
-      }
-      break;
-    case 2:
-      one = "In the future";
-      switch ( getRandomInt( 1, 5 ) ) {
-        case 1:
-          two = 'the person you missed will return to your life';
-          break;
-        case 2:
-          two = 'you will meet a new person';
-          break;
-        case 3:
-          two = 'someone you wouldnt expect will help you';
-          break;
-        case 5:
-          two = 'you will trust yourself more';
-          break;
-      }
-      break;
-    case 3:
-      one = "In the near future";
-      switch ( getRandomInt( 1, 5 ) ) {
-        case 1:
-          two = 'new things will come and you will have to adapt';
-          break;
-        case 2:
-          two = 'the person you missed will return to your life';
-          break;
-        case 3:
-          two = 'you will meet a new person';
-          break;
-        case 5:
-          two = 'someone you wouldnt expect will help you';
+        case 4:
+          one = "Your life will change completely and then";
+          switch (getRandomInt(1, 5)) {
+            case 1:
+              two = 'it will be better';
+              break;
+            case 2:
+              two = 'the person you missed will return to your life';
+              break;
+            case 3:
+              two = 'someone you wouldn\'t expect will help you';
+              break;
+            case 4:
+              two = 'it won\'t be easy';
+              break;
+          }
           break;
       }
-      break;
-    case 4:
-      one = "Your life will change completely and then";
-      switch ( getRandomInt( 1, 5 ) ) {
-        case 1:
-          two = 'it will be better';
-          break;
-        case 2:
-          two = 'the person you missed will return to your life';
-          break;
-        case 3:
-          two = 'someone you wouldnt expect will help you';
-          break;
-        case 5:
-          two = 'it wont be easy';
-          break;
-      }
-      break;
-  }
-  predict.textContent = one + ' ' + two + '.';
-};
 
-predicts();
-
-var another = document.getElementById('another');
-another.onmousedown = function(){ predicts(); };
+      predictionElement.textContent = one + ' ' + two + '.';
+    }
   
       const darkModeButton = document.getElementById('darkModeButton');
     const body = document.body;
