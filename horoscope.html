@@ -20,36 +20,42 @@ const setFavicon = (emoji) => {
 
 setFavicon('♒');
 </script>
-<title>Online Fortune Teller Bot with Random Horoscope Generator</title>
 <link rel="stylesheet" href="design.css">
+<title>Online Fortune Teller - Chatbot with Prediction Generator</title>
 <button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
 <center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
-<center><logo1>Horoscopes</logo1></center>
-<center><div class="UFO-Div" style="height:860px;"><div class="chatbox" id="chatbox"><div class="bot-message message"><div id="prediction">Choose sign to generate random prediction</div></div><div class="bot-message message">
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Aries</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Taurus</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Gemini</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Cancer</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Leo</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Virgo</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Libra</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Scorpio</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Sagittarius</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Capricorn</button>
-  <br>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Aquarius</button>
-  <button class="UFO-DarkModeButton" onclick="showPrediction(this)">Pisces</button></div></div>
+<center><logo1>Fortune Teller AI</logo1></center>
+<center>
+<div class="UFO-Div" style="height:860px;">
+<div class="chatbox" id="chatbox">
+<div class="bot-message message">
+Fortune Teller AI is a chatbot that can generate random predictions of the future, but can also calculate simple mathematical examples and answer questions.
+</div>
+</div>
 <div class="input-container">
-  <input class="messagesend" type="text" id="userInput" autocomplete="off" placeholder="How does this work?" />
+  <input class="messagesend" type="text" id="userInput" autocomplete="off" placeholder="Can you generate a prediction?" />
   <button class="send-button" onclick="sendMessage()">Send</button>
-</div></div></center>
-<center><div class="UFO-Div" style="height:330px;"><center><h2>click the button to copy the chat URL so that next time you can continue where you left off</h2></center><center><button class="UFO-LinkButton" onclick="copyURL()">URL</button></center></div></center>
+</div>
+</div>
+</center>
+<center>
+<div class="UFO-Div" style="height:330px;"><center><h2>click the button to copy the chat URL so that next time you can continue where you left off</h2></center><center><button class="UFO-LinkButton" onclick="copyURL()">URL</button></center>
+</div>
+</center>
 <script>
-          function copyURL() {
+                  const darkModeButton = document.getElementById('darkModeButton');
+    const body = document.body;
+
+    darkModeButton.addEventListener('click', function() {
+      body.classList.toggle('dark-mode');
+      if (body.classList.contains('dark-mode')) {
+        darkModeButton.textContent = 'Dark Mode ON';
+      } else {
+        darkModeButton.textContent = 'Dark Mode OFF';
+      }
+    });
+            
+            function copyURL() {
       var urlInput = document.createElement("input");
       urlInput.value = window.location.href;
       document.body.appendChild(urlInput);
@@ -57,8 +63,13 @@ setFavicon('♒');
       document.execCommand("copy");
       document.body.removeChild(urlInput);
     }
-      
-      function sendMessage() {
+  
+  var previousUserInput = ''; // Store the previous user input
+  var mood = ''; // Track the chatbot's mood
+  var future = '';
+  var morefuture = '';
+  
+  function sendMessage() {
     const userInput = document.getElementById('userInput').value;
     const chatbox = document.getElementById('chatbox');
 
@@ -68,12 +79,37 @@ setFavicon('♒');
       const result = eval(userInput); // Evaluate the expression
       const botMessage = createMessage('bot-message', 'Result: ' + result);
       chatbox.appendChild(botMessage);
+    } else if (lowercaseInput.includes('future')) {
+      if (previousUserInput.toLowerCase().includes('future')) {
+        future = 'But there are no further predictions ';
+        morefuture = 'at this time';
+      } else {
+        future = getFuture();
+        morefuture = getMoreFuture();
+      }
+      const botMessage = createMessage('bot-message', 'This prediction works on the basis of a random number generator that selects the sentences that will make the prediction. Predictions are made completely randomly from pre-prepared sentences. ' + future + morefuture);
+      chatbox.appendChild(botMessage);
+    } else if (lowercaseInput.includes('predict')) {
+      if (previousUserInput.toLowerCase().includes('predict')) {
+        future = 'But there are no further predictions ';
+        morefuture = 'at this time';
+      } else {
+        future = getFuture();
+        morefuture = getMoreFuture();
+      }
+      const botMessage = createMessage('bot-message', 'This prediction works on the basis of a random number generator that selects the sentences that will make the prediction. Predictions are made completely randomly from pre-prepared sentences. ' + future + morefuture);
+      chatbox.appendChild(botMessage);
     } else if (lowercaseInput.includes('how are you')) {
-      const botMessage = createMessage('bot-message', 'Chatbot is ' + getBotMood());
+      if (previousUserInput.toLowerCase().includes('how are you')) {
+        mood = 'feels the same as before';
+      } else {
+        mood = getBotMood();
+      }
+      const botMessage = createMessage('bot-message', 'Chatbot ' + mood);
       chatbox.appendChild(botMessage);
     } else if (lowercaseInput.startsWith('how to')) {
       const instruction = userInput.slice(7).trim();
-      const botMessage = createMessage('bot-message', 'Okay, I can help you with ' + instruction + '. You will ' + instruction + ' when ' + getInstructionResponse());
+      const botMessage = createMessage('bot-message', 'Okay, I can help you with ' + instruction + '. You will ' + instruction + ' when ' + getInstructionResponse() + instruction + '.');
       chatbox.appendChild(botMessage);
     } else if (lowercaseInput.includes('fortnite')) {
       const botMessage = createMessage('bot-message', 'Fortnite is a battle royale game in which you can build and fight. In this game, there is multiplayer and skins. There is also crafting and weapons in Fortnite.');
@@ -81,11 +117,11 @@ setFavicon('♒');
     } else if (lowercaseInput.includes('minecraft')) {
       const botMessage = createMessage('bot-message', 'Minecraft is a strategic game in which you can build and fight. In this game, there is multiplayer and skins. There is also crafting and weapons in Minecraft.');
       chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('this work')) {
-      const botMessage = createMessage('bot-message', 'This Bot is based on a random number generator and one answer is randomly assigned to each number, which will be displayed after clicking the button.');
-      chatbox.appendChild(botMessage);
     } else if (lowercaseInput.includes('chess')) {
       const botMessage = createMessage('bot-message', 'Chess is a very logical and strategic game. Not everyone has the patience for chess, but almost everyone can learn it. The game itself is both complex and simple at the same time. Recently, online chess has become quite popular. You can play them against other players or against bots. Some online chess games may even have bots that will teach you chess. Chess has relatively simple rules, but there are also lesser-known parts that not many people know about. The game takes place on a simple board of 8x8 squares.');
+      chatbox.appendChild(botMessage);
+    } else if (lowercaseInput.includes('doesnt work')) {
+      const botMessage = createMessage('bot-message', 'Sorry, but I cant help you with this problem.');
       chatbox.appendChild(botMessage);
     } else {
       const userMessage = createMessage('user-message', 'Error-message: ' + userInput);
@@ -106,6 +142,9 @@ setFavicon('♒');
     const currentURL = window.location.href.split('?')[0];
     const newURL = currentURL + '?conversation=' + encodedConversation;
     window.history.pushState({}, '', newURL);
+
+    // Store the current user input as the previous input
+    previousUserInput = userInput;
   }
 
   function createMessage(className, text) {
@@ -115,14 +154,41 @@ setFavicon('♒');
     return message;
   }
 
-  function getBotMood() {
+    function getFuture() {
     // Generate a random number between 0 and 1
     const randomNumber = Math.random();
 
     if (randomNumber < 0.5) {
-      return 'happy to help you';
+      return 'This future looks like it will have a lot of difficulties, but there is also hope, although there may be more difficulties than victories, these victories will often be more important and stronger than the difficulties';
     } else {
-      return 'busy with work';
+      return 'This future looks like there will be a lot of hope and maybe less trouble than victory and yet it wont always be easy but you can do it.';
+    }
+  }
+  
+      function getMoreFuture() {
+    // Generate a random number between 0 and 1
+    const randomNumber = Math.random();
+
+    if (randomNumber < 0.5) {
+      return 'There will also be a lot of changes in the future and you will have to adapt.';
+    } else {
+      return 'In the future, you will also meet a new person who will become a part of your life.';
+    }
+  }
+  
+  function getBotMood() {
+    // If the chatbot's mood is already determined, return "Still the same"
+    if (mood === 'feels the same as before') {
+      return 'feels the same as before';
+    }
+
+    // Generate a random number between 0 and 1
+    const randomNumber = Math.random();
+
+    if (randomNumber < 0.5) {
+      return 'is happy to help you but as a Chatbot I dont feel emotions';
+    } else {
+      return 'is busy with work but as a Chatbot I dont feel emotions';
     }
   }
 
@@ -130,9 +196,9 @@ setFavicon('♒');
     const randomNumber = Math.random();
 
     if (randomNumber < 0.5) {
-      return 'you will understand that it is important to think carefully about how to do it, think about how it could go, and thus arrive at the best option.';
+      return 'you will understand that it is important to think carefully about how to do it, think about how it could go, and thus arrive at the best option to ';
     } else {
-      return 'you will arrive at the best option to solve it as simply as possible.';
+      return 'you have to think logically and choose the easiest way and if you do everything right you could ';
     }
   }
 
@@ -147,46 +213,6 @@ setFavicon('♒');
   }
 
   loadConversationFromURL();
-  
-      function showPrediction(button) {
-      var predictions = [
-        "Your life will change because you will meet a new person.",
-        "Your life will change because you will change job.",
-        "Your life will change completely because someone you wouldnt expect will help you.",
-        "Your life will change because the person you missed will return to your life.",
-      "Your life will change completely because new things will come and you will have to adapt.",
-      "Your life will change completely and then it wont be easy",
-      "In the near future it will be better",
-      "In the near future you will trust yourself more",
-      "Your life will change completely and then you will trust yourself more",
-      "In the future the person you missed will return to your life.",
-      "Your life will change completely and then the person you missed will return to your life.",     
-      "In the future your life will change completely and then someone you wouldnt expect will help you.",
-      "In the future your life will change and then you will trust yourself more.",
-      "In the near future new things will come and you will have to adapt.",
-      "Your life will change because it wont be easy",
-      "Your life will change because it will be better",
-      "In the near future it wont be easy",
-      ];
-
-      var prediction = document.getElementById("prediction");
-      var randomIndex = Math.floor(Math.random() * predictions.length);
-
-      prediction.textContent = predictions[randomIndex];
-      button.disabled = true;
-    }
-  
-      const darkModeButton = document.getElementById('darkModeButton');
-    const body = document.body;
-
-    darkModeButton.addEventListener('click', function() {
-      body.classList.toggle('dark-mode');
-      if (body.classList.contains('dark-mode')) {
-        darkModeButton.textContent = 'Dark Mode ON';
-      } else {
-        darkModeButton.textContent = 'Dark Mode OFF';
-      }
-    });
-  </script>
+</script>
 </body>
 </html>
