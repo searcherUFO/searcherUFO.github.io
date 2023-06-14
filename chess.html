@@ -1,23 +1,7 @@
 <!DOCTYPE html>
  <html>
   <head>
-<link rel="icon" type="image/png" href="favicon.ico"/>
-<script>
-const setFavicon = (emoji) => {
-  const canvas = document.createElement('canvas');
-  canvas.height = 32;
-  canvas.width = 32;
-
-  const ctx = canvas.getContext('2d');
-  ctx.font = '28px serif';
-  ctx.fillText(emoji, -2, 24);
-
-  const favicon = document.querySelector('link[rel=icon]');
-  if (favicon) { favicon.href = canvas.toDataURL(); }
-}
-
-setFavicon('♟');
-</script>
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABVtJREFUWEftlmtMk2cUx//npXIRFASx3McQ4wdmtrnNKWMi0gqDvl6grRqd02yZW5Y5dReXTZ2ZuCy6bNFlJsb4YSG7QUWw5TJbQI2IF7wPZAoynZcpF0ErRWzfZ3mLrS1toTj8tvdL0+c5/3N+zznnuRAe46uurpbcb0W8mTOPB6PxAAIYR5c4i9A0BoFNyepkk7duyVtDxhhXtrtqPmPCIoDSQfD3pGXAcTBo/BnbIVfLuwaK4RWAtlA/A8BOIkr0Fli0YwxGENbyStlWT7pBAbSF+rVEtHEogfvbMgadT2CvMisr637/uQEBdBp9HkCf/5fgDtqDgWE+GWlpaT2O/jwC6Ar1K0H03TAFt7phDOUm1sGr1WqLza9bAG1R1bOwWE4SETecAFYIsE94pXzLwAAawwkCJg938L40oIcxSuTV6dfEvy4Z0BXqc0C0+4kEtzll2KFQyd5xD6DRVwCUIU4+6H2A5j8uo/1WJ7rvdCMkPBjSmHDEJESA8/Fcnc72O7jafAO3rrXB128EYsZHITwqFIGjRtp6wRTGRoaJB5ZTBqoLqoOMZO4Sa28ymlC5pwat1zvsyRg9ZhRin47EjSs3MWNeMoJDRzklijGGY1Wn0VB38ZEmJAixCVG42NCCVH6aFb6vEpjHK2XFTgBlRZUzBYFVmh+YsWdXBYxd3XZHY6Wh2F68ybry86ebsGnVNsx+Q25flWhYu+8EGk812zVBwYHYWboZI3wlaPnzCj5d9jWmK15G/MQYEMPmbJVsjRNAqcawggFbG081oXbfSafVRcVJsU3zpX3s48V5gIQwg59qHWu93g5dfqWTJjQ8BNtLvoJE4mMdX7/8G1z96wZy384St6SOV8l4JwBtoX4DEX0hprH++AWXPlz47lzkLM3EndtGfKBej25jDxaumGOtc01FHS6cueSiyVCm4s2PFqLbaMKqBRtwu60Ly9aoxe14hFfKp/UHsB67LY1XsL/kiNuNEJsQiVvX23G/p9c6P3vpLIRJQ1D2UxVuXm1zq4l+KsIauPueCeOixyJ78UwxA7W8SpbsBKDTGBYDyBcEhqKd5bjbaRx0N85ZNguh40JQ/nM1/vm7dVD79NwUxCVGiRnI55XyJc4Auw0JYLB2kbiFyn/ZD8EieHQqNuTrq3PAcZy1+92VzVGc+Ew8Xs2e0jfE8J5CJdvuchBpNfpaAlk761LDZRzQHvUIkPTiBExJf94639VxF8W7focguAeWxoYjY34qfPrOD7NEMEsz1ZkdLgClhQYFI2htUZvrL+NQ+XGXTIwODcLsJbMwwk9iBzx3pBF1B866AIspT8maAr8A34erZ98rVPIV4h/3l1GhoYwIr9k83e28h4a6C7h4tgUSXwniJkRjckoS/ANdH0XiThDtxEaVxoxF0ksTETchCkR9oRjQGcAhUZYja/cMUFAZTSTUgyh40K4aogExNjdbJS+xyTy+B0qLDJlMQJmnLA0xrm313/JK2YeO2oFfRH03428AHhX6oVpXUYwz505irkKFCGkkqg7qUX/+LNasXIeAgL5Lx/FjwA+K3PT3iYh5DSAalhVVpQoWy14QjXYUakp+xYFDzkevn58/Nq3bAvHXKThj63iVPM9d1gZ9lIqivZqqJA6CDkC8zYnZbEbN0YM4ceoY2jpa8dykFzD9lTREjIu0x2GM9XIc91Z2bnq+p5J5BSCKDxccDuig7o0grPayLwwgLFfkylwvCAcarwFsmtIC/SRG9BkIC9yvitURQ55jpw/UsEMGsDnbW6BPIQ6LiGEqQOEgVkPElWflzPyxf6M9EYDH2YaP3YTDFex/AHcZ+BdLHPQwPnxxsgAAAABJRU5ErkJggg=="/>
 <title>Chess Basics - Names of pieces and basics of chess rules</title>
  <link rel="stylesheet" href="design.css">
 <button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
