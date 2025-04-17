@@ -4,8 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>404 - Page Not Found</title>
-  <script src="logo.js"></script>
   <link rel="icon" type="image/png" href="favicon.ico"/>
+  <script>
+    const setFavicon = (emoji) => {
+  const canvas = document.createElement('canvas');
+  canvas.height = 32;
+  canvas.width = 32;
+
+  const ctx = canvas.getContext('2d');
+  ctx.font = '28px serif';
+  ctx.fillText(emoji, -2, 24);
+
+  const favicon = document.querySelector('link[rel=icon]');
+  if (favicon) { favicon.href = canvas.toDataURL(); }
+}
+
+setFavicon('👽');
+  </script>
   <link rel="stylesheet" href="design.css" />
 </head>
 <body>
