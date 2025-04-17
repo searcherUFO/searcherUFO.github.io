@@ -1,168 +1,78 @@
-h2 { 
- color: #140880;
- font-size: 39px;
- font-family: Arial, sans-serif;
+:root {
+  --bg-color: #0e0e0e;
+  --text-color: #e0e0e0;
+  --accent-color: #bb86fc;
+  --nav-bg: #1a1a1a;
+  --card-bg: #1f1f1f;
+  --transition: 0.3s ease;
 }
- .UFO-Div {
- background-color: #fcfcfc;
- width: 915px;
- border-radius: 40px;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-    body {
-      background-color: #c9c9c9;
-      opacity: 1;
-      background: linear-gradient(135deg, #bababa 25%, transparent 25%) -40px 0/ 80px 80px, 
-                  linear-gradient(225deg, #ababab 25%, transparent 25%) -40px 0/ 80px 80px, 
-                  linear-gradient(315deg, #bababa 25%, transparent 25%) 0px 0/ 80px 80px, 
-                  linear-gradient(45deg, #ababab 25%, #c9c9c9 25%) 0px 0/ 80px 80px;
-    }
-   logo1 {
-   color: white;
-   font-size: 6em;
-   font-family: Arial, sans-serif;
-   font-weight: bold;
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
 }
-   logo2 {
-   color: #42eda0;
+
+header {
+  background: var(--nav-bg);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
-       .UFO-LinkButton {
-      display: inline-block;
-      padding: 15px 25px;
-      font-size: 110px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      outline: none;
-      color: #000000;
-      background-color: #f2f2f2;
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 9px #999;
-      width: 445px;
-      height: 195px;
-    }
-    
-    .UFO-LinkButton:hover {
-      background-color: #e3e3e3;
-    }
-    
-    .UFO-LinkButton:active {
-      background-color: #e3e3e3;
-      box-shadow: 0 5px #666;
-      transform: translateY(4px);
-    }
-    .UFO-DarkModeButton {
-      display: inline-block;
-      padding: 15px 25px;
-      font-size: 26px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      outline: none;
-      color: #fff;
-      background-color: #ff5e5e;
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 9px #999;
-      margin-bottom: 15px;
-      width: 245px;
-      height: 70px;
-    }
-    
-    .UFO-DarkModeButton:hover {
-      background-color: #fc3232;
-    }
-    
-    .UFO-DarkModeButton:active {
-      background-color: #fc3232;
-      box-shadow: 0 5px #666;
-      transform: translateY(4px);
-    }
-    
-    /* Dark mode styles */
-    .dark-mode {
-      background-color: #6e6e6e;
-      opacity: 1;
-      background: linear-gradient(135deg, #555555 25%, transparent 25%) -40px 0/ 80px 80px, 
-                  linear-gradient(225deg, #292929 25%, transparent 25%) -40px 0/ 80px 80px, 
-                  linear-gradient(315deg, #555555 25%, transparent 25%) 0px 0/ 80px 80px, 
-                  linear-gradient(45deg, #292929 25%, #4a4a4a 25%) 0px 0/ 80px 80px;
-    }
-    
-    .dark-mode .UFO-DarkModeButton {
-      background-color: #555;
-      box-shadow: 0 9px #000;
-    }
-    
-    .dark-mode .UFO-DarkModeButton:hover {
-      background-color: #444;
-    }
-    
-    .dark-mode .UFO-DarkModeButton:active {
-      background-color: #444;
-      box-shadow: 0 5px #111;
-      transform: translateY(4px);
-    }
-    UFO-Text {
-    font-weight: bold;
-    font-family: arial, sans serif;
-    color: #000000;
-  }
-    .chatbox {
-    width: 550px;
-    height: 700px;
-    background-color: #f2f2f2;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    overflow-y: scroll;
+
+header h1 {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+}
+
+nav a {
+  margin-left: 1.5rem;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+nav a:hover {
+  color: var(--accent-color);
+}
+
+main {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  margin-bottom: 2rem;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
+  nav a {
+    margin: 0.5rem 0;
   }
-
-  .user-message {
-    background-color: #ffffff;
-    color: red;
-    font-size: 25px;
-  }
-
-  .bot-message {
-    background-color: #d7f2d7;
-    color: green; 
-    font-size: 25px;
-  }
-
-  .send-button {
-    background-color: #f1f1f1;
-    color: black;
-    font-size: 22px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    text-align: center;
-    width: 110px;
-    height: 70px;
-    margin-top: 20px;
-    font-family: "JetBrains Mono", monospace;
-  }
-
-  .send-button:hover {
-    background-color: black;
-    color: white;
-    font-family: "JetBrains Mono", monospace;
-  }
-
-  .messagesend {
-    width: 471px;
-    height: 66px;
-    border: none;
-    font-size: 21px;
-    margin-top: 20px;
-    border-radius: 20px;
-    font-family: "JetBrains Mono", monospace;
-  }
+}
