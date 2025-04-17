@@ -1,41 +1,31 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  <title>404</title>
-<link rel="icon" type="image/png" href="favicon.ico"/>
-<script>
-const setFavicon = (emoji) => {
-  const canvas = document.createElement('canvas');
-  canvas.height = 32;
-  canvas.width = 32;
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Page Not Found</title>
+  <script src="logo.js"></script>
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body>
+  <header>
+    <h1>Dark Web</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="https://www.youtube.com/@Umracorespecial">YouTube</a>
+    </nav>
+  </header>
 
-  const ctx = canvas.getContext('2d');
-  ctx.font = '28px serif';
-  ctx.fillText(emoji, -2, 24);
+  <main>
+    <div class="card">
+      <h2>404 - Page Not Found</h2>
+      <p>The page you're looking for does not exist or has been moved.</p>
+    </div>
 
-  const favicon = document.querySelector('link[rel=icon]');
-  if (favicon) { favicon.href = canvas.toDataURL(); }
-}
-
-setFavicon('👽');
-</script>
-  <link rel="stylesheet" href="design.css">
-<button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
-<center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
-<center><logo1>404</logo1></center>
-<center><div class="UFO-Div" style="height:440px"><center><UFO-Text style="font-size:60px">This page does not exist, but here is a link to our pages that do exist and you can visit them.</UFO-Text></center><center><a href="bestthree.html"><button class="UFO-LinkButton">TOP 3</button></a><a href="index.html"><button class="UFO-LinkButton">2Dvs3D</button></a></center></div></center>
-<script>
-    const darkModeButton = document.getElementById('darkModeButton');
-    const body = document.body;
-
-    darkModeButton.addEventListener('click', function() {
-      body.classList.toggle('dark-mode');
-      if (body.classList.contains('dark-mode')) {
-        darkModeButton.textContent = 'Dark Mode ON';
-      } else {
-        darkModeButton.textContent = 'Dark Mode OFF';
-      }
-    });
-  </script>
+    <div class="card">
+      <h2>Return to Reality</h2>
+      <p><a href="index.html" style="color: var(--accent-color); text-decoration: underline;">Click here</a> to go back to the homepage.</p>
+    </div>
+  </main>
 </body>
 </html>
