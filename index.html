@@ -1,102 +1,43 @@
 <!DOCTYPE html>
-<title>History of games | 2D vs 3D Game Development History</title>
-<link rel="icon" type="image/png" href="favicon.ico"/>
-<script>
-const setFavicon = (emoji) => {
-  const canvas = document.createElement('canvas');
-  canvas.height = 32;
-  canvas.width = 32;
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Generated music</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8726399143371834"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="design.css" />
+  <script src="logo.js"></script>
+</head>
+<body>
+  <header>
+    <h1>AI Generated Music</h1>
+    <nav>
+      <a href="index.html">Coming soon</a>
+      <a href="o-nas.html">Coming soon</a>
+      <a href="https://www.youtube.com/@Umracorespecial">YouTube</a>
+    </nav>
+  </header>
 
-  const ctx = canvas.getContext('2d');
-  ctx.font = '28px serif';
-  ctx.fillText(emoji, -2, 24);
+  <main>
+    <div class="card">
+      <h2>Welcome to the dark side of sound.</h2>
+      <p><p>We create dark, AI-generated horrorcore music that drags you into the shadows of your mind. Twisted beats, synthetic voices, and disturbing lyrics — all crafted to make you feel something different.</p>
 
-  const favicon = document.querySelector('link[rel=icon]');
-  if (favicon) { favicon.href = canvas.toDataURL(); }
-}
+<p>Enter our world, where nightmares come to life.</p>
+<p>🎵 Music from the void.</p>
+<p>🧠 Created by machines.</p>
+<p>💀 Inspired by horror.</p>
 
-setFavicon('👽');
-</script>
-<html>
-  <head>
-  <head><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8726399143371834"
-     crossorigin="anonymous"></script></head>
-    <link rel="stylesheet" href="design.css">
-    <button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
-<center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
-<center><logo1>Games history</logo1></center>
-<center><div class="UFO-Div" style="height:3300px;"><center><UFO-Text style="font-size:200px;">2D vs 3D</UFO-Text></center><center><h2>The directions in which we can move in the three-dimensional world are up, down, right, left, forward, and backward. The universe we live in has three dimensions. In the world of gaming, you can also choose games with a two-dimensional universe. Games, also known as platformers, were among the first games to emerge. However, times have changed, and the games we play today have reached an entirely different level. Unreal Engine and Unity have completely transformed the game development landscape, revolutionizing the way games are created nowadays. Nevertheless, let's now explore the history of 2D and 3D game development in greater detail.</h2></center><center><canvas id="pacman_canvas" height="200" width="200"></canvas></center>
-<script type="text/JavaScript">
-// Get things rolling once the DOM loads
-document.addEventListener('DOMContentLoaded', function() {
-  var canvas = document.getElementById('pacman_canvas');
-  var context = canvas.getContext('2d');
-  
-  // dir is the offset that will be added to pctOpen on every interval
-  var dir = -10, pctOpen = 100;
-  
-  function drawPacman(pctOpen) {
-    // Convert percent open to a float
-    var fltOpen = pctOpen / 100;
+<p>Subscribe for new tracks, videos, and unfiltered darkness.</p>
+<p>👉 <a href="https://www.youtube.com/@Umracorespecial">Our YouTube channel</a></p></p>
+    </div>
 
-    // Clear the canvas to draw the next part of the animation
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // An arc which stops at a specific percent to allow for the
-    // open mouth to be drawn
-    context.beginPath();
-    context.arc(100, 100, 100, (fltOpen * 0.2) * Math.PI, (2 - fltOpen * 0.2) * Math.PI);
-
-    // The line leading back to the center and then closing the
-    // path to finish the open mouth.
-    context.lineTo(100, 100);
-    context.closePath();
-
-    // Fill pacman's head yellow
-    context.fillStyle = "#FF0";
-    context.fill();
-    
-    // Outline the head
-    context.strokeStyle = '#000';
-    context.stroke();
-
-    // A circle for the eye
-    var angle = Math.PI * (0.3 + fltOpen * 0.2),
-        xDelta = 50 * Math.cos(angle),
-        yDelta = 50 * Math.sin(angle);
-    context.beginPath();
-    context.arc(100 + xDelta, 100 - yDelta, 10, 0, 2 * Math.PI);
-    context.fillStyle = "#000";
-    context.fill();
-    
-    // Outline the eye
-    context.strokeStyle = '#FFF';
-    context.stroke();
-  }
-  
-  // update pacman every 0.1 seconds
-  setInterval(function() {
-    drawPacman(pctOpen += dir);
-
-    // when the mouth reaches its limit reverse the direction
-    if (pctOpen % 100 == 0) {
-      dir = -dir;
-    }
-  }, 100);
-});
-</script><center><UFO-Text style="font-size:170px;">2D Games</UFO-Text></center><center><h2>A 2D game is good in that it is simple to program using HTML and JS. You can create a simple game on a canvas, but you can also create a more complex game. All depends on your knowledge of JavaScript and HTML. The big disadvantage of a 2D game is that you cannot create a map as big as in a 3D game. In a 2D game you can move in 4 directions but in 3D in 6. However, there are still many popular 2D games such as Agar. io. There are also games like Hungry Shark which are platform games but with 3D graphics. As for programs for creating 2D games, one of the most famous is probably Scratch.But you can also create a 2D or platform game in Unity.</h2></center><center><UFO-Text style="font-size:170px;">3D Games</UFO-Text></center><center><h2>3D games became popular at the ending of the 20th century, one of the first 3D games was Wolfenstein. At the beginning of the 21th century, the first version of the Unreal Engine was also created. Unreal Engine is not the only 3D engine, there is Unity or Babylon.js and Three.js. These engines are improved every year so they have better graphics and controls.Sometimes it doesn't even matter if the game is 2D or 3D, it depends on the gameplay, if the game is good, if it is unique, all this will decide whether the game will be successful, games that have become legends like Pong, Snake, Pacman, Tetris mainly thanks to the fact that they were one of the first, but also because they were original.</h2></center><center><a href="welcome.html"><button class="UFO-LinkButton">INFO</button></a><a href="bestthree.html"><button class="UFO-LinkButton">TOP 3</button></a></center></div></center>
-<script>
-    const darkModeButton = document.getElementById('darkModeButton');
-    const body = document.body;
-
-    darkModeButton.addEventListener('click', function() {
-      body.classList.toggle('dark-mode');
-      if (body.classList.contains('dark-mode')) {
-        darkModeButton.textContent = 'Dark Mode ON';
-      } else {
-        darkModeButton.textContent = 'Dark Mode OFF';
-      }
-    });
-  </script>
+    <div class="card">
+      <h2>Our Music</h2>
+      <p><iframe width="550" height="310" src="https://www.youtube.com/embed/OCFtGM8pB3o">
+</iframe></p>
+    </div>
+  </main>
 </body>
 </html>
