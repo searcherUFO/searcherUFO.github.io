@@ -23,198 +23,334 @@ const setFavicon = (emoji) => {
 setFavicon('♒');
 </script>
 <link rel="stylesheet" href="design.css">
-<title>Online Fortune Teller ☯️ AI with Prediction Generator</title>
-<button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
-<center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
-<center><logo1>Fortune Teller AI</logo1></center>
-<center>
-<div class="UFO-Div" style="height:860px;">
-<div class="chatbox" id="chatbox">
-<div class="bot-message message">
-Fortune Teller AI is a chatbot that can generate random predictions of the future, but can also calculate simple mathematical examples and answer questions.
-</div>
-</div>
-<div class="input-container">
-  <input class="messagesend" type="text" id="userInput" autocomplete="off" placeholder="Can you generate a prediction?" />
-  <button class="send-button" onclick="sendMessage()">Send</button>
-</div>
-</div>
-</center>
-<center>
-<div class="UFO-Div" style="height:330px;"><center><h2>click the button to copy the chat URL so that next time you can continue where you left off</h2></center><center><button class="UFO-LinkButton" onclick="copyURL()">URL</button></center>
-</div>
-</center>
-<script>
-                  const darkModeButton = document.getElementById('darkModeButton');
-    const body = document.body;
+<title>Future Insights – AI That Predicts Your Destiny</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1e0033, #000000);
+            color: #f3e5f5;
+            margin: 0;
+            padding: 0;
+            transition: background 0.5s, color 0.5s;
+        }
 
-    darkModeButton.addEventListener('click', function() {
-      body.classList.toggle('dark-mode');
-      if (body.classList.contains('dark-mode')) {
-        darkModeButton.textContent = 'Dark Mode ON';
-      } else {
-        darkModeButton.textContent = 'Dark Mode OFF';
+        .dark-mode {
+            background: linear-gradient(135deg, #f3e5f5, #3d005c);
+            color: #1e0033;
+        }
+
+        .UFO-DarkModeButton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #6a1b9a;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 10px #aa00ff;
+        }
+
+        logo1, logo2 {
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px #d500f9;
+        }
+
+        logo2 {
+            color: #e040fb;
+        }
+
+        .UFO-Div {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #ce93d8;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px;
+            max-width: 700px;
+            box-shadow: 0 0 15px #8e24aa;
+        }
+
+        .chatbox {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            background-color: #4a148c;
+            box-shadow: 0 0 5px #aa00ff;
+        }
+
+        .user-message {
+            background-color: #7b1fa2;
+            text-align: right;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .messagesend {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ce93d8;
+            border-radius: 10px;
+            background: #f3e5f5;
+            color: #4a0072;
+            font-size: 1rem;
+        }
+
+        .send-button {
+            padding: 10px 20px;
+            background-color: #ba68c8;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 10px #d500f9;
+        }
+
+        h2 {
+            color: #e1bee7;
+        }
+
+        .UFO-LinkButton {
+            padding: 10px 20px;
+            background-color: #8e24aa;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #d500f9; }
+            50% { box-shadow: 0 0 15px #d500f9; }
+            100% { box-shadow: 0 0 5px #d500f9; }
+        }
+
+        .UFO-Div, .send-button, .UFO-LinkButton {
+            animation: glow 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <button class="UFO-DarkModeButton" id="darkModeButton">Dark Mode OFF</button>
+    <center><logo1>Searcher "<logo2>UFO</logo2>"</logo1></center>
+    <center><logo1>Fortune Teller AI</logo1></center>
+    <center>
+    <div class="UFO-Div" style="height:860px;">
+    <div class="chatbox" id="chatbox">
+    <div class="bot-message message">
+    Fortune Teller AI is a chatbot that can generate random predictions of the future, but can also calculate simple mathematical examples and answer questions.
+    </div>
+    </div>
+    <div class="input-container">
+      <input class="messagesend" type="text" id="userInput" autocomplete="off" placeholder="Ask me anything!" />
+      <button class="send-button" onclick="sendMessage()">Send</button>
+    </div>
+    </div>
+    </center>
+    <center>
+    <div class="UFO-Div" style="height:330px;">
+    <center><h2>click the button to copy the chat URL so that next time you can continue where you left off</h2></center>
+    <center><button class="UFO-LinkButton" onclick="copyURL()">URL</button></center>
+    </div>
+    </center>
+    <script>
+      const darkModeButton = document.getElementById('darkModeButton');
+      const body = document.body;
+
+      darkModeButton.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+          darkModeButton.textContent = 'Dark Mode ON';
+        } else {
+          darkModeButton.textContent = 'Dark Mode OFF';
+        }
+      });
+
+      function copyURL() {
+        var urlInput = document.createElement("input");
+        urlInput.value = window.location.href;
+        document.body.appendChild(urlInput);
+        urlInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(urlInput);
       }
-    });
-            
-            function copyURL() {
-      var urlInput = document.createElement("input");
-      urlInput.value = window.location.href;
-      document.body.appendChild(urlInput);
-      urlInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(urlInput);
-    }
-  
-  var previousUserInput = ''; // Store the previous user input
-  var mood = ''; // Track the chatbot's mood
-  var future = '';
-  var morefuture = '';
-  
-  function sendMessage() {
-    const userInput = document.getElementById('userInput').value;
-    const chatbox = document.getElementById('chatbox');
 
-    const lowercaseInput = userInput.toLowerCase();
+      var previousUserInput = ''; // Store the previous user input
+      var mood = ''; // Track the chatbot's mood
+      var future = '';
+      var morefuture = '';
 
-    if (lowercaseInput.includes('+') || lowercaseInput.includes('-') || lowercaseInput.includes('*') || lowercaseInput.includes('/')) {
-      const result = eval(userInput); // Evaluate the expression
-      const botMessage = createMessage('bot-message', 'Result: ' + result);
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('future')) {
-      if (previousUserInput.toLowerCase().includes('future')) {
-        future = 'But there are no further predictions ';
-        morefuture = 'at this time';
-      } else {
-        future = getFuture();
-        morefuture = getMoreFuture();
+      // Function to generate responses to user input
+      function sendMessage() {
+        const userInput = document.getElementById('userInput').value;
+        const chatbox = document.getElementById('chatbox');
+        const lowercaseInput = userInput.toLowerCase();
+
+        // Function to randomly pick a response
+        function getRandomResponse(responses) {
+          return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Respond to greetings
+        if (lowercaseInput.includes('hi') || lowercaseInput.includes('hello') || lowercaseInput.includes('hey')) {
+          const responses = [
+            'Hello! How can I assist you today?',
+            'Hey there! What can I help you with?',
+            'Greetings! How are you today?'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        } 
+        // Respond to "I'm" or "I am" followed by a word like "human"
+        else if (lowercaseInput.startsWith('im ') || lowercaseInput.startsWith('iam ')) {
+          const word = userInput.split(' ').slice(1).join(' ');  // Get the word after "im" or "iam"
+          const botMessage = createMessage('bot-message', `So you are ${word}, interesting.`);
+          chatbox.appendChild(botMessage);
+        }
+        // Respond to how are you
+        else if (lowercaseInput.includes('how are you')) {
+          const responses = [
+            'I am just a bot, but I am here to assist you!',
+            'I am feeling quite algorithmic today!',
+            'I am doing well, thank you for asking!'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        }
+        // Respond to apologies
+        else if (lowercaseInput.includes('sorry') || lowercaseInput.includes('i apologize') || lowercaseInput.includes('my bad')) {
+          const responses = [
+            'No need to apologize, I\'m here to help!',
+            'It\'s all good! Let\'s keep chatting.',
+            'There\'s nothing to be sorry for – ask me anything!'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        }
+        // Respond to weather questions
+        else if (lowercaseInput.includes('weather') || lowercaseInput.includes('rain') || lowercaseInput.includes('sun')) {
+          const responses = [
+            'The weather seems unpredictable today, better stay prepared!',
+            'It looks like it will rain later, don\'t forget your umbrella!',
+            'Sunny weather ahead, perfect for a walk outside!'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        } 
+        // Respond to choice or decision
+        else if (lowercaseInput.includes('choice') || lowercaseInput.includes('decision')) {
+          const responses = [
+            'Choices are part of life, and they often shape our future.',
+            'The best choice is often the hardest one to make.',
+            'Your choices define your path ahead.'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        } 
+        // Respond to mathematical operations
+        else if (lowercaseInput.includes('+') || lowercaseInput.includes('-') || lowercaseInput.includes('*') || lowercaseInput.includes('/')) {
+          try {
+            const result = eval(userInput); // Evaluate the expression
+            const botMessage = createMessage('bot-message', 'Result: ' + result);
+            chatbox.appendChild(botMessage);
+          } catch (error) {
+            const botMessage = createMessage('bot-message', 'I couldn\'t understand that operation. Please try again.');
+            chatbox.appendChild(botMessage);
+          }
+        } 
+        // Handle specific phrases like "what", "why"
+        else if (lowercaseInput.includes('what')) {
+          const responses = [
+            'This is ' + userInput.split(' ').slice(1).join(' ') + '.',
+            'It\'s difficult to figure that out, but it could be something related to the future.',
+            'That\'s an interesting question. It\'s something beyond my knowledge right now.'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        } 
+        else if (lowercaseInput.includes('why')) {
+          const responses = [
+            'Why is a complex question, but I can tell you that everything happens for a reason.',
+            'That\'s a deep question. The answer to why is often elusive.',
+            'I wish I knew why. But it\'s one of those mysteries of life.'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        } 
+        // Handle phrases like 'happened', 'end'
+        else if (lowercaseInput.includes('happened') || lowercaseInput.includes('end')) {
+          const responses = [
+            'Some events are beyond our control, but they shape who we become.',
+            'The end of something often marks the beginning of something new.',
+            'I don\'t know exactly what happened, but life moves forward regardless.'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        } 
+        // Handle future, predict, life, past, present, please
+        else if (lowercaseInput.includes('future') || lowercaseInput.includes('predict') || lowercaseInput.includes('life') || lowercaseInput.includes('past') || lowercaseInput.includes('present') || lowercaseInput.includes('please')) {
+          const responses = [
+            'The future is full of possibilities, and your actions today shape tomorrow.',
+            'I can see that your path ahead will bring many challenges, but also rewards.',
+            'In the present moment, all decisions lead you towards your destiny.',
+            'The past is behind you, but it has molded you into who you are today.'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        }
+        // Respond to random phrases
+        else if (
+          lowercaseInput.includes('this is random') ||
+          lowercaseInput.includes('is this random') ||
+          lowercaseInput.includes('totally random') ||
+          lowercaseInput.includes('completely random') ||
+          lowercaseInput.includes('so random') ||
+          lowercaseInput.includes('kind of random') ||
+          lowercaseInput.includes('kinda random')
+        ) {
+          const responses = [
+            'The universe thrives on randomness.',
+            'Totally random... or is it fate in disguise?',
+            'Randomness is just a pattern we haven’t understood yet.',
+            'Even chaos has its logic.',
+            'Some things appear random, but everything has a purpose.',
+            'That’s what makes life interesting — unpredictability.'
+          ];
+          const botMessage = createMessage('bot-message', getRandomResponse(responses));
+          chatbox.appendChild(botMessage);
+        }
+        // Default message if no conditions match
+        else {
+          const botMessage = createMessage('bot-message', 'I\'m not sure how to respond to that.');
+          chatbox.appendChild(botMessage);
+        }
+
+        document.getElementById('userInput').value = ''; // Clear the input field
       }
-      const botMessage = createMessage('bot-message', 'This prediction works on the basis of a random number generator that selects the sentences that will make the prediction. Predictions are made completely randomly from pre-prepared sentences. ' + future + morefuture);
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('predict')) {
-      if (previousUserInput.toLowerCase().includes('predict')) {
-        future = 'But there are no further predictions ';
-        morefuture = 'at this time';
-      } else {
-        future = getFuture();
-        morefuture = getMoreFuture();
+
+      function createMessage(className, text) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = className + ' message';
+        messageDiv.textContent = text;
+        return messageDiv;
       }
-      const botMessage = createMessage('bot-message', 'This prediction works on the basis of a random number generator that selects the sentences that will make the prediction. Predictions are made completely randomly from pre-prepared sentences. ' + future + morefuture);
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('how are you')) {
-      if (previousUserInput.toLowerCase().includes('how are you')) {
-        mood = 'feels the same as before';
-      } else {
-        mood = getBotMood();
-      }
-      const botMessage = createMessage('bot-message', 'Chatbot ' + mood);
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.startsWith('how to')) {
-      const instruction = userInput.slice(7).trim();
-      const botMessage = createMessage('bot-message', 'Okay, I can help you with ' + instruction + '. You will ' + instruction + ' when ' + getInstructionResponse() + instruction + '.');
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('fortnite')) {
-      const botMessage = createMessage('bot-message', 'Fortnite is a battle royale game in which you can build and fight. In this game, there is multiplayer and skins. There is also crafting and weapons in Fortnite.');
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('minecraft')) {
-      const botMessage = createMessage('bot-message', 'Minecraft is a strategic game in which you can build and fight. In this game, there is multiplayer and skins. There is also crafting and weapons in Minecraft.');
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('chess')) {
-      const botMessage = createMessage('bot-message', 'Chess is a very logical and strategic game. Not everyone has the patience for chess, but almost everyone can learn it. The game itself is both complex and simple at the same time. Recently, online chess has become quite popular. You can play them against other players or against bots. Some online chess games may even have bots that will teach you chess. Chess has relatively simple rules, but there are also lesser-known parts that not many people know about. The game takes place on a simple board of 8x8 squares.');
-      chatbox.appendChild(botMessage);
-    } else if (lowercaseInput.includes('doesnt work')) {
-      const botMessage = createMessage('bot-message', 'Sorry, but I cant help you with this problem.');
-      chatbox.appendChild(botMessage);
-    } else {
-      const userMessage = createMessage('user-message', 'Error-message: ' + userInput);
-      chatbox.appendChild(userMessage);
-
-      const botMessage = createMessage('bot-message', 'Chatbot: Sorry, I cannot understand that.');
-      chatbox.appendChild(botMessage);
-    }
-
-    // Scroll to the bottom of the chatbox
-    chatbox.scrollTop = chatbox.scrollHeight;
-
-    // Clear the user input
-    document.getElementById('userInput').value = '';
-
-    // Save conversation in the URL
-    const encodedConversation = encodeURIComponent(chatbox.innerHTML);
-    const currentURL = window.location.href.split('?')[0];
-    const newURL = currentURL + '?conversation=' + encodedConversation;
-    window.history.pushState({}, '', newURL);
-
-    // Store the current user input as the previous input
-    previousUserInput = userInput;
-  }
-
-  function createMessage(className, text) {
-    const message = document.createElement('div');
-    message.className = 'message ' + className;
-    message.textContent = text;
-    return message;
-  }
-
-    function getFuture() {
-    // Generate a random number between 0 and 1
-    const randomNumber = Math.random();
-
-    if (randomNumber < 0.5) {
-      return 'This future looks like it will have a lot of difficulties, but there is also hope, although there may be more difficulties than victories, these victories will often be more important and stronger than the difficulties';
-    } else {
-      return 'This future looks like there will be a lot of hope and maybe less trouble than victory and yet it wont always be easy but you can do it.';
-    }
-  }
-  
-      function getMoreFuture() {
-    // Generate a random number between 0 and 1
-    const randomNumber = Math.random();
-
-    if (randomNumber < 0.5) {
-      return 'There will also be a lot of changes in the future and you will have to adapt.';
-    } else {
-      return 'In the future, you will also meet a new person who will become a part of your life.';
-    }
-  }
-  
-  function getBotMood() {
-    // If the chatbot's mood is already determined, return "Still the same"
-    if (mood === 'feels the same as before') {
-      return 'feels the same as before';
-    }
-
-    // Generate a random number between 0 and 1
-    const randomNumber = Math.random();
-
-    if (randomNumber < 0.5) {
-      return 'is happy to help you but as a Chatbot I dont feel emotions';
-    } else {
-      return 'is busy with work but as a Chatbot I dont feel emotions';
-    }
-  }
-
-  function getInstructionResponse() {
-    const randomNumber = Math.random();
-
-    if (randomNumber < 0.5) {
-      return 'you will understand that it is important to think carefully about how to do it, think about how it could go, and thus arrive at the best option to ';
-    } else {
-      return 'you have to think logically and choose the easiest way and if you do everything right you could ';
-    }
-  }
-
-  // Load conversation from URL if available
-  function loadConversationFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const encodedConversation = urlParams.get('conversation');
-    if (encodedConversation) {
-      const conversation = decodeURIComponent(encodedConversation);
-      chatbox.innerHTML = conversation;
-    }
-  }
-
-  loadConversationFromURL();
-</script>
+    </script>
 </body>
 </html>
