@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,147 +19,160 @@
     }
     setFavicon('👽');
   </script>
-  <title>How Well Do You Know Italian Brainrot? - Brainrot Quiz</title>
+  <title>How Well Do You Know Italian Brainrot? - Brainrot Quiz!</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8726399143371834"
+     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="design.css" />
+  <style>
+    .quiz-container {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .answer {
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .answer:hover {
+      background: #bb60fc;
+    }
+
+    .result {
+      font-size: 1.5rem;
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--text-color);
+    }
+
+    .button {
+      background: var(--accent-color);
+      color: var(--bg-color);
+      padding: 1rem;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      margin-top: 2rem;
+      transition: var(--transition);
+    }
+
+    .button:hover {
+      background: #bb60fc;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>How Well Do You Know Italian Brainrot?</h1>
-    <nav>
-      <a href="404.html">Coming soon</a>
-      <a href="404.html">Coming soon</a>
-      <a href="https://www.youtube.com/@Umracorespecial">YouTube</a>
-    </nav>
   </header>
 
   <main>
-    <div class="card">
-      <h2>Question 1</h2>
-      <p>He believes that reality is just a bad pasta joke and that sunglasses are the key to the multiverse. Who is this character?</p>
-      <div>
-        <input type="radio" id="q1a1" name="q1" value="a1">
-        <label for="q1a1">Bombardino Crocodilo</label>
+    <div class="quiz-container" id="quiz-container">
+      <div class="question" id="question">Loading...</div>
+      <div class="answers">
+        <button class="answer" id="answer1" onclick="checkAnswer(1)">Answer 1</button>
+        <button class="answer" id="answer2" onclick="checkAnswer(2)">Answer 2</button>
+        <button class="answer" id="answer3" onclick="checkAnswer(3)">Answer 3</button>
       </div>
-      <div>
-        <input type="radio" id="q1a2" name="q1" value="a2">
-        <label for="q1a2">Trallalero Trallalà</label>
-      </div>
-      <div>
-        <input type="radio" id="q1a3" name="q1" value="a3">
-        <label for="q1a3">Bumbubini Gussini</label>
-      </div>
+      <div id="next-button" class="button" style="display: none;" onclick="nextQuestion()">Next Question</div>
+      <div class="result" id="result"></div>
     </div>
-
-    <div class="card">
-      <h2>Question 2</h2>
-      <p>This character once argued with a mailbox in G major for three hours and refuses to walk without singing. Who is it?</p>
-      <div>
-        <input type="radio" id="q2a1" name="q2" value="a1">
-        <label for="q2a1">Gianni il Cinghiale</label>
-      </div>
-      <div>
-        <input type="radio" id="q2a2" name="q2" value="a2">
-        <label for="q2a2">Principe del Caos</label>
-      </div>
-      <div>
-        <input type="radio" id="q2a3" name="q2" value="a3">
-        <label for="q2a3">Trallalero Trallalà</label>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Question 3</h2>
-      <p>Known for believing traffic signs are part of a government conspiracy, this boar is the most chaotic creature in the Brainrot universe. Who is he?</p>
-      <div>
-        <input type="radio" id="q3a1" name="q3" value="a1">
-        <label for="q3a1">Gianni il Cinghiale</label>
-      </div>
-      <div>
-        <input type="radio" id="q3a2" name="q3" value="a2">
-        <label for="q3a2">Formaggio Mentale</label>
-      </div>
-      <div>
-        <input type="radio" id="q3a3" name="q3" value="a3">
-        <label for="q3a3">Bumbubini Gussini</label>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Question 4</h2>
-      <p>Famous for his weird obsession with ravioli and his collection of five pairs of sunglasses, this character speaks in pasta metaphors. Who is he?</p>
-      <div>
-        <input type="radio" id="q4a1" name="q4" value="a1">
-        <label for="q4a1">Bumbubini Gussini</label>
-      </div>
-      <div>
-        <input type="radio" id="q4a2" name="q4" value="a2">
-        <label for="q4a2">Bombardino Crocodilo</label>
-      </div>
-      <div>
-        <input type="radio" id="q4a3" name="q4" value="a3">
-        <label for="q4a3">Principe del Caos</label>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Question 5</h2>
-      <p>This prince leads an imaginary kingdom of plastic chairs and once tried to build a castle out of pizza boxes. Who is this regal figure?</p>
-      <div>
-        <input type="radio" id="q5a1" name="q5" value="a1">
-        <label for="q5a1">Formaggio Mentale</label>
-      </div>
-      <div>
-        <input type="radio" id="q5a2" name="q5" value="a2">
-        <label for="q5a2">Principe del Caos</label>
-      </div>
-      <div>
-        <input type="radio" id="q5a3" name="q5" value="a3">
-        <label for="q5a3">Gianni il Cinghiale</label>
-      </div>
-    </div>
-
-    <button onclick="submitQuiz()">Submit</button>
-    <div id="result"></div>
   </main>
 
   <script>
-    function submitQuiz() {
-      let score = 0;
-      // Correct answers:
-      const answers = ['a1', 'a3', 'a1', 'a1', 'a2'];
-
-      // Check answers
-      for (let i = 1; i <= 5; i++) {
-        const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
-        if (selectedAnswer && selectedAnswer.value === answers[i - 1]) {
-          score++;
-        }
+    const questions = [
+      {
+        question: "Who is the wild boar of destiny in Italian Brainrot?",
+        answers: ["Gianni il Cinghiale", "Bumbubini Gussini", "Bombardino Crocodilo"],
+        correctAnswer: 1
+      },
+      {
+        question: "Which character is known for singing everything?",
+        answers: ["Trallalero Trallalà", "Formaggio Mentale", "Principe del Caos"],
+        correctAnswer: 1
+      },
+      {
+        question: "Who believes ravioli politics are a thing?",
+        answers: ["Bumbubini Gussini", "Gianni il Cinghiale", "Trallalero Trallalà"],
+        correctAnswer: 1
+      },
+      {
+        question: "Who once tried to sue gravity?",
+        answers: ["Gianni il Cinghiale", "Formaggio Mentale", "Bombardino Crocodilo"],
+        correctAnswer: 1
+      },
+      {
+        question: "Which character’s mind has turned entirely to cheese?",
+        answers: ["Formaggio Mentale", "Principe del Caos", "Trallalero Trallalà"],
+        correctAnswer: 1
       }
+    ];
 
-      // Display result
-      let resultMessage = '';
-      switch (score) {
-        case 5:
-          resultMessage = 'Congratulations, your brain is fully rotten!';
-          break;
-        case 4:
-          resultMessage = 'Well done, your brain is almost there!';
-          break;
-        case 3:
-          resultMessage = 'Good job, but your brain still needs some seasoning.';
-          break;
-        case 2:
-          resultMessage = 'You need more time in the Brainrot oven.';
-          break;
-        case 1:
-          resultMessage = 'Your brain is still fresh, but you’re getting there!';
-          break;
-        default:
-          resultMessage = 'Brainrot? More like brain detox. Try again!';
-      }
+    let currentQuestionIndex = 0;
+    let correctAnswersCount = 0;
 
-      document.getElementById('result').innerText = resultMessage;
+    function loadQuestion() {
+      const question = questions[currentQuestionIndex];
+      document.getElementById("question").textContent = question.question;
+      document.getElementById("answer1").textContent = question.answers[0];
+      document.getElementById("answer2").textContent = question.answers[1];
+      document.getElementById("answer3").textContent = question.answers[2];
+      document.getElementById("next-button").style.display = "none";
     }
+
+    function checkAnswer(answerIndex) {
+      const question = questions[currentQuestionIndex];
+      if (answerIndex === question.correctAnswer) {
+        correctAnswersCount++;
+      }
+      document.getElementById("next-button").style.display = "block";
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let resultMessage = "";
+      if (correctAnswersCount === 5) {
+        resultMessage = "Congratulations, your brain is officially rotting at maximum capacity!";
+      } else if (correctAnswersCount >= 3) {
+        resultMessage = "Nice job! You have a healthy dose of Brainrot!";
+      } else {
+        resultMessage = "Hmm, your Brainrot knowledge needs some work. Try again!";
+      }
+      document.getElementById("result").textContent = resultMessage;
+      document.getElementById("next-button").style.display = "none";
+    }
+
+    // Initialize quiz
+    loadQuestion();
   </script>
 </body>
 </html>
