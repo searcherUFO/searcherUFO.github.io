@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="favicon.ico"/>
+  <script>
+    const setFavicon = (emoji) => {
+      const canvas = document.createElement('canvas');
+      canvas.height = 32;
+      canvas.width = 32;
+
+      const ctx = canvas.getContext('2d');
+      ctx.font = '28px serif';
+      ctx.fillText(emoji, -2, 24);
+
+      const favicon = document.querySelector('link[rel=icon]');
+      if (favicon) { favicon.href = canvas.toDataURL(); }
+    }
+    setFavicon('👽');
+  </script>
+  <title>Do You Know the Brainrot Icons?</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8726399143371834"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="design.css" />
+  <style>
+    .card {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #f2f2f2;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .card h2 {
+      color: #ff5050;
+      margin-top: 2rem;
+    }
+    .character {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .character p {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Do You Know the Brainrot Icons?</h1>
+    <nav>
+      <a href="404.html">Coming soon</a>
+      <a href="404.html">Coming soon</a>
+      <a href="https://www.youtube.com/@Umracorespecial">YouTube</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <p>The Italian Brainrot universe is a chaotic blend of surreal humor, memes, and cultural absurdity. These characters have become iconic in the weird corners of the internet — here are the legends:</p>
+
+      <h2>🧨 Bombardino Crocodilo</h2>
+      <div class="character">
+        <p>A fusion of explosive chaos and reptilian nonsense. Bombardino Crocodilo shouts random philosophy while breakdancing in church ruins. He’s either a visionary or a cursed spaghetti wizard.</p>
+      </div>
+
+      <h2>🎶 Trallalero Trallalà</h2>
+      <div class="character">
+        <p>The musical glitch of the Brainrot realm. Every step he takes is a melody, every sentence is operatic madness. He once argued with a mailbox in G major for 3 hours straight.</p>
+      </div>
+
+      <h2>🍝 Bumbubini Gussini</h2>
+      <div class="character">
+        <p>Nobody knows his origin — only that he yells about ravioli politics and wears 5 sunglasses at once. His catchphrase? “Reality is just uncooked gnocchi!”</p>
+      </div>
+
+      <h2>🐗 Gianni il Cinghiale</h2>
+      <div class="character">
+        <p>The wild boar soul of chaos. He believes every traffic sign is a government conspiracy and once tried to sue gravity. His tusks are registered as a historical monument.</p>
+      </div>
+
+      <h2>👑 Principe del Caos</h2>
+      <div class="character">
+        <p>A self-declared prince ruling over an imaginary kingdom of plastic chairs. Often seen giving motivational speeches to stray cats and pigeons. Madness? Maybe. Majesty? Definitely.</p>
+      </div>
+
+      <h2>🧀 Formaggio Mentale</h2>
+      <div class="character">
+        <p>His brain has fully melted into cheese. Every word he speaks is part horoscope, part pizza recipe. Don't listen too closely or you'll start craving lasagna during existential crises.</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
