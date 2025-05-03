@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="favicon.ico"/>
+  <script>
+    const setFavicon = (emoji) => {
+      const canvas = document.createElement('canvas');
+      canvas.height = 32;
+      canvas.width = 32;
+
+      const ctx = canvas.getContext('2d');
+      ctx.font = '28px serif';
+      ctx.fillText(emoji, -2, 24);
+
+      const favicon = document.querySelector('link[rel=icon]');
+      if (favicon) { favicon.href = canvas.toDataURL(); }
+    }
+    setFavicon('👽');
+  </script>
+  <title>How Well Do You Know Italian Brainrot? - Brainrot Quiz</title>
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body>
+  <header>
+    <h1>How Well Do You Know Italian Brainrot?</h1>
+    <nav>
+      <a href="404.html">Coming soon</a>
+      <a href="404.html">Coming soon</a>
+      <a href="https://www.youtube.com/@Umracorespecial">YouTube</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Question 1</h2>
+      <p>He believes that reality is just a bad pasta joke and that sunglasses are the key to the multiverse. Who is this character?</p>
+      <div>
+        <input type="radio" id="q1a1" name="q1" value="a1">
+        <label for="q1a1">Bombardino Crocodilo</label>
+      </div>
+      <div>
+        <input type="radio" id="q1a2" name="q1" value="a2">
+        <label for="q1a2">Trallalero Trallalà</label>
+      </div>
+      <div>
+        <input type="radio" id="q1a3" name="q1" value="a3">
+        <label for="q1a3">Bumbubini Gussini</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Question 2</h2>
+      <p>This character once argued with a mailbox in G major for three hours and refuses to walk without singing. Who is it?</p>
+      <div>
+        <input type="radio" id="q2a1" name="q2" value="a1">
+        <label for="q2a1">Gianni il Cinghiale</label>
+      </div>
+      <div>
+        <input type="radio" id="q2a2" name="q2" value="a2">
+        <label for="q2a2">Principe del Caos</label>
+      </div>
+      <div>
+        <input type="radio" id="q2a3" name="q2" value="a3">
+        <label for="q2a3">Trallalero Trallalà</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Question 3</h2>
+      <p>Known for believing traffic signs are part of a government conspiracy, this boar is the most chaotic creature in the Brainrot universe. Who is he?</p>
+      <div>
+        <input type="radio" id="q3a1" name="q3" value="a1">
+        <label for="q3a1">Gianni il Cinghiale</label>
+      </div>
+      <div>
+        <input type="radio" id="q3a2" name="q3" value="a2">
+        <label for="q3a2">Formaggio Mentale</label>
+      </div>
+      <div>
+        <input type="radio" id="q3a3" name="q3" value="a3">
+        <label for="q3a3">Bumbubini Gussini</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Question 4</h2>
+      <p>Famous for his weird obsession with ravioli and his collection of five pairs of sunglasses, this character speaks in pasta metaphors. Who is he?</p>
+      <div>
+        <input type="radio" id="q4a1" name="q4" value="a1">
+        <label for="q4a1">Bumbubini Gussini</label>
+      </div>
+      <div>
+        <input type="radio" id="q4a2" name="q4" value="a2">
+        <label for="q4a2">Bombardino Crocodilo</label>
+      </div>
+      <div>
+        <input type="radio" id="q4a3" name="q4" value="a3">
+        <label for="q4a3">Principe del Caos</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Question 5</h2>
+      <p>This prince leads an imaginary kingdom of plastic chairs and once tried to build a castle out of pizza boxes. Who is this regal figure?</p>
+      <div>
+        <input type="radio" id="q5a1" name="q5" value="a1">
+        <label for="q5a1">Formaggio Mentale</label>
+      </div>
+      <div>
+        <input type="radio" id="q5a2" name="q5" value="a2">
+        <label for="q5a2">Principe del Caos</label>
+      </div>
+      <div>
+        <input type="radio" id="q5a3" name="q5" value="a3">
+        <label for="q5a3">Gianni il Cinghiale</label>
+      </div>
+    </div>
+
+    <button onclick="submitQuiz()">Submit</button>
+    <div id="result"></div>
+  </main>
+
+  <script>
+    function submitQuiz() {
+      let score = 0;
+      // Correct answers:
+      const answers = ['a1', 'a3', 'a1', 'a1', 'a2'];
+
+      // Check answers
+      for (let i = 1; i <= 5; i++) {
+        const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selectedAnswer && selectedAnswer.value === answers[i - 1]) {
+          score++;
+        }
+      }
+
+      // Display result
+      let resultMessage = '';
+      switch (score) {
+        case 5:
+          resultMessage = 'Congratulations, your brain is fully rotten!';
+          break;
+        case 4:
+          resultMessage = 'Well done, your brain is almost there!';
+          break;
+        case 3:
+          resultMessage = 'Good job, but your brain still needs some seasoning.';
+          break;
+        case 2:
+          resultMessage = 'You need more time in the Brainrot oven.';
+          break;
+        case 1:
+          resultMessage = 'Your brain is still fresh, but you’re getting there!';
+          break;
+        default:
+          resultMessage = 'Brainrot? More like brain detox. Try again!';
+      }
+
+      document.getElementById('result').innerText = resultMessage;
+    }
+  </script>
+</body>
+</html>
