@@ -16,7 +16,7 @@
       height: 100vh;
     }
 
-header {
+    header {
       background: #fcddec;
       padding: 1rem;
       text-align: center;
@@ -24,7 +24,7 @@ header {
       font-weight: bold;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    
+
     #chat {
       flex: 1;
       padding: 10px;
@@ -56,6 +56,7 @@ header {
       padding: 100px;
       border-top: 1px solid #ccc;
       background: #fff;
+      align-items: center;
     }
 
     #userInput {
@@ -64,6 +65,21 @@ header {
       border-radius: 20px;
       border: 1px solid #ccc;
       font-size: 1em;
+    }
+
+    #sendBtn {
+      background-color: #ff80ab;
+      color: white;
+      padding: 10px;
+      border-radius: 20px;
+      margin-left: 10px;
+      font-size: 1em;
+      border: none;
+      cursor: pointer;
+    }
+
+    #sendBtn:hover {
+      background-color: #f48fb1;
     }
   </style>
 </head>
@@ -74,6 +90,7 @@ header {
   <div id="chat"></div>
   <div id="inputArea">
     <input type="text" id="userInput" placeholder="Say Hi to BFFy..." autofocus />
+    <button id="sendBtn" onclick="sendMessage()">Send</button>
   </div>
 
   <script>
