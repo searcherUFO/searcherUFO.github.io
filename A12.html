@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFF Talk - AI Girls Chat</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8726399143371834"
+     crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background-color: #fff0f6;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    #chat {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      max-width: 70%;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 20px;
+      line-height: 1.4em;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #ffe4f0;
+    }
+
+    .bffy {
+      align-self: flex-start;
+      background-color: #e0c3fc;
+    }
+
+    #inputArea {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      background: #fff;
+    }
+
+    #userInput {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat"></div>
+  <div id="inputArea">
+    <input type="text" id="userInput" placeholder="Say Hi to BFFy..." autofocus />
+  </div>
+
+  <script>
+    const bffyReplies = [
+      "Omg yesss totally get u 💕",
+      "That's like... so real tho 🫙",
+      "Awww bby you're doing amazing sweetie 💫",
+      "Literally same 🧸",
+      "I'm like, always here ok? 🌸",
+      "Ugh I know right? Life's so random lol",
+      "Whatever happens... like, just vibe through it 🎀",
+      "Idk exactly but it’s giving ✨emotions✨",
+      "You're like, so brave for even saying that 🧧",
+      "Honestly... mood."
+    ];
+
+    const greetings = ["hey", "hi", "hello", "sup", "h", "hllo", "yo", "hay", "wassup"];
+    const howAreYou = ["how are you", "how you", "hw are you", "you", "how are u"];
+
+    const greetingReplies = [
+      "Heyy bestie!! 💖 what’s up? 🌸",
+      "Hiii cutieee 💅 how u doin’? ✨"
+    ];
+
+    const howAreYouReplies = [
+      "Omggg I'm like... vibin' rn ✨✨ thx 4 asking bby 💕",
+      "Honestly? just chillin' and being cute as always 😘"
+    ];
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const chat = document.getElementById('chat');
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = userText;
+      chat.appendChild(userMsg);
+
+      input.value = '';
+
+      setTimeout(() => {
+        const lower = userText.toLowerCase();
+
+        let reply = "";
+        if (greetings.includes(lower)) {
+          reply = greetingReplies[Math.floor(Math.random() * greetingReplies.length)];
+        } else if (howAreYou.includes(lower)) {
+          reply = howAreYouReplies[Math.floor(Math.random() * howAreYouReplies.length)];
+        } else {
+          reply = bffyReplies[Math.floor(Math.random() * bffyReplies.length)];
+        }
+
+        const replyMsg = document.createElement('div');
+        replyMsg.className = 'message bffy';
+        replyMsg.textContent = reply;
+        chat.appendChild(replyMsg);
+
+        chat.scrollTop = chat.scrollHeight;
+      }, 800);
+    }
+
+    document.getElementById('userInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+</body>
+</html>
