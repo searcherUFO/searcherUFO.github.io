@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Commentbox s Firebase</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    button {
+      background-color: #e60000;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #b30000;
+    }
+    .comment {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .comment strong {
+      color: #e60000;
+    }
+    .comment time {
+      color: #999;
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Diskuse</h1>
+
+  <form id="comment-form">
+    <label for="nickname">Přezdívka:</label>
+    <input type="text" id="nickname" placeholder="Zadej přezdívku" required />
+
+    <label for="message">Komentář:</label>
+    <textarea id="message" rows="4" placeholder="Napiš svůj komentář..." required></textarea>
+
+    <button type="submit">Odeslat</button>
+  </form>
+
+  <div id="comments-container"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // ======= ZDE VLOŽ SVÉ FIREBASE KONFIGURAČNÍ ÚDAJE =======
+    const firebaseConfig = {
+  apiKey: "AIzaSyCVFIy-Voesb_N-Qq2P8oaExrCtIzh0M0A",
+  authDomain: "ccr-d-b7615.firebaseapp.com",
+  databaseURL: "https://ccr-d-b7615-default-rtdb.firebaseio.com",
+  projectId: "ccr-d-b7615",
+  storageBucket: "ccr-d-b7615.firebasestorage.app",
+  messagingSenderId: "639045569097",
+  appId: "1:639045569097:web:21b2987bb5fa56365a8d98",
+  measurementId: "G-W4GCKV3TSJ"
+    };
+    // ========================================================
+
+    // Inicializace Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    const form = document.getElementById('comment-form');
+    const commentsContainer = document.getElementById('comments-container');
+
+    // Posílání komentáře
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const nickname = form.nickname.value.trim();
+      const message = form.message.value.trim();
+
+      if (!nickname || !message) return alert('Vyplň prosím přezdívku i komentář.');
+
+      const newCommentRef = database.ref('comments').push();
+      newCommentRef.set({
+        nickname,
+        message,
+        timestamp: Date.now()
+      }).then(() => {
+        form.reset();
+      }).catch(err => {
+        alert('Chyba při odesílání komentáře: ' + err.message);
+      });
+    });
+
+    // Načítání komentářů realtime
+    database.ref('comments').orderByChild('timestamp').on('value', snapshot => {
+      commentsContainer.innerHTML = ''; // vyčistit staré komentáře
+
+      const comments = snapshot.val();
+      if (!comments) {
+        commentsContainer.innerHTML = '<p>Žádné komentáře zatím nejsou.</p>';
+        return;
+      }
+
+      // Převést na pole a seřadit od nejstarších
+      const commentsArray = Object.entries(comments)
+        .sort((a, b) => a[1].timestamp - b[1].timestamp);
+
+      commentsArray.forEach(([key, comment]) => {
+        const commentEl = document.createElement('div');
+        commentEl.classList.add('comment');
+
+        const time = new Date(comment.timestamp).toLocaleString('cs-CZ');
+
+        commentEl.innerHTML = `
+          <strong>${sanitize(comment.nickname)}</strong> 
+          <time>${time}</time>
+          <p>${sanitize(comment.message)}</p>
+        `;
+
+        commentsContainer.appendChild(commentEl);
+      });
+    });
+
+    // Jednoduchá sanitizace vstupu proti XSS
+    function sanitize(str) {
+      return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+    }
+  </script>
+</body>
+</html>
