@@ -1,122 +1,267 @@
+
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Commentbox s Firebase</title>
-  <link rel="stylesheet" href="web-app.css" />
+  <title>Czech Crime Reports – Diskuze</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #e60000;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #333;
+      font-size: 1.25rem;
+      border-bottom: 2px solid #e60000;
+      padding-bottom: 5px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+    #nickname {
+      font-size: 1.2rem;
+    }
+    #title {
+      font-size: 1rem;
+      margin-top: 5px;
+    }
+    #comment-title {
+      margin: 10px 0;
+      font-size: 1rem;
+      color: #555;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: vertical;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #e60000;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #b30000;
+    }
+    .comment {
+      border-bottom: 1px solid #ddd;
+      padding: 16px 0;
+    }
+    .comment strong {
+      color: #e60000;
+      font-size: 1.1rem;
+    }
+    .comment h3 {
+      margin: 5px 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .comment time {
+      color: #999;
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+    .comment p {
+      margin: 8px 0 0;
+      line-height: 1.5;
+    }
+  .like-button {
+  background-color: transparent;
+  border: 1px solid #e60000;
+  color: #e60000;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.like-button.liked {
+  background-color: #e60000;
+  color: white;
+  border: none;
+}
+.likes-count {
+  font-size: 0.9rem;
+  margin-left: 10px;
+  color: #666;
+}
+  </style>
 </head>
 <body>
-  <h1>Diskuse</h1>
+  <header>
+    <h1>Czech Crime Reports</h1>
+    <p>Sdílej podezřelé události nebo diskutuj s ostatními anonymně</p>
+  </header>
 
-  <form id="comment-form">
-    <label for="nickname">Přezdívka:</label>
-    <input type="text" id="nickname" placeholder="Zadej přezdívku" required />
+  <main>
+    <h2>Veřejná diskuze</h2>
 
-    <label for="title">Nadpis:</label>
-    <input type="text" id="title" placeholder="Napiš nadpis..." required />
+    <form id="comment-form">
+      <label for="nickname">Tvoje přezdívka:</label>
+      <input type="text" id="nickname" placeholder="Např. Anonym123" required />
 
-    <label for="message">Komentář:</label>
-    <textarea id="message" rows="4" placeholder="Napiš svůj komentář..." required></textarea>
+      <label for="title">Nadpis příspěvku:</label>
+      <input type="text" id="title" placeholder="Např. Bouračka v Praze" required />
 
-    <button type="submit">Odeslat</button>
-  </form>
+      <label for="message">Popis události / komentář:</label>
+      <textarea id="message" rows="4" placeholder="Co jsi viděl/a, co tě znepokojuje, nebo jaký máš názor?" required></textarea>
 
-  <div id="comments-container"></div>
+      <button type="submit">Odeslat příspěvek</button>
+    </form>
+
+    <div id="comments-container"></div>
+  </main>
 
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCVFIy-Voesb_N-Qq2P8oaExrCtIzh0M0A",
-      authDomain: "ccr-d-b7615.firebaseapp.com",
-      databaseURL: "https://ccr-d-b7615-default-rtdb.firebaseio.com",
-      projectId: "ccr-d-b7615",
-      storageBucket: "ccr-d-b7615.appspot.com",
-      messagingSenderId: "639045569097",
-      appId: "1:639045569097:web:21b2987bb5fa56365a8d98"
-    };
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCVFIy-Voesb_N-Qq2P8oaExrCtIzh0M0A",
+    authDomain: "ccr-d-b7615.firebaseapp.com",
+    databaseURL: "https://ccr-d-b7615-default-rtdb.firebaseio.com",
+    projectId: "ccr-d-b7615",
+    storageBucket: "ccr-d-b7615.appspot.com",
+    messagingSenderId: "639045569097",
+    appId: "1:639045569097:web:21b2987bb5fa56365a8d98",
+    measurementId: "G-W4GCKV3TSJ"
+  };
 
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
 
-    const form = document.getElementById('comment-form');
-    const commentsContainer = document.getElementById('comments-container');
+  const form = document.getElementById('comment-form');
+  const commentsContainer = document.getElementById('comments-container');
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
+  form.addEventListener('submit', e => {
+    e.preventDefault();
 
-      const nickname = form.nickname.value.trim();
-      const title = form.title.value.trim();
-      const message = form.message.value.trim();
+    const nickname = form.nickname.value.trim();
+    const title = form.title.value.trim();
+    const message = form.message.value.trim();
 
-      if (!nickname || !title || !message) return alert('Vyplň prosím všechny pole.');
+    if (!nickname || !title || !message) {
+      alert('Vyplň prosím všechna pole.');
+      return;
+    }
 
-      const newCommentRef = database.ref('comments').push();
-      newCommentRef.set({
-        nickname,
-        title,
-        message,
-        timestamp: Date.now(),
-        likes: 0,
-        dislikes: 0
-      }).then(() => {
-        form.reset();
-      }).catch(err => {
-        alert('Chyba při odesílání komentáře: ' + err.message);
-      });
+    const newCommentRef = database.ref('comments').push();
+    newCommentRef.set({
+      nickname,
+      title,
+      message,
+      likes: 0,
+      timestamp: Date.now()
+    }).then(() => {
+      form.reset();
+    }).catch(err => {
+      alert('Chyba při odesílání: ' + err.message);
+    });
+  });
+
+  database.ref('comments').orderByChild('timestamp').on('value', snapshot => {
+    commentsContainer.innerHTML = '';
+
+    const comments = snapshot.val();
+    if (!comments) {
+      commentsContainer.innerHTML = '<p>Zatím žádné příspěvky.</p>';
+      return;
+    }
+
+    const commentsArray = Object.entries(comments)
+      .sort((a, b) => b[1].timestamp - a[1].timestamp);
+
+    commentsArray.forEach(([key, comment]) => {
+      const commentEl = document.createElement('div');
+      commentEl.classList.add('comment');
+
+      const time = new Date(comment.timestamp).toLocaleString('cs-CZ');
+      const likedComments = JSON.parse(localStorage.getItem('likedComments') || '[]');
+      const liked = likedComments.includes(key);
+
+      commentEl.innerHTML = `
+        <strong>${sanitize(comment.nickname)}</strong> 
+        <time>${time}</time>
+        <h3>${sanitize(comment.title)}</h3>
+        <p>${sanitize(comment.message)}</p>
+        <button class="like-button" data-key="${key}" ${liked ? 'disabled class="liked"' : ''}>👍 Lajk</button>
+        <span class="likes-count">${comment.likes || 0} hlasů</span>
+      `;
+
+      commentsContainer.appendChild(commentEl);
     });
 
-    database.ref('comments').orderByChild('timestamp').on('value', snapshot => {
-      commentsContainer.innerHTML = '';
-      const comments = snapshot.val();
-      if (!comments) {
-        commentsContainer.innerHTML = '<p>Žádné komentáře zatím nejsou.</p>';
-        return;
-      }
+    // Aktivace like tlačítek
+    document.querySelectorAll('.like-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const key = button.getAttribute('data-key');
+        const likedComments = JSON.parse(localStorage.getItem('likedComments') || '[]');
 
-      const commentsArray = Object.entries(comments).sort((a, b) => a[1].timestamp - b[1].timestamp);
+        if (likedComments.includes(key)) return;
 
-      commentsArray.forEach(([key, comment]) => {
-        const commentEl = document.createElement('div');
-        commentEl.classList.add('comment');
+        const commentRef = database.ref('comments/' + key + '/likes');
+        commentRef.transaction(currentLikes => {
+          return (currentLikes || 0) + 1;
+        });
 
-        const time = new Date(comment.timestamp).toLocaleString('cs-CZ');
+        likedComments.push(key);
+        localStorage.setItem('likedComments', JSON.stringify(likedComments));
 
-        commentEl.innerHTML = `
-          <strong>${sanitize(comment.nickname)}</strong>
-          <time>${time}</time>
-          <h3>${sanitize(comment.title)}</h3>
-          <p>${sanitize(comment.message)}</p>
-          <div class="reaction-buttons">
-            <button class="like" onclick="likeComment('${key}')">👍 ${comment.likes}</button>
-            <button class="dislike" onclick="dislikeComment('${key}')">👎 ${comment.dislikes}</button>
-          </div>
-        `;
+        button.classList.add('liked');
+        button.disabled = true;
 
-        commentsContainer.appendChild(commentEl);
+        const likesCountSpan = button.nextElementSibling;
+        const currentText = likesCountSpan.textContent;
+        const currentLikes = parseInt(currentText) || 0;
+        likesCountSpan.textContent = `${currentLikes + 1} hlasů`;
       });
     });
+  });
 
-    function likeComment(id) {
-      const ref = database.ref('comments/' + id + '/likes');
-      ref.transaction(current => (current || 0) + 1);
-    }
-
-    function dislikeComment(id) {
-      const ref = database.ref('comments/' + id + '/dislikes');
-      ref.transaction(current => (current || 0) + 1);
-    }
-
-    function sanitize(str) {
-      return str.replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#39;");
-    }
-  </script>
+  function sanitize(str) {
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;");
+  }
+</script>
 </body>
 </html>
