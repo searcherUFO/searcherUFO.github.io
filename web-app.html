@@ -3,72 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Czech Crime Reports – Diskuze</title>
+  <title>Commentbox s Firebase</title>
   <style>
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
-    header {
-      background-color: #e60000;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    main {
-      max-width: 800px;
-      margin: 30px auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    h2 {
-      margin-top: 30px;
-      color: #333;
-      font-size: 1.25rem;
-      border-bottom: 2px solid #e60000;
-      padding-bottom: 5px;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 15px;
-      display: block;
-    }
-    #nickname {
-      font-size: 1.2rem;
-    }
-    #title {
-      font-size: 1rem;
-      margin-top: 5px;
-    }
-    #comment-title {
-      margin: 10px 0;
-      font-size: 1rem;
-      color: #555;
+    form {
+      margin-bottom: 20px;
     }
     input, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       margin-top: 6px;
       margin-bottom: 12px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
       resize: vertical;
-      font-size: 1rem;
     }
     button {
       background-color: #e60000;
       color: white;
       border: none;
-      padding: 10px 18px;
+      padding: 10px 16px;
       border-radius: 4px;
       cursor: pointer;
       font-size: 1rem;
@@ -78,15 +38,15 @@
     }
     .comment {
       border-bottom: 1px solid #ddd;
-      padding: 16px 0;
+      padding: 10px 0;
     }
     .comment strong {
       color: #e60000;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
     .comment h3 {
-      margin: 5px 0;
-      font-size: 1.2rem;
+      margin: 4px 0;
+      font-size: 1rem;
       color: #333;
     }
     .comment time {
@@ -94,36 +54,42 @@
       font-size: 0.85rem;
       margin-left: 8px;
     }
-    .comment p {
-      margin: 8px 0 0;
-      line-height: 1.5;
+    .reaction-buttons button {
+      margin-right: 10px;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+    }
+    .like {
+      background-color: #28a745;
+    }
+    .like:hover {
+      background-color: #218838;
+    }
+    .dislike {
+      background-color: #dc3545;
+    }
+    .dislike:hover {
+      background-color: #c82333;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Czech Crime Reports</h1>
-    <p>Sdílej podezřelé události nebo diskutuj s ostatními anonymně</p>
-  </header>
+  <h1>Diskuse</h1>
 
-  <main>
-    <h2>Veřejná diskuze</h2>
+  <form id="comment-form">
+    <label for="nickname">Přezdívka:</label>
+    <input type="text" id="nickname" placeholder="Zadej přezdívku" required />
 
-    <form id="comment-form">
-      <label for="nickname">Tvoje přezdívka:</label>
-      <input type="text" id="nickname" placeholder="Např. Anonym123" required />
+    <label for="title">Nadpis:</label>
+    <input type="text" id="title" placeholder="Napiš nadpis..." required />
 
-      <label for="title">Nadpis příspěvku:</label>
-      <input type="text" id="title" placeholder="Např. Bouračka v Praze" required />
+    <label for="message">Komentář:</label>
+    <textarea id="message" rows="4" placeholder="Napiš svůj komentář..." required></textarea>
 
-      <label for="message">Popis události / komentář:</label>
-      <textarea id="message" rows="4" placeholder="Co jsi viděl/a, co tě znepokojuje, nebo jaký máš názor?" required></textarea>
+    <button type="submit">Odeslat</button>
+  </form>
 
-      <button type="submit">Odeslat příspěvek</button>
-    </form>
-
-    <div id="comments-container"></div>
-  </main>
+  <div id="comments-container"></div>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -137,8 +103,7 @@
       projectId: "ccr-d-b7615",
       storageBucket: "ccr-d-b7615.appspot.com",
       messagingSenderId: "639045569097",
-      appId: "1:639045569097:web:21b2987bb5fa56365a8d98",
-      measurementId: "G-W4GCKV3TSJ"
+      appId: "1:639045569097:web:21b2987bb5fa56365a8d98"
     };
 
     firebase.initializeApp(firebaseConfig);
@@ -154,35 +119,32 @@
       const title = form.title.value.trim();
       const message = form.message.value.trim();
 
-      if (!nickname || !title || !message) {
-        alert('Vyplň prosím všechna pole.');
-        return;
-      }
+      if (!nickname || !title || !message) return alert('Vyplň prosím všechny pole.');
 
       const newCommentRef = database.ref('comments').push();
       newCommentRef.set({
         nickname,
         title,
         message,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        likes: 0,
+        dislikes: 0
       }).then(() => {
         form.reset();
       }).catch(err => {
-        alert('Chyba při odesílání: ' + err.message);
+        alert('Chyba při odesílání komentáře: ' + err.message);
       });
     });
 
     database.ref('comments').orderByChild('timestamp').on('value', snapshot => {
       commentsContainer.innerHTML = '';
-
       const comments = snapshot.val();
       if (!comments) {
-        commentsContainer.innerHTML = '<p>Zatím žádné příspěvky.</p>';
+        commentsContainer.innerHTML = '<p>Žádné komentáře zatím nejsou.</p>';
         return;
       }
 
-      const commentsArray = Object.entries(comments)
-        .sort((a, b) => b[1].timestamp - a[1].timestamp); // nejnovější první
+      const commentsArray = Object.entries(comments).sort((a, b) => a[1].timestamp - b[1].timestamp);
 
       commentsArray.forEach(([key, comment]) => {
         const commentEl = document.createElement('div');
@@ -191,15 +153,29 @@
         const time = new Date(comment.timestamp).toLocaleString('cs-CZ');
 
         commentEl.innerHTML = `
-          <strong>${sanitize(comment.nickname)}</strong> 
+          <strong>${sanitize(comment.nickname)}</strong>
           <time>${time}</time>
           <h3>${sanitize(comment.title)}</h3>
           <p>${sanitize(comment.message)}</p>
+          <div class="reaction-buttons">
+            <button class="like" onclick="likeComment('${key}')">👍 ${comment.likes}</button>
+            <button class="dislike" onclick="dislikeComment('${key}')">👎 ${comment.dislikes}</button>
+          </div>
         `;
 
         commentsContainer.appendChild(commentEl);
       });
     });
+
+    function likeComment(id) {
+      const ref = database.ref('comments/' + id + '/likes');
+      ref.transaction(current => (current || 0) + 1);
+    }
+
+    function dislikeComment(id) {
+      const ref = database.ref('comments/' + id + '/dislikes');
+      ref.transaction(current => (current || 0) + 1);
+    }
 
     function sanitize(str) {
       return str.replace(/&/g, "&amp;")
