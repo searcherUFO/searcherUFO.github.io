@@ -284,6 +284,12 @@
               .replace(/"/g, "&quot;")
               .replace(/'/g, "&#39;");
   }
+// Zobraz formulář po kliknutí na tlačítko
+document.getElementById('add-post-btn').addEventListener('click', () => {
+  const form = document.getElementById('comment-form');
+  form.style.display = form.style.display === 'block' ? 'none' : 'block';
+});
+  
 </script>
 </body>
 </html>
