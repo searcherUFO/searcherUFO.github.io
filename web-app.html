@@ -133,7 +133,7 @@
 
   <button id="toggle-form-btn">➕ Přidat příspěvek</button>
 
-  <div id="form-wrapper" style="display: none;">
+  <div id="form-wrapper" style="display: none; margin-top: 20px;">
     <form id="comment-form">
       <label for="nickname">Tvoje přezdívka:</label>
       <input type="text" id="nickname" placeholder="Např. Anonym123" required />
@@ -148,7 +148,7 @@
     </form>
   </div>
 
-  <div id="comments-container"></div>
+  <div id="comments-container" style="margin-top: 40px;"></div>
 </main>
 
 
@@ -266,20 +266,20 @@
               .replace(/"/g, "&quot;")
               .replace(/'/g, "&#39;");
   }
-// Zobrazit/skrýt formulář
-document.getElementById('toggle-form-btn').addEventListener('click', () => {
-  const formWrapper = document.getElementById('form-wrapper');
-  formWrapper.style.display = formWrapper.style.display === 'none' ? 'block' : 'none';
-});
-document.getElementById('toggle-form-btn').addEventListener('click', () => {
-  const formWrapper = document.getElementById('form-wrapper');
-  const button = document.getElementById('toggle-form-btn');
-  const isVisible = formWrapper.style.display === 'block';
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.getElementById('toggle-form-btn');
+    const formWrapper = document.getElementById('form-wrapper');
 
-  formWrapper.style.display = isVisible ? 'none' : 'block';
-  button.textContent = isVisible ? '➕ Přidat příspěvek' : '❌ Skrýt formulář';
-});
-
+    toggleBtn.addEventListener('click', () => {
+      if (formWrapper.style.display === 'none') {
+        formWrapper.style.display = 'block';
+        toggleBtn.textContent = '❌ Skrýt formulář';
+      } else {
+        formWrapper.style.display = 'none';
+        toggleBtn.textContent = '➕ Přidat příspěvek';
+      }
+    });
+  });
 </script>
 </body>
 </html>
