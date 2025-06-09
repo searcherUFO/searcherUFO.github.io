@@ -145,23 +145,26 @@
   </header>
 
   <main>
-    <h2>Veřejná diskuze</h2>
+  <h2>Veřejná diskuze</h2>
 
-    <form id="comment-form">
-      <label for="nickname">Tvoje přezdívka:</label>
-      <input type="text" id="nickname" placeholder="Např. Anonym123" required />
+  <button id="add-post-btn">➕ Přidat příspěvek</button>
 
-      <label for="title">Nadpis příspěvku:</label>
-      <input type="text" id="title" placeholder="Např. Bouračka v Praze" required />
+  <form id="comment-form">
+    <label for="nickname">Tvoje přezdívka:</label>
+    <input type="text" id="nickname" placeholder="Např. Anonym123" required />
 
-      <label for="message">Popis události / komentář:</label>
-      <textarea id="message" rows="4" placeholder="Co jsi viděl/a, co tě znepokojuje, nebo jaký máš názor?" required></textarea>
+    <label for="title">Nadpis příspěvku:</label>
+    <input type="text" id="title" placeholder="Např. Bouračka v Praze" required />
 
-      <button type="submit">Odeslat příspěvek</button>
-    </form>
+    <label for="message">Popis události / komentář:</label>
+    <textarea id="message" rows="4" placeholder="Co jsi viděl/a, co tě znepokojuje, nebo jaký máš názor?" required></textarea>
 
-    <div id="comments-container"></div>
-  </main>
+    <button type="submit">Odeslat příspěvek</button>
+  </form>
+
+  <div id="comments-container"></div>
+</main>
+
 
   <!-- Firebase SDK -->
  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
