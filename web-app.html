@@ -231,14 +231,18 @@
       const likedComments = JSON.parse(localStorage.getItem('likedComments') || '[]');
       const liked = likedComments.includes(key);
 
-      commentEl.innerHTML = `
-        <strong>${sanitize(comment.nickname)}</strong> 
-        <time>${time}</time>
-        <h3>${sanitize(comment.title)}</h3>
-        <p>${sanitize(comment.message)}</p>
-        <button class="like-button" data-key="${key}" ${liked ? 'disabled class="liked"' : ''}>👍 Lajk</button>
-        <span class="likes-count">${comment.likes || 0} hlasů</span>
-      `;
+     commentEl.innerHTML = `
+  <div class="comment-header">
+    <strong>${sanitize(comment.nickname)}</strong> 
+    <time>${time}</time>
+  </div>
+  <h3>${sanitize(comment.title)}</h3>
+  <p>${sanitize(comment.message)}</p>
+  <div class="comment-footer">
+    <button class="like-button" data-key="${key}" ${liked ? 'disabled class="liked"' : ''}>👍 Lajk</button>
+    <span class="likes-count">${comment.likes || 0} hlasů</span>
+  </div>
+`;
 
       commentsContainer.appendChild(commentEl);
     });
