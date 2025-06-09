@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -76,66 +77,49 @@
     button:hover {
       background-color: #b30000;
     }
-      .comment {
-    background-color: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin: 20px 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    transition: box-shadow 0.2s ease;
-  }
-  .comment:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .comment strong {
-    color: #e60000;
-    font-size: 1rem;
-  }
-  .comment h3 {
-    margin: 8px 0;
-    font-size: 1.1rem;
-    color: #222;
-  }
-  .comment time {
-    color: #888;
-    font-size: 0.8rem;
-    margin-left: 10px;
-  }
-  .comment p {
-    margin: 10px 0 12px;
-    line-height: 1.6;
-    color: #333;
-  }
-  .comment-footer {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 10px;
-  }
+    .comment {
+      border-bottom: 1px solid #ddd;
+      padding: 16px 0;
+    }
+    .comment strong {
+      color: #e60000;
+      font-size: 1.1rem;
+    }
+    .comment h3 {
+      margin: 5px 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .comment time {
+      color: #999;
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+    .comment p {
+      margin: 8px 0 0;
+      line-height: 1.5;
+    }
   .like-button {
-    background-color: transparent;
-    border: 1px solid #e60000;
-    color: #e60000;
-    padding: 6px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-  }
-  .like-button:hover {
-    background-color: #e60000;
-    color: #fff;
-  }
-  .like-button.liked {
-    background-color: #e60000;
-    color: white;
-    border: none;
-  }
-  .likes-count {
-    font-size: 0.9rem;
-    color: #555;
-  }
+  background-color: transparent;
+  border: 1px solid #e60000;
+  color: #e60000;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.like-button.liked {
+  background-color: #e60000;
+  color: white;
+  border: none;
+}
+.likes-count {
+  font-size: 0.9rem;
+  margin-left: 10px;
+  color: #666;
+}
   </style>
 </head>
 <body>
@@ -144,23 +128,25 @@
     <p>Sdílej podezřelé události nebo diskutuj s ostatními anonymně</p>
   </header>
 
-  <main>
+<main>
   <h2>Veřejná diskuze</h2>
 
-  <button id="add-post-btn">➕ Přidat příspěvek</button>
+  <button id="toggle-form-btn">➕ Přidat příspěvek</button>
 
-  <form id="comment-form">
-    <label for="nickname">Tvoje přezdívka:</label>
-    <input type="text" id="nickname" placeholder="Např. Anonym123" required />
+  <div id="form-wrapper" style="display: none;">
+    <form id="comment-form">
+      <label for="nickname">Tvoje přezdívka:</label>
+      <input type="text" id="nickname" placeholder="Např. Anonym123" required />
 
-    <label for="title">Nadpis příspěvku:</label>
-    <input type="text" id="title" placeholder="Např. Bouračka v Praze" required />
+      <label for="title">Nadpis příspěvku:</label>
+      <input type="text" id="title" placeholder="Např. Bouračka v Praze" required />
 
-    <label for="message">Popis události / komentář:</label>
-    <textarea id="message" rows="4" placeholder="Co jsi viděl/a, co tě znepokojuje, nebo jaký máš názor?" required></textarea>
+      <label for="message">Popis události / komentář:</label>
+      <textarea id="message" rows="4" placeholder="Co jsi viděl/a, co tě znepokojuje, nebo jaký máš názor?" required></textarea>
 
-    <button type="submit">Odeslat příspěvek</button>
-  </form>
+      <button type="submit">Odeslat příspěvek</button>
+    </form>
+  </div>
 
   <div id="comments-container"></div>
 </main>
@@ -234,18 +220,14 @@
       const likedComments = JSON.parse(localStorage.getItem('likedComments') || '[]');
       const liked = likedComments.includes(key);
 
-     commentEl.innerHTML = `
-  <div class="comment-header">
-    <strong>${sanitize(comment.nickname)}</strong> 
-    <time>${time}</time>
-  </div>
-  <h3>${sanitize(comment.title)}</h3>
-  <p>${sanitize(comment.message)}</p>
-  <div class="comment-footer">
-    <button class="like-button" data-key="${key}" ${liked ? 'disabled class="liked"' : ''}>👍 Lajk</button>
-    <span class="likes-count">${comment.likes || 0} hlasů</span>
-  </div>
-`;
+      commentEl.innerHTML = `
+        <strong>${sanitize(comment.nickname)}</strong> 
+        <time>${time}</time>
+        <h3>${sanitize(comment.title)}</h3>
+        <p>${sanitize(comment.message)}</p>
+        <button class="like-button" data-key="${key}" ${liked ? 'disabled class="liked"' : ''}>👍 Lajk</button>
+        <span class="likes-count">${comment.likes || 0} hlasů</span>
+      `;
 
       commentsContainer.appendChild(commentEl);
     });
@@ -284,12 +266,20 @@
               .replace(/"/g, "&quot;")
               .replace(/'/g, "&#39;");
   }
-// Zobraz formulář po kliknutí na tlačítko
-document.getElementById('add-post-btn').addEventListener('click', () => {
-  const form = document.getElementById('comment-form');
-  form.style.display = form.style.display === 'block' ? 'none' : 'block';
+// Zobrazit/skrýt formulář
+document.getElementById('toggle-form-btn').addEventListener('click', () => {
+  const formWrapper = document.getElementById('form-wrapper');
+  formWrapper.style.display = formWrapper.style.display === 'none' ? 'block' : 'none';
 });
-  
+document.getElementById('toggle-form-btn').addEventListener('click', () => {
+  const formWrapper = document.getElementById('form-wrapper');
+  const button = document.getElementById('toggle-form-btn');
+  const isVisible = formWrapper.style.display === 'block';
+
+  formWrapper.style.display = isVisible ? 'none' : 'block';
+  button.textContent = isVisible ? '➕ Přidat příspěvek' : '❌ Skrýt formulář';
+});
+
 </script>
 </body>
 </html>
